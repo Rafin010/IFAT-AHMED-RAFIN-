@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ifat Ahmed Rafin</title>
     
+    <!-- Curved Favicon (Browser Icon) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3CclipPath id='c'%3E%3Crect width='100' height='100' rx='25'/%3E%3C/clipPath%3E%3Cimage href='https://i.ibb.co.com/Wpg1n8Rr/iar-logo.png' width='100' height='100' clip-path='url(%23c)'/%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="https://i.ibb.co.com/Wpg1n8Rr/iar-logo.png">
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -241,7 +245,7 @@
 
     <!-- ORIGINAL UNIQUE NAVBAR -->
     <div class="fixed w-full z-50 top-4 px-4 md:px-10 flex justify-center">
-        <nav class="nav-shape w-full max-w-7xl px-6 py-3 flex justify-between items-center transition-all duration-300 shadow-2xl">
+        <nav class="nav-shape relative w-full max-w-7xl px-6 py-3 flex justify-between items-center transition-all duration-300 shadow-2xl bg-white/5 backdrop-blur-md border border-white/10">
             <!-- Logo -->
             <a href="#home" class="font-display font-bold text-lg tracking-wide flex items-center gap-2 group">
                 <i class="fa-solid fa-microchip text-neonCyan group-hover:rotate-12 transition duration-300"></i>
@@ -268,9 +272,26 @@
                 </a>
             </div>
             
-            <button class="lg:hidden text-white text-xl">
+            <button id="mobile-menu-btn" class="lg:hidden text-white text-xl cursor-pointer">
                 <i class="fa-solid fa-bars-staggered"></i>
             </button>
+
+            <!-- Mobile Dropdown Menu -->
+            <div id="mobile-menu" class="hidden absolute top-[110%] right-0 w-64 bg-black/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-5 flex-col gap-4 shadow-2xl lg:hidden origin-top-right transition-all duration-300">
+                <a href="#skills" class="nav-link-mobile text-white text-sm font-bold uppercase tracking-widest text-right py-2 border-b border-white/5 hover:text-neonCyan transition">Stack</a>
+                <a href="#projects" class="nav-link-mobile text-gray-400 text-sm font-bold uppercase tracking-widest text-right py-2 border-b border-white/5 hover:text-neonCyan transition">Projects</a>
+                <a href="#contact" class="nav-link-mobile text-gray-400 text-sm font-bold uppercase tracking-widest text-right py-2 border-b border-white/5 hover:text-neonCyan transition">Contact</a>
+                
+                <div class="flex justify-end gap-5 py-2 mt-2">
+                    <a href="https://github.com/Rafin010/" class="text-gray-400 hover:text-white transition text-xl"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/ifat-ahmed-rafin-056741360/" class="text-gray-400 hover:text-[#0A66C2] transition text-xl"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="https://www.instagram.com/ia_rafin/" class="text-gray-400 hover:text-[#E1306C] transition text-xl"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+                
+                <a href="#contact" class="nav-link-mobile mt-2 text-center btn-unique btn-cut-4 border border-neonCyan text-neonCyan px-4 py-3 font-display font-bold text-xs uppercase tracking-wider">
+                    Hire Me
+                </a>
+            </div>
         </nav>
     </div>
 
@@ -475,7 +496,7 @@
                 </div>
 
                 <!-- Project 2 (Web Platform) -->
-                <div class="project-card glass-panel compact-card rounded-2xl overflow-hidden flex flex-col group" data-category="web">
+                <div class="project-card glass-panel compact-card rounded-2xl overflow-hidden flex flex-col group" data-category="app">
                     <div class="h-48 bg-[#000000] relative overflow-hidden border-b border-white/5">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#000000] to-transparent z-10"></div>
                         <img src="https://i.ibb.co.com/V0kwHvQM/free-Store-logo.png" class="w-full h-full object-cover opacity-60" alt="FreeStore">
@@ -497,8 +518,8 @@
                     </div>
                 </div>
 
-                <!-- Project 3 (Software) -->
-                <div class="project-card glass-panel compact-card rounded-2xl overflow-hidden flex flex-col group" data-category="software">
+                <!-- Project 3 (web) -->
+                <div class="project-card glass-panel compact-card rounded-2xl overflow-hidden flex flex-col group" data-category="app">
                     <div class="h-48 bg-[#000000] relative overflow-hidden border-b border-white/5">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#000000] to-transparent z-10"></div>
                         <img src="https://i.ibb.co.com/zW23z8SL/Facebook-doanloader-BANADER.png" class="w-full h-full object-cover opacity-60" alt="Facebook Downloader">
@@ -509,9 +530,78 @@
                         </div>
                     </div>
                     <div class="p-8 flex flex-col flex-grow">
-                        <h3 class="text-2xl font-display font-bold text-white mb-3">FB Downloader</h3>
+                        <h3 class="text-2xl font-display font-bold text-white mb-3">Facebook Videos Downloader</h3>
                         <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-grow">Advanced Facebook media downloader with seamless integration. Supports high-speed 4K video extraction.</p>
                         <a href="https://f.freedownloader.top" target="_blank" rel="noopener noreferrer" class="group/link text-white font-bold text-xs uppercase tracking-widest flex items-center gap-2 transition w-max">
+                            Launch Platform 
+                            <span class="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover/link:bg-neonCyan group-hover/link:border-neonCyan group-hover/link:text-black transition-all">
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+                 <!-- Project 4 (web/app) -->
+                <div class="project-card glass-panel compact-card rounded-2xl overflow-hidden flex flex-col group" data-category="app">
+                    <div class="h-48 bg-[#000000] relative overflow-hidden border-b border-white/5">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#000000] to-transparent z-10"></div>
+                        <img src="https://i.ibb.co.com/m5QNVT8R/You-Tube-Bander.png" class="w-full h-full object-cover opacity-60" alt="Facebook Downloader">
+                        <div class="absolute top-4 right-4 z-20">
+                            <span class="bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full text-[10px] font-bold text-white border border-white/10 flex items-center gap-1.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> Python
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow">
+                        <h3 class="text-2xl font-display font-bold text-white mb-3">YouTube Videos Downloader</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-grow">Advanced YouTube media downloader with seamless integration. Supports high-speed 4K video extraction.</p>
+                        <a href="https://y.freedownloader.top" target="_blank" rel="noopener noreferrer" class="group/link text-white font-bold text-xs uppercase tracking-widest flex items-center gap-2 transition w-max">
+                            Launch Platform 
+                            <span class="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover/link:bg-neonCyan group-hover/link:border-neonCyan group-hover/link:text-black transition-all">
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 5 (web/app) -->
+                <div class="project-card glass-panel compact-card rounded-2xl overflow-hidden flex flex-col group" data-category="app">
+                    <div class="h-48 bg-[#000000] relative overflow-hidden border-b border-white/5">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#000000] to-transparent z-10"></div>
+                        <img src="https://i.ibb.co.com/3Ysf5Bdy/Instagram-Banare.png" class="w-full h-full object-cover opacity-60" alt="Facebook Downloader">
+                        <div class="absolute top-4 right-4 z-20">
+                            <span class="bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full text-[10px] font-bold text-white border border-white/10 flex items-center gap-1.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> Python
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow">
+                        <h3 class="text-2xl font-display font-bold text-white mb-3">Instagram Videos Downloader</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-grow">Advanced YouTube media downloader with seamless integration. Supports high-speed 4K video extraction.</p>
+                        <a href="https://i.freedownloader.top" target="_blank" rel="noopener noreferrer" class="group/link text-white font-bold text-xs uppercase tracking-widest flex items-center gap-2 transition w-max">
+                            Launch Platform 
+                            <span class="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover/link:bg-neonCyan group-hover/link:border-neonCyan group-hover/link:text-black transition-all">
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 6 (web/app) -->
+                <div class="project-card glass-panel compact-card rounded-2xl overflow-hidden flex flex-col group" data-category="app">
+                    <div class="h-48 bg-[#000000] relative overflow-hidden border-b border-white/5">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#000000] to-transparent z-10"></div>
+                        <img src="https://i.ibb.co.com/N2DrJ4Ln/tiktok-bannar.png" class="w-full h-full object-cover opacity-60" alt="Facebook Downloader">
+                        <div class="absolute top-4 right-4 z-20">
+                            <span class="bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full text-[10px] font-bold text-white border border-white/10 flex items-center gap-1.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> Python
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow">
+                        <h3 class="text-2xl font-display font-bold text-white mb-3">TikTOk Videos Downloader</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-grow">Advanced YouTube media downloader with seamless integration. Supports high-speed 4K video extraction.</p>
+                        <a href="https://t.freedownloader.top" target="_blank" rel="noopener noreferrer" class="group/link text-white font-bold text-xs uppercase tracking-widest flex items-center gap-2 transition w-max">
                             Launch Platform 
                             <span class="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover/link:bg-neonCyan group-hover/link:border-neonCyan group-hover/link:text-black transition-all">
                                 <i class="fa-solid fa-arrow-right text-[10px]"></i>
@@ -620,11 +710,16 @@
                             <span class="absolute bottom-1 right-2 text-[8px] opacity-50 font-mono">_01</span>
                         </a>
                         
-                        <!-- Email Button (Cut Corners Style 2) -->
-                        <a href="mailto:iarafin010@gmail.com" class="relative group/btn inline-flex items-center justify-center gap-3 bg-transparent text-cyan-400 px-8 py-4 font-mono font-bold uppercase tracking-widest text-xs transition-all duration-300 hover:bg-cyan-50 hover:text-black [clip-path:polygon(15px_0,100%_0,100%_calc(100%-15px),calc(100%-15px)_100%,0_100%,0_15px)] border-t-2 border-b-2 border-cyan-500 hover:shadow-[0_0_30px_rgba(34,211,238,0.4)]">
-                            <i class="fa-regular fa-envelope text-lg group-hover/btn:text-black transition-colors"></i> 
-                            <span>Direct Email</span>
-                            <span class="absolute top-1 left-2 text-[8px] opacity-50 font-mono">_02</span>
+                        <!-- Email Button (Official Gmail Colors on Hover) -->
+                        <a href="mailto:iarafin010@gmail.com" class="relative group/btn inline-flex items-center justify-center gap-3 bg-transparent text-cyan-400 px-8 py-4 font-mono font-bold uppercase tracking-widest text-xs transition-all duration-500 [clip-path:polygon(15px_0,100%_0,100%_calc(100%-15px),calc(100%-15px)_100%,0_100%,0_15px)] border-t-2 border-b-2 border-cyan-500 hover:border-transparent hover:shadow-[0_0_40px_rgba(234,67,53,0.4)] z-10 overflow-hidden">
+                            
+                            <!-- 4-Color Official Email Gradient Background -->
+                            <div class="absolute inset-0 bg-[linear-gradient(90deg,#4285F4,#EA4335,#FBBC05,#34A853)] opacity-0 group-hover/btn:opacity-100 transition-all duration-500 z-0"></div>
+                            
+                            <!-- Content Area -->
+                            <i class="fa-regular fa-envelope text-lg relative z-10 group-hover/btn:text-white transition-colors duration-300"></i> 
+                            <span class="relative z-10 group-hover/btn:text-white transition-colors duration-300 drop-shadow-md">Direct Email</span>
+                            <span class="absolute top-1 left-2 text-[8px] opacity-50 font-mono relative z-10 group-hover/btn:text-white/80 transition-colors duration-300">_02</span>
                         </a>
                         
                     </div>
@@ -717,6 +812,25 @@
                     });
                 });
             });
+
+            // Mobile Menu Toggle Logic
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.nav-link-mobile');
+
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    mobileMenu.classList.toggle('flex');
+                });
+
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenu.classList.remove('flex');
+                    });
+                });
+            }
         });
     </script>
 </body>
