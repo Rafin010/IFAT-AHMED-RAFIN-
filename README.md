@@ -1,2 +1,2 @@
 # IFAT-AHMED-RAFIN-
-[Web Site LINK](https://iarafin.netlify.app/)
+[WebSite LINK](https://iarafin.netlify.app/)
