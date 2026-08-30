@@ -92,7 +92,7 @@
                     <input 
                         type="password" 
                         id="auth-passkey" 
-                        placeholder="Enter Admin PIN (Default: 0100)" 
+                        placeholder="Enter Security Passkey" 
                         required 
                         autofocus
                         class="w-full bg-[#060A14] border border-white/15 focus:border-sunsetRuby text-white text-center tracking-[0.3em] font-mono text-lg rounded-xl py-3.5 px-4 outline-none transition-all shadow-inner"
@@ -109,7 +109,7 @@
             </form>
 
             <div class="mt-6 pt-4 border-t border-white/5 flex justify-between items-center text-[10px] font-mono text-gray-500">
-                <span>Default PIN: <strong class="text-gray-300">0100</strong></span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-emerald-400"></i> SHA-256 Auth Shield</span>
                 <a href="index.html" class="text-sunsetRuby hover:underline">Return to Site</a>
             </div>
         </div>
@@ -349,7 +349,44 @@
             </div>
 
             <!-- TAB 6: BACKUP & DATA -->
-            <div id="section-backup" class="tab-content hidden">
+            <div id="section-backup" class="tab-content hidden space-y-8">
+                <!-- Security & Password Management Card -->
+                <div class="glass-panel p-8 rounded-3xl max-w-2xl mx-auto space-y-6 text-left border border-sunsetRuby/30 shadow-[0_0_30px_rgba(244,63,94,0.15)]">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-sunsetRuby/20 border border-sunsetRuby/40 flex items-center justify-center text-sunsetRuby">
+                            <i class="fa-solid fa-key text-base"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-display font-bold text-lg text-white">Security & Passkey Manager</h3>
+                            <p class="text-xs text-gray-400">Update your 256-bit encrypted admin access passkey.</p>
+                        </div>
+                    </div>
+
+                    <form onsubmit="handleUpdatePasskey(event)" class="space-y-4 pt-2">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-mono uppercase text-gray-400 mb-1.5">New Security Passkey</label>
+                                <input type="password" id="new-passkey" required placeholder="Enter new password..." class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-sunsetRuby outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-mono uppercase text-gray-400 mb-1.5">Confirm New Passkey</label>
+                                <input type="password" id="confirm-passkey" required placeholder="Confirm new password..." class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-sunsetRuby outline-none">
+                            </div>
+                        </div>
+
+                        <div id="pwd-msg" class="hidden text-xs font-mono py-2 px-3 rounded-lg"></div>
+
+                        <div class="flex justify-between items-center pt-2">
+                            <span class="text-[11px] font-mono text-gray-500 flex items-center gap-1.5">
+                                <i class="fa-solid fa-lock text-emerald-400"></i> Encrypted with SHA-256
+                            </span>
+                            <button type="submit" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyberViolet to-sunsetRuby text-white font-mono font-bold text-xs uppercase shadow-lg transition hover:scale-105">
+                                Update Passkey
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
                 <div class="glass-panel p-8 rounded-3xl max-w-2xl mx-auto space-y-6 text-center">
                     <div class="w-16 h-16 rounded-2xl bg-cyberViolet/20 border border-cyberViolet/40 flex items-center justify-center text-cyberViolet mx-auto">
                         <i class="fa-solid fa-database text-2xl"></i>
@@ -510,8 +547,17 @@
 
     <!-- JAVASCRIPT CONTROLLER -->
     <script>
-        const AUTH_PASSKEY = "0100";
+        // 256-Bit Cryptographic Hash of default passkey (163264)
+        const DEFAULT_AUTH_HASH = "74c406aa2f240fd0618981018c7af3477461a292efb78dc4eaca15c9c82bd623";
         const STORAGE_KEY = "rafin_portfolio_data";
+        const PWD_STORAGE_KEY = "rafin_admin_pwd_hash";
+
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
 
         // Default baseline portfolio data
         const defaultPortfolioData = {
@@ -796,11 +842,14 @@
             renderAll();
         }
 
-        // Authentication Handler
-        function handleAuth(e) {
+        // Authentication Handler with 256-Bit SHA-256 Verification
+        async function handleAuth(e) {
             e.preventDefault();
-            const pin = document.getElementById('auth-passkey').value;
-            if (pin === AUTH_PASSKEY) {
+            const pin = document.getElementById('auth-passkey').value.trim();
+            const enteredHash = await sha256(pin);
+            const validHash = localStorage.getItem(PWD_STORAGE_KEY) || DEFAULT_AUTH_HASH;
+
+            if (enteredHash === validHash) {
                 sessionStorage.setItem('rafin_admin_auth', 'true');
                 document.getElementById('auth-modal').classList.add('hidden');
                 document.getElementById('admin-app').classList.remove('hidden');
@@ -808,6 +857,42 @@
             } else {
                 document.getElementById('auth-error').classList.remove('hidden');
             }
+        }
+
+        // Change Admin Passkey Handler
+        async function handleUpdatePasskey(e) {
+            e.preventDefault();
+            const newPass = document.getElementById('new-passkey').value.trim();
+            const confPass = document.getElementById('confirm-passkey').value.trim();
+            const msgEl = document.getElementById('pwd-msg');
+
+            if (!newPass) {
+                msgEl.className = "text-xs font-mono py-2 px-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400";
+                msgEl.textContent = "Please enter a valid passkey.";
+                msgEl.classList.remove('hidden');
+                return;
+            }
+
+            if (newPass !== confPass) {
+                msgEl.className = "text-xs font-mono py-2 px-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400";
+                msgEl.textContent = "Error: Passkeys do not match.";
+                msgEl.classList.remove('hidden');
+                return;
+            }
+
+            const newHash = await sha256(newPass);
+            localStorage.setItem(PWD_STORAGE_KEY, newHash);
+
+            document.getElementById('new-passkey').value = '';
+            document.getElementById('confirm-passkey').value = '';
+
+            msgEl.className = "text-xs font-mono py-2 px-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400";
+            msgEl.textContent = "✓ Passkey updated and encrypted successfully!";
+            msgEl.classList.remove('hidden');
+
+            setTimeout(() => {
+                msgEl.classList.add('hidden');
+            }, 4000);
         }
 
         function logoutAdmin() {
