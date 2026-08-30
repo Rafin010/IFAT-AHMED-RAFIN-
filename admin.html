@@ -452,8 +452,42 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-mono uppercase text-gray-400 mb-1">Thumbnail Image URL</label>
-                        <input type="text" id="proj-image" required class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-sunsetRuby outline-none" placeholder="https://i.ibb.co.com/... or img/filename.png">
+                        <label class="block text-xs font-mono uppercase text-gray-400 mb-1">Live Platform URL</label>
+                        <input type="url" id="proj-live" required class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-sunsetRuby outline-none" placeholder="https://example.com">
+                    </div>
+                </div>
+
+                <!-- Comprehensive Thumbnail Manager (Device Upload + Live Preview + URL Normalizer) -->
+                <div class="space-y-2 pt-1 bg-white/[0.02] p-3 rounded-2xl border border-white/10">
+                    <div class="flex justify-between items-center">
+                        <label class="block text-xs font-mono uppercase text-gray-300">Project Thumbnail Image</label>
+                        <span id="proj-img-status" class="text-[10px] font-mono text-gray-500">No image loaded</span>
+                    </div>
+
+                    <!-- Direct Device File Upload & URL Input Row -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <label class="flex flex-col items-center justify-center p-3 border-2 border-dashed border-white/15 hover:border-sunsetRuby/60 rounded-xl cursor-pointer bg-[#060A14] hover:bg-white/[0.04] transition group">
+                            <div class="flex items-center gap-2 text-gray-300 group-hover:text-sunsetRuby">
+                                <i class="fa-solid fa-cloud-arrow-up text-sm"></i>
+                                <span class="text-xs font-mono font-bold">Upload from Device</span>
+                            </div>
+                            <span class="text-[10px] text-gray-500 mt-0.5 font-sans">PNG, JPG, WEBP (Auto-optimized)</span>
+                            <input type="file" id="proj-file-input" accept="image/*" class="hidden" onchange="handleProjectImageUpload(event)">
+                        </label>
+
+                        <div class="flex flex-col justify-center">
+                            <span class="text-[10px] font-mono uppercase text-gray-400 mb-1">Or Direct Image URL:</span>
+                            <input type="text" id="proj-image" required oninput="handleProjectImageUrlInput(this.value)" class="w-full bg-[#060A14] border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:border-sunsetRuby outline-none font-mono" placeholder="https://i.ibb.co/... or img/name.png">
+                        </div>
+                    </div>
+
+                    <!-- Live Image Preview Box -->
+                    <div id="proj-preview-container" class="h-32 rounded-xl overflow-hidden bg-black/80 border border-white/10 relative flex items-center justify-center">
+                        <img id="proj-preview-img" src="" alt="Live Thumbnail Preview" class="w-full h-full object-cover hidden">
+                        <div id="proj-preview-placeholder" class="text-center p-3 text-gray-500 text-xs font-mono">
+                            <i class="fa-regular fa-image text-2xl mb-1 block opacity-40"></i>
+                            <span>Thumbnail preview will display here in real time</span>
+                        </div>
                     </div>
                 </div>
 
@@ -502,15 +536,9 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-mono uppercase text-gray-400 mb-1">Live Platform URL</label>
-                        <input type="url" id="proj-live" required class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-sunsetRuby outline-none" placeholder="https://example.com">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-mono uppercase text-gray-400 mb-1">GitHub URL (Optional)</label>
-                        <input type="url" id="proj-github" class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-sunsetRuby outline-none" placeholder="https://github.com/...">
-                    </div>
+                <div>
+                    <label class="block text-xs font-mono uppercase text-gray-400 mb-1">GitHub Repository URL (Optional)</label>
+                    <input type="url" id="proj-github" class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-sunsetRuby outline-none" placeholder="https://github.com/...">
                 </div>
 
                 <div>
@@ -544,21 +572,47 @@
                     <input type="text" id="cert-input-title" required class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-solarGold outline-none" placeholder="e.g. Google Cloud Certified Architect">
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-mono uppercase text-gray-400 mb-1">Image Path or URL</label>
-                        <input type="text" id="cert-input-image" required class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-solarGold outline-none" placeholder="img/filename.png">
+                <!-- Certificate Image Manager (Device Upload + Live Preview) -->
+                <div class="space-y-2 pt-1 bg-white/[0.02] p-3 rounded-2xl border border-white/10">
+                    <div class="flex justify-between items-center">
+                        <label class="block text-xs font-mono uppercase text-gray-300">Certificate Image / Proof</label>
+                        <span id="cert-img-status" class="text-[10px] font-mono text-gray-500">No image loaded</span>
                     </div>
-                    <div>
-                        <label class="block text-xs font-mono uppercase text-gray-400 mb-1">Authority Category</label>
-                        <select id="cert-input-category" class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-solarGold outline-none">
-                            <option value="google">Google & AI</option>
-                            <option value="kaggle">Kaggle Data Science</option>
-                            <option value="python">Python & Code</option>
-                            <option value="design">Creative & Design</option>
-                            <option value="other">Other Credential</option>
-                        </select>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <label class="flex flex-col items-center justify-center p-3 border-2 border-dashed border-white/15 hover:border-solarGold/60 rounded-xl cursor-pointer bg-[#060A14] hover:bg-white/[0.04] transition group">
+                            <div class="flex items-center gap-2 text-gray-300 group-hover:text-solarGold">
+                                <i class="fa-solid fa-cloud-arrow-up text-sm"></i>
+                                <span class="text-xs font-mono font-bold">Upload from Device</span>
+                            </div>
+                            <span class="text-[10px] text-gray-500 mt-0.5 font-sans">PNG, JPG, WEBP</span>
+                            <input type="file" id="cert-file-input" accept="image/*" class="hidden" onchange="handleCertImageUpload(event)">
+                        </label>
+
+                        <div class="flex flex-col justify-center">
+                            <span class="text-[10px] font-mono uppercase text-gray-400 mb-1">Or Path / URL:</span>
+                            <input type="text" id="cert-input-image" required oninput="handleCertImageUrlInput(this.value)" class="w-full bg-[#060A14] border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:border-solarGold outline-none font-mono" placeholder="img/name.png or https://...">
+                        </div>
                     </div>
+
+                    <div id="cert-preview-container" class="h-28 rounded-xl overflow-hidden bg-black/80 border border-white/10 relative flex items-center justify-center">
+                        <img id="cert-preview-img" src="" alt="Certificate Preview" class="w-full h-full object-contain hidden">
+                        <div id="cert-preview-placeholder" class="text-center p-2 text-gray-500 text-xs font-mono">
+                            <i class="fa-regular fa-image text-xl mb-1 block opacity-40"></i>
+                            <span>Certificate preview will display here</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-mono uppercase text-gray-400 mb-1">Authority Category</label>
+                    <select id="cert-input-category" class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-solarGold outline-none">
+                        <option value="google">Google & AI</option>
+                        <option value="kaggle">Kaggle Data Science</option>
+                        <option value="python">Python & Code</option>
+                        <option value="design">Creative & Design</option>
+                        <option value="other">Other Credential</option>
+                    </select>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
@@ -1180,6 +1234,125 @@
             });
         }
 
+        // SMART IMAGE URL NORMALIZER & CDN FALLBACK HANDLER
+        function cleanImageUrl(url) {
+            if (!url) return '';
+            let cleaned = url.trim();
+
+            // Handle base64 Data URLs directly
+            if (cleaned.startsWith('data:image/')) return cleaned;
+
+            // Fix ibb.co.com typo
+            cleaned = cleaned.replace(/ibb\.co\.com/g, 'ibb.co');
+
+            // Convert Google Drive view URL to direct image stream
+            if (cleaned.includes('drive.google.com/file/d/')) {
+                const match = cleaned.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                if (match && match[1]) {
+                    return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+                }
+            }
+
+            // Convert Imgur page URL to direct image URL
+            if (cleaned.includes('imgur.com/') && !cleaned.includes('i.imgur.com')) {
+                const parts = cleaned.split('/');
+                const id = parts[parts.length - 1].replace(/\.(jpg|png|gif|jpeg|webp)/i, '');
+                return `https://i.imgur.com/${id}.jpg`;
+            }
+
+            // Convert GitHub blob URL to raw URL
+            if (cleaned.includes('github.com') && cleaned.includes('/blob/')) {
+                cleaned = cleaned.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/');
+            }
+
+            return cleaned;
+        }
+
+        // AUTO-OPTIMIZING DEVICE IMAGE UPLOADER (Converts to Web-Optimized Base64)
+        function compressAndLoadImage(file, callback) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+                    const maxDim = 1200;
+
+                    if (width > maxDim || height > maxDim) {
+                        if (width > height) {
+                            height = Math.round((height * maxDim) / width);
+                            width = maxDim;
+                        } else {
+                            width = Math.round((width * maxDim) / height);
+                            height = maxDim;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    // Export as JPEG compressed base64 (quality: 0.85)
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+                    callback(dataUrl);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Project Image Upload & Live Preview
+        function handleProjectImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const statusEl = document.getElementById('proj-img-status');
+            if (statusEl) statusEl.innerHTML = `<span class="text-solarGold"><i class="fa-solid fa-spinner fa-spin"></i> Optimizing image...</span>`;
+
+            compressAndLoadImage(file, (dataUrl) => {
+                document.getElementById('proj-image').value = dataUrl;
+                updateProjectImagePreview(dataUrl);
+                if (statusEl) statusEl.innerHTML = `<span class="text-emerald-400 font-bold"><i class="fa-solid fa-circle-check"></i> Device Image Loaded</span>`;
+            });
+        }
+
+        function handleProjectImageUrlInput(val) {
+            const cleaned = cleanImageUrl(val);
+            updateProjectImagePreview(cleaned);
+        }
+
+        function updateProjectImagePreview(url) {
+            const previewImg = document.getElementById('proj-preview-img');
+            const placeholder = document.getElementById('proj-preview-placeholder');
+            const statusEl = document.getElementById('proj-img-status');
+
+            if (!url || url.trim() === '') {
+                previewImg.classList.add('hidden');
+                placeholder.classList.remove('hidden');
+                if (statusEl) statusEl.innerHTML = `<span class="text-gray-500">No image loaded</span>`;
+                return;
+            }
+
+            previewImg.src = url;
+            previewImg.onload = function() {
+                previewImg.classList.remove('hidden');
+                placeholder.classList.add('hidden');
+                if (statusEl) statusEl.innerHTML = `<span class="text-emerald-400 font-bold"><i class="fa-solid fa-circle-check"></i> Valid Image Preview Ready</span>`;
+            };
+            previewImg.onerror = function() {
+                previewImg.classList.add('hidden');
+                placeholder.classList.remove('hidden');
+                placeholder.innerHTML = `
+                    <i class="fa-solid fa-triangle-exclamation text-xl text-rose-400 mb-1 block"></i>
+                    <span class="text-rose-400 font-semibold">Image failed to load</span>
+                    <span class="block text-[10px] text-gray-400 mt-1">Click "Upload from Device" above or check your URL.</span>
+                `;
+                if (statusEl) statusEl.innerHTML = `<span class="text-rose-400 font-bold"><i class="fa-solid fa-circle-xmark"></i> Broken Image Link</span>`;
+            };
+        }
+
         // Project Modal & Actions
         function openAddProjectModal() {
             document.getElementById('project-modal-title').textContent = "Add New Project";
@@ -1193,6 +1366,7 @@
             
             selectedTechList = [];
             renderSelectedTechTags();
+            updateProjectImagePreview("");
 
             document.getElementById('project-modal').classList.remove('hidden');
             document.getElementById('project-modal').classList.add('flex');
@@ -1217,6 +1391,7 @@
                 selectedTechList = [];
             }
             renderSelectedTechTags();
+            updateProjectImagePreview(proj.image);
 
             document.getElementById('project-modal').classList.remove('hidden');
             document.getElementById('project-modal').classList.add('flex');
@@ -1238,14 +1413,17 @@
                 return;
             }
 
+            const rawImg = document.getElementById('proj-image').value.trim();
+            const cleanedImg = cleanImageUrl(rawImg);
+
             const projectObj = {
-                title: document.getElementById('proj-title').value,
+                title: document.getElementById('proj-title').value.trim(),
                 category: document.getElementById('proj-category').value,
                 tech: techVal,
-                image: document.getElementById('proj-image').value,
-                live_url: document.getElementById('proj-live').value,
-                github_url: document.getElementById('proj-github').value,
-                desc: document.getElementById('proj-desc').value
+                image: cleanedImg,
+                live_url: document.getElementById('proj-live').value.trim(),
+                github_url: document.getElementById('proj-github').value.trim(),
+                desc: document.getElementById('proj-desc').value.trim()
             };
 
             if (index >= 0) {
@@ -1459,6 +1637,56 @@
             });
         }
 
+        // Certificate Image Upload & Live Preview
+        function handleCertImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const statusEl = document.getElementById('cert-img-status');
+            if (statusEl) statusEl.innerHTML = `<span class="text-solarGold"><i class="fa-solid fa-spinner fa-spin"></i> Optimizing certificate proof...</span>`;
+
+            compressAndLoadImage(file, (dataUrl) => {
+                document.getElementById('cert-input-image').value = dataUrl;
+                updateCertImagePreview(dataUrl);
+                if (statusEl) statusEl.innerHTML = `<span class="text-emerald-400 font-bold"><i class="fa-solid fa-circle-check"></i> Certificate Proof Loaded</span>`;
+            });
+        }
+
+        function handleCertImageUrlInput(val) {
+            const cleaned = cleanImageUrl(val);
+            updateCertImagePreview(cleaned);
+        }
+
+        function updateCertImagePreview(url) {
+            const previewImg = document.getElementById('cert-preview-img');
+            const placeholder = document.getElementById('cert-preview-placeholder');
+            const statusEl = document.getElementById('cert-img-status');
+
+            if (!url || url.trim() === '') {
+                previewImg.classList.add('hidden');
+                placeholder.classList.remove('hidden');
+                if (statusEl) statusEl.innerHTML = `<span class="text-gray-500">No image loaded</span>`;
+                return;
+            }
+
+            previewImg.src = url;
+            previewImg.onload = function() {
+                previewImg.classList.remove('hidden');
+                placeholder.classList.add('hidden');
+                if (statusEl) statusEl.innerHTML = `<span class="text-emerald-400 font-bold"><i class="fa-solid fa-circle-check"></i> Valid Proof Preview Ready</span>`;
+            };
+            previewImg.onerror = function() {
+                previewImg.classList.add('hidden');
+                placeholder.classList.remove('hidden');
+                placeholder.innerHTML = `
+                    <i class="fa-solid fa-triangle-exclamation text-xl text-rose-400 mb-1 block"></i>
+                    <span class="text-rose-400 font-semibold">Image failed to load</span>
+                    <span class="block text-[10px] text-gray-400 mt-1">Upload from device or verify the URL/path.</span>
+                `;
+                if (statusEl) statusEl.innerHTML = `<span class="text-rose-400 font-bold"><i class="fa-solid fa-circle-xmark"></i> Broken Image URL</span>`;
+            };
+        }
+
         function openAddCertModal() {
             document.getElementById('cert-form-title').textContent = "Add New Certificate";
             document.getElementById('cert-edit-index').value = "-1";
@@ -1467,6 +1695,7 @@
             document.getElementById('cert-input-category').value = "google";
             document.getElementById('cert-input-issuer').value = "Google Cloud";
             document.getElementById('cert-input-skills').value = "";
+            updateCertImagePreview("");
             document.getElementById('cert-modal-form').classList.remove('hidden');
             document.getElementById('cert-modal-form').classList.add('flex');
         }
@@ -1481,6 +1710,7 @@
             document.getElementById('cert-input-category').value = cert.category || "google";
             document.getElementById('cert-input-issuer').value = cert.issuer || "Verified Credential";
             document.getElementById('cert-input-skills').value = cert.skills || "";
+            updateCertImagePreview(cert.image);
             document.getElementById('cert-modal-form').classList.remove('hidden');
             document.getElementById('cert-modal-form').classList.add('flex');
         }
@@ -1495,9 +1725,12 @@
             const data = getData();
             const index = parseInt(document.getElementById('cert-edit-index').value);
 
+            const rawImg = document.getElementById('cert-input-image').value.trim();
+            const cleanedImg = cleanImageUrl(rawImg);
+
             const certObj = {
                 title: document.getElementById('cert-input-title').value.trim(),
-                image: document.getElementById('cert-input-image').value.trim(),
+                image: cleanedImg,
                 category: document.getElementById('cert-input-category').value,
                 issuer: document.getElementById('cert-input-issuer').value.trim(),
                 skills: document.getElementById('cert-input-skills').value.trim(),
