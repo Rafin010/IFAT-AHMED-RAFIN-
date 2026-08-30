@@ -8,3 +8,4 @@ backend/.pytest_cache/
 backend/portfolio.db
 *.pyc
 .DS_Store
+.vercel

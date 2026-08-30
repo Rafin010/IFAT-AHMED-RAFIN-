@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYS.ADMIN // Command Center - Ifat Ahmed Rafin</title>
+    
+    <!-- Browser Favicon (User Portrait) -->
+    <link rel="icon" type="image/png" href="img/rafin-portrait.png">
+    <link rel="shortcut icon" type="image/png" href="img/rafin-portrait.png">
+    <link rel="apple-touch-icon" href="img/rafin-portrait.png">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Syne, Plus Jakarta Sans, JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=JetBrains+Mono:wght@300;400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['Syne', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        voidBg: '#020408',
+                        cyberViolet: '#8B5CF6',
+                        sunsetRuby: '#F43F5E',
+                        solarGold: '#F59E0B',
+                        neonCyan: '#00F0FF',
+                        darkSurface: '#060A14',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #020408;
+            color: #e2e8f0;
+            font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+        }
+
+        .glass-panel {
+            background: linear-gradient(135deg, rgba(12, 17, 30, 0.8) 0%, rgba(4, 7, 14, 0.95) 100%);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+        }
+
+        .btn-cut {
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+        }
+
+        .text-gradient-cosmic {
+            background: linear-gradient(135deg, #8B5CF6, #F43F5E, #F59E0B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #020408; }
+        ::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.3); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #F43F5E; }
+    </style>
+</head>
+<body class="min-h-screen selection:bg-sunsetRuby selection:text-white flex flex-col">
+
+    <!-- AUTHENTICATION LOCK SCREEN MODAL -->
+    <div id="auth-modal" class="fixed inset-0 z-[100] bg-[#020408]/98 backdrop-blur-2xl flex items-center justify-center p-4">
+        <div class="glass-panel p-8 sm:p-10 rounded-3xl max-w-md w-full border border-cyberViolet/30 text-center relative shadow-[0_0_80px_rgba(139,92,246,0.25)]">
+            
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyberViolet/20 to-sunsetRuby/20 border border-sunsetRuby/40 flex items-center justify-center text-sunsetRuby mx-auto mb-6 shadow-[0_0_30px_rgba(244,63,94,0.3)]">
+                <i class="fa-solid fa-shield-halved text-2xl"></i>
+            </div>
+
+            <div class="text-[10px] font-mono tracking-widest text-sunsetRuby uppercase mb-2">SYS.ACCESS // ENCRYPTED</div>
+            <h2 class="font-display font-extrabold text-2xl text-white mb-2">Admin Command Center</h2>
+            <p class="text-xs text-gray-400 font-sans mb-8">Enter your security passkey to access portfolio management.</p>
+
+            <form id="auth-form" onsubmit="handleAuth(event)" class="space-y-5">
+                <div class="relative">
+                    <input 
+                        type="password" 
+                        id="auth-passkey" 
+                        placeholder="Enter Admin PIN (Default: 0100)" 
+                        required 
+                        autofocus
+                        class="w-full bg-[#060A14] border border-white/15 focus:border-sunsetRuby text-white text-center tracking-[0.3em] font-mono text-lg rounded-xl py-3.5 px-4 outline-none transition-all shadow-inner"
+                    >
+                </div>
+                
+                <div id="auth-error" class="hidden text-xs font-mono text-rose-400 bg-rose-500/10 border border-rose-500/20 py-2 rounded-lg">
+                    <i class="fa-solid fa-triangle-exclamation mr-1"></i> Access Denied: Invalid Security Passkey
+                </div>
+
+                <button type="submit" class="w-full bg-gradient-to-r from-cyberViolet to-sunsetRuby hover:from-sunsetRuby hover:to-solarGold text-white font-display font-bold py-3.5 rounded-xl uppercase tracking-widest text-xs transition-all shadow-lg hover:shadow-[0_0_25px_rgba(244,63,94,0.5)]">
+                    Authenticate & Enter
+                </button>
+            </form>
+
+            <div class="mt-6 pt-4 border-t border-white/5 flex justify-between items-center text-[10px] font-mono text-gray-500">
+                <span>Default PIN: <strong class="text-gray-300">0100</strong></span>
+                <a href="index.html" class="text-sunsetRuby hover:underline">Return to Site</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN ADMIN INTERFACE -->
+    <div id="admin-app" class="hidden min-h-screen flex flex-col">
+        
+        <!-- TOP APP BAR -->
+        <header class="border-b border-white/10 bg-[#060A14]/90 backdrop-blur-md sticky top-0 z-40 px-6 py-4">
+            <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
+                
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyberViolet/20 to-sunsetRuby/20 border border-sunsetRuby/40 flex items-center justify-center text-sunsetRuby shadow-[0_0_15px_rgba(244,63,94,0.3)]">
+                        <i class="fa-solid fa-sliders text-base"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-display font-bold text-lg text-white">
+                            SYS.ADMIN // <span class="text-gradient-cosmic">RAFİN</span>
+                        </h1>
+                        <div class="text-[10px] font-mono text-emerald-400 flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span>LIVE ENGINE SYNC ACTIVE</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="index.html" target="_blank" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-gray-300 hover:text-white flex items-center gap-2 transition">
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                        <span>View Live Portfolio</span>
+                    </a>
+                    
+                    <button onclick="logoutAdmin()" class="px-4 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-xs font-mono text-rose-300 transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-lock text-[10px]"></i>
+                        <span>Lock Terminal</span>
+                    </button>
+                </div>
+
+            </div>
+        </header>
+
+        <!-- DASHBOARD CONTAINER -->
+        <div class="max-w-7xl mx-auto w-full px-6 py-8 flex-grow">
+            
+            <!-- TABS NAVIGATION -->
+            <div class="flex flex-wrap gap-2 mb-8 border-b border-white/10 pb-4">
+                <button onclick="switchTab('overview')" id="tab-overview" class="admin-tab active px-5 py-2.5 rounded-xl font-mono text-xs uppercase tracking-wider font-bold bg-gradient-to-r from-cyberViolet to-sunsetRuby text-white shadow-lg transition">
+                    <i class="fa-solid fa-chart-pie mr-2"></i> Overview
+                </button>
+                <button onclick="switchTab('projects')" id="tab-projects" class="admin-tab px-5 py-2.5 rounded-xl font-mono text-xs uppercase tracking-wider font-bold bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition">
+                    <i class="fa-solid fa-rocket mr-2"></i> Projects (<span id="count-projects">7</span>)
+                </button>
+                <button onclick="switchTab('skills')" id="tab-skills" class="admin-tab px-5 py-2.5 rounded-xl font-mono text-xs uppercase tracking-wider font-bold bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition">
+                    <i class="fa-solid fa-cubes mr-2"></i> Tech Stack (<span id="count-skills">19</span>)
+                </button>
+                <button onclick="switchTab('certificates')" id="tab-certificates" class="admin-tab px-5 py-2.5 rounded-xl font-mono text-xs uppercase tracking-wider font-bold bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition">
+                    <i class="fa-solid fa-award mr-2"></i> Certificates (<span id="count-certificates">8</span>)
+                </button>
+                <button onclick="switchTab('profile')" id="tab-profile" class="admin-tab px-5 py-2.5 rounded-xl font-mono text-xs uppercase tracking-wider font-bold bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition">
+                    <i class="fa-solid fa-user-gear mr-2"></i> Profile & Contact
+                </button>
+                <button onclick="switchTab('backup')" id="tab-backup" class="admin-tab px-5 py-2.5 rounded-xl font-mono text-xs uppercase tracking-wider font-bold bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition">
+                    <i class="fa-solid fa-database mr-2"></i> Backup & Export
+                </button>
+            </div>
+
+            <!-- TAB 1: OVERVIEW -->
+            <div id="section-overview" class="tab-content space-y-8">
+                
+                <!-- KPI Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                    <div class="glass-panel p-6 rounded-2xl border-l-4 border-sunsetRuby">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs font-mono uppercase text-gray-400">Total Deployments</span>
+                            <i class="fa-solid fa-rocket text-sunsetRuby text-lg"></i>
+                        </div>
+                        <div class="font-display font-extrabold text-3xl text-white" id="kpi-projects">7</div>
+                        <div class="text-[11px] font-mono text-emerald-400 mt-2">All Live & Filtered</div>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl border-l-4 border-cyberViolet">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs font-mono uppercase text-gray-400">Tech Stack Matrix</span>
+                            <i class="fa-solid fa-cubes text-cyberViolet text-lg"></i>
+                        </div>
+                        <div class="font-display font-extrabold text-3xl text-white" id="kpi-skills">19</div>
+                        <div class="text-[11px] font-mono text-cyberViolet mt-2">6 Enterprise Categories</div>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl border-l-4 border-solarGold">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs font-mono uppercase text-gray-400">Verified Credentials</span>
+                            <i class="fa-solid fa-award text-solarGold text-lg"></i>
+                        </div>
+                        <div class="font-display font-extrabold text-3xl text-white" id="kpi-certificates">8</div>
+                        <div class="text-[11px] font-mono text-solarGold mt-2">Google & Kaggle Validated</div>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl border-l-4 border-emerald-400">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs font-mono uppercase text-gray-400">System Health</span>
+                            <i class="fa-solid fa-heart-pulse text-emerald-400 text-lg"></i>
+                        </div>
+                        <div class="font-display font-extrabold text-3xl text-white">99.9%</div>
+                        <div class="text-[11px] font-mono text-emerald-400 mt-2">Realtime Storage Engine</div>
+                    </div>
+                </div>
+
+                <!-- Quick Action Buttons -->
+                <div class="glass-panel p-8 rounded-3xl">
+                    <h3 class="font-display font-bold text-xl text-white mb-2">Quick Actions</h3>
+                    <p class="text-xs text-gray-400 mb-6 font-light">Direct shortcuts to add new content to your live portfolio.</p>
+                    
+                    <div class="flex flex-wrap gap-4">
+                        <button onclick="openAddProjectModal()" class="px-6 py-3 rounded-xl bg-sunsetRuby hover:bg-sunsetRuby/90 text-white font-mono text-xs uppercase font-bold flex items-center gap-2 shadow-lg transition">
+                            <i class="fa-solid fa-plus"></i> Upload New Project
+                        </button>
+                        <button onclick="switchTab('skills')" class="px-6 py-3 rounded-xl bg-cyberViolet hover:bg-cyberViolet/90 text-white font-mono text-xs uppercase font-bold flex items-center gap-2 shadow-lg transition">
+                            <i class="fa-solid fa-code"></i> Add Tech Skill
+                        </button>
+                        <button onclick="openAddCertModal()" class="px-6 py-3 rounded-xl bg-solarGold hover:bg-solarGold/90 text-black font-mono text-xs uppercase font-bold flex items-center gap-2 shadow-lg transition">
+                            <i class="fa-solid fa-certificate"></i> Add Certificate
+                        </button>
+                        <button onclick="switchTab('profile')" class="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/15 text-white font-mono text-xs uppercase font-bold flex items-center gap-2 transition">
+                            <i class="fa-solid fa-pen-to-square"></i> Edit Bio & Links
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- TAB 2: PROJECTS MANAGER -->
+            <div id="section-projects" class="tab-content hidden space-y-6">
+                <div class="flex flex-wrap justify-between items-center gap-4">
+                    <div>
+                        <h2 class="font-display font-bold text-2xl text-white">Live Deployments & Projects</h2>
+                        <p class="text-xs text-gray-400 font-light">Add, edit, or remove projects shown in the portfolio showcase.</p>
+                    </div>
+                    <button onclick="openAddProjectModal()" class="px-6 py-3 rounded-xl bg-gradient-to-r from-cyberViolet to-sunsetRuby text-white font-mono text-xs font-bold uppercase flex items-center gap-2 shadow-lg transition">
+                        <i class="fa-solid fa-plus"></i> Add New Project
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="admin-projects-grid">
+                    <!-- Projects Rendered via JavaScript -->
+                </div>
+            </div>
+
+            <!-- TAB 3: SKILLS MANAGER -->
+            <div id="section-skills" class="tab-content hidden space-y-6">
+                <div class="flex flex-wrap justify-between items-center gap-4">
+                    <div>
+                        <h2 class="font-display font-bold text-2xl text-white">Enterprise Tech Stack</h2>
+                        <p class="text-xs text-gray-400 font-light">Manage skills across all 6 architecture categories.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="admin-skills-grid">
+                    <!-- Categories Rendered via JavaScript -->
+                </div>
+            </div>
+
+            <!-- TAB 4: CERTIFICATES MANAGER -->
+            <div id="section-certificates" class="tab-content hidden space-y-6">
+                <div class="flex flex-wrap justify-between items-center gap-4">
+                    <div>
+                        <h2 class="font-display font-bold text-2xl text-white">Certificates & Awards</h2>
+                        <p class="text-xs text-gray-400 font-light">Manage your verified credentials and certificate awards.</p>
+                    </div>
+                    <button onclick="openAddCertModal()" class="px-6 py-3 rounded-xl bg-gradient-to-r from-solarGold to-sunsetRuby text-black font-mono text-xs font-bold uppercase flex items-center gap-2 shadow-lg transition">
+                        <i class="fa-solid fa-plus"></i> Add New Certificate
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="admin-certs-grid">
+                    <!-- Certificates Rendered via JavaScript -->
+                </div>
+            </div>
+
+            <!-- TAB 5: PROFILE & CONTACT -->
+            <div id="section-profile" class="tab-content hidden">
+                <div class="glass-panel p-8 rounded-3xl max-w-3xl mx-auto space-y-6">
+                    <h2 class="font-display font-bold text-2xl text-white">Profile & Contact Information</h2>
+                    <p class="text-xs text-gray-400 font-light">Update your personal bio, job title, WhatsApp number, and social links.</p>
+
+                    <form onsubmit="saveProfileChanges(event)" class="space-y-5">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-mono uppercase text-gray-400 mb-1.5">Full Name</label>
+                                <input type="text" id="prof-name" class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-sunsetRuby outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-mono uppercase text-gray-400 mb-1.5">Job Title</label>
+                                <input type="text" id="prof-title" class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-sunsetRuby outline-none">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-mono uppercase text-gray-400 mb-1.5">Hero Bio / Description</label>
+                            <textarea id="prof-bio" rows="3" class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-sunsetRuby outline-none"></textarea>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-mono uppercase text-gray-400 mb-1.5">WhatsApp Number (Direct Link Format)</label>
+                                <input type="text" id="prof-whatsapp" class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-sunsetRuby outline-none" placeholder="01870760751">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-mono uppercase text-gray-400 mb-1.5">Direct Email</label>
+                                <input type="email" id="prof-email" class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-sunsetRuby outline-none" placeholder="iarafin010@gmail.com">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-xs font-mono uppercase text-gray-400 mb-1.5">GitHub URL</label>
+                                <input type="text" id="prof-github" class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-sunsetRuby outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-mono uppercase text-gray-400 mb-1.5">LinkedIn URL</label>
+                                <input type="text" id="prof-linkedin" class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-sunsetRuby outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-mono uppercase text-gray-400 mb-1.5">Instagram URL</label>
+                                <input type="text" id="prof-instagram" class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-sunsetRuby outline-none">
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-white/10 flex justify-end">
+                            <button type="submit" class="px-8 py-3 rounded-xl bg-gradient-to-r from-cyberViolet to-sunsetRuby text-white font-mono font-bold text-xs uppercase shadow-lg transition hover:scale-105">
+                                Save Profile Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- TAB 6: BACKUP & DATA -->
+            <div id="section-backup" class="tab-content hidden">
+                <div class="glass-panel p-8 rounded-3xl max-w-2xl mx-auto space-y-6 text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-cyberViolet/20 border border-cyberViolet/40 flex items-center justify-center text-cyberViolet mx-auto">
+                        <i class="fa-solid fa-database text-2xl"></i>
+                    </div>
+
+                    <h2 class="font-display font-bold text-2xl text-white">Backup & Data Synchronization</h2>
+                    <p class="text-xs text-gray-400 font-light">Export your entire portfolio configuration as a JSON file or import a saved backup.</p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                        <button onclick="exportDataJSON()" class="p-6 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 flex flex-col items-center gap-3 transition">
+                            <i class="fa-solid fa-file-export text-2xl text-sunsetRuby"></i>
+                            <span class="font-display font-bold text-sm text-white">Export Data (JSON)</span>
+                            <span class="text-[10px] font-mono text-gray-400">Download backup file</span>
+                        </button>
+
+                        <label class="p-6 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 flex flex-col items-center gap-3 transition cursor-pointer">
+                            <i class="fa-solid fa-file-import text-2xl text-solarGold"></i>
+                            <span class="font-display font-bold text-sm text-white">Import Data (JSON)</span>
+                            <span class="text-[10px] font-mono text-gray-400">Restore from backup</span>
+                            <input type="file" id="import-file-input" accept=".json" onchange="importDataJSON(event)" class="hidden">
+                        </label>
+                    </div>
+
+                    <div class="pt-6 border-t border-white/10">
+                        <button onclick="resetToDefaults()" class="text-xs font-mono text-rose-400 hover:underline">
+                            <i class="fa-solid fa-rotate-left mr-1"></i> Reset All Data to Original Defaults
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ADD / EDIT PROJECT MODAL -->
+    <div id="project-modal" class="fixed inset-0 z-[110] hidden bg-black/90 backdrop-blur-xl items-center justify-center p-4">
+        <div class="glass-panel p-8 rounded-3xl max-w-2xl w-full border border-cyberViolet/30 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeProjectModal()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h3 class="font-display font-bold text-2xl text-white mb-2" id="project-modal-title">Add New Project</h3>
+            <p class="text-xs text-gray-400 mb-6 font-light">Fill in the project details below to publish directly to the live portfolio.</p>
+
+            <form onsubmit="handleSaveProject(event)" class="space-y-4">
+                <input type="hidden" id="proj-edit-index" value="-1">
+
+                <div>
+                    <label class="block text-xs font-mono uppercase text-gray-400 mb-1">Project Title</label>
+                    <input type="text" id="proj-title" required class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-sunsetRuby outline-none" placeholder="e.g. AI Content Suite">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-mono uppercase text-gray-400 mb-1">Category Filter</label>
+                        <select id="proj-category" class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-sunsetRuby outline-none">
+                            <option value="app">App / WebApp</option>
+                            <option value="web">Web Platform</option>
+                            <option value="software">Software / Script</option>
+                            <option value="landing">Landing Page</option>
+                            <option value="blockchain">Blockchain & Crypto</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-mono uppercase text-gray-400 mb-1">Thumbnail Image URL</label>
+                        <input type="text" id="proj-image" required class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-sunsetRuby outline-none" placeholder="https://i.ibb.co.com/... or img/filename.png">
+                    </div>
+                </div>
+
+                <!-- Interactive Multi-Select Tech Stack Picker -->
+                <div class="space-y-2.5 pt-1">
+                    <div class="flex justify-between items-center">
+                        <label class="block text-xs font-mono uppercase text-gray-400">Tech Stack Badges (Multi-Select with Logos)</label>
+                        <span class="text-[10px] font-mono text-sunsetRuby"><span id="selected-tech-count">0</span> Selected</span>
+                    </div>
+                    
+                    <!-- Selected Tags Viewer Box -->
+                    <div id="selected-tech-tags" class="min-h-[46px] p-2.5 bg-[#060A14] border border-white/15 rounded-xl flex flex-wrap gap-2 items-center">
+                        <span class="text-xs text-gray-500 font-mono italic">No technologies selected yet. Click presets below or add custom.</span>
+                    </div>
+
+                    <!-- Hidden Input to store combined string -->
+                    <input type="hidden" id="proj-tech" required>
+
+                    <!-- Presets Grid with Brand Icons -->
+                    <div class="pt-1">
+                        <span class="text-[10px] font-mono uppercase text-gray-500 block mb-1.5">Click to Add Presets:</span>
+                        <div class="flex flex-wrap gap-1.5" id="tech-presets-container"></div>
+                    </div>
+
+                    <!-- Custom Tech Stack Input -->
+                    <div class="flex gap-2 pt-1">
+                        <input type="text" id="custom-tech-input" placeholder="Add custom technology (e.g. Next.js, Redux, Solidity)..." class="flex-grow bg-[#060A14] border border-white/10 rounded-lg px-3 py-2 text-xs text-white outline-none focus:border-sunsetRuby">
+                        <button type="button" onclick="addCustomTechStack()" class="px-4 py-2 rounded-lg bg-cyberViolet hover:bg-cyberViolet/90 text-white font-mono text-xs font-bold">+ Add</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-mono uppercase text-gray-400 mb-1">Live Platform URL</label>
+                        <input type="url" id="proj-live" required class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-sunsetRuby outline-none" placeholder="https://example.com">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-mono uppercase text-gray-400 mb-1">GitHub URL (Optional)</label>
+                        <input type="url" id="proj-github" class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-sunsetRuby outline-none" placeholder="https://github.com/...">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-mono uppercase text-gray-400 mb-1">Short Description</label>
+                    <textarea id="proj-desc" required rows="3" class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-sunsetRuby outline-none" placeholder="Describe the architecture and features..."></textarea>
+                </div>
+
+                <div class="pt-4 flex justify-end gap-3">
+                    <button type="button" onclick="closeProjectModal()" class="px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-mono uppercase">Cancel</button>
+                    <button type="submit" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyberViolet to-sunsetRuby text-white text-xs font-mono uppercase font-bold shadow-lg">Save Project</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ADD / EDIT CERTIFICATE MODAL -->
+    <div id="cert-modal-form" class="fixed inset-0 z-[110] hidden bg-black/90 backdrop-blur-xl items-center justify-center p-4">
+        <div class="glass-panel p-8 rounded-3xl max-w-lg w-full border border-solarGold/30 relative">
+            <button onclick="closeCertFormModal()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h3 class="font-display font-bold text-2xl text-white mb-2" id="cert-form-title">Add Certificate</h3>
+            <p class="text-xs text-gray-400 mb-6 font-light">Add or edit verified certificate credentials.</p>
+
+            <form onsubmit="handleSaveCert(event)" class="space-y-4">
+                <input type="hidden" id="cert-edit-index" value="-1">
+
+                <div>
+                    <label class="block text-xs font-mono uppercase text-gray-400 mb-1">Certificate Title</label>
+                    <input type="text" id="cert-input-title" required class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-solarGold outline-none" placeholder="e.g. Google Cloud Certified Architect">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-mono uppercase text-gray-400 mb-1">Image Path or URL</label>
+                    <input type="text" id="cert-input-image" required class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-solarGold outline-none" placeholder="img/filename.png or https://...">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-mono uppercase text-gray-400 mb-1">Verification Issuer / Status</label>
+                    <input type="text" id="cert-input-issuer" required class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-solarGold outline-none" placeholder="e.g. Verified Credential">
+                </div>
+
+                <div class="pt-4 flex justify-end gap-3">
+                    <button type="button" onclick="closeCertFormModal()" class="px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-mono uppercase">Cancel</button>
+                    <button type="submit" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-solarGold to-sunsetRuby text-black text-xs font-mono uppercase font-bold shadow-lg">Save Certificate</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT CONTROLLER -->
+    <script>
+        const AUTH_PASSKEY = "0100";
+        const STORAGE_KEY = "rafin_portfolio_data";
+
+        // Default baseline portfolio data
+        const defaultPortfolioData = {
+            profile: {
+                name: "Ifat Ahmed Rafin",
+                headline: "Full-Stack Architect | AI Systems Builder",
+                bio: "Engineering intelligent web applications, robust databases, and scalable server architectures. Specializing in modern JS frameworks and Python ecosystems.",
+                whatsapp: "01870760751",
+                email: "iarafin010@gmail.com",
+                github: "https://github.com/Rafin010/",
+                linkedin: "https://www.linkedin.com/in/ifat-ahmed-rafin-056741360/",
+                instagram: "https://www.instagram.com/ia_rafin/",
+                photo: "img/rafin-portrait.png"
+            },
+            skills: [
+                {
+                    category: "Backend Arch",
+                    badge: "Core Engine",
+                    desc: "High-throughput microservices, REST APIs, and asynchronous message handlers.",
+                    skills: ["Node.js", "Python", "Django", "FastAPI"]
+                },
+                {
+                    category: "Frontend Matrix",
+                    badge: "Client Matrix",
+                    desc: "Ultra-responsive, accessible user interfaces with sleek interactive layouts.",
+                    skills: ["React.js", "JavaScript", "Tailwind CSS"]
+                },
+                {
+                    category: "Data Systems",
+                    badge: "Persistence",
+                    desc: "ACID-compliant relational storage, NoSQL documents, and optimized query plans.",
+                    skills: ["MongoDB", "PostgreSQL", "MySQL"]
+                },
+                {
+                    category: "Cloud & Ops",
+                    badge: "Infrastructure",
+                    desc: "Container orchestration, reverse proxies, and automated zero-downtime deployment.",
+                    skills: ["Ubuntu VPS", "Docker", "Nginx"]
+                },
+                {
+                    category: "Web & SEO",
+                    badge: "Protocols",
+                    desc: "Real-time bi-directional sockets, schema markup, and search engine optimization.",
+                    skills: ["JSON-LD", "WebSockets", "REST API"]
+                },
+                {
+                    category: "AI Integration",
+                    badge: "Intelligent Tech",
+                    desc: "Autonomous agentic workflows, prompt chaining, and LLM API integrations.",
+                    skills: ["LLM APIs", "Claude / Gemini", "Automation"]
+                },
+                {
+                    category: "Blockchain & Web3",
+                    badge: "Decentralized Arch",
+                    desc: "Smart contracts, decentralized applications (dApps), crypto APIs, and Web3 protocols.",
+                    skills: ["Solidity", "Smart Contracts", "Web3.js", "Crypto APIs", "DeFi Protocols"]
+                }
+            ],
+            projects: [
+                {
+                    title: "CINE-STREAM",
+                    category: "app",
+                    tech: "Node.js + React",
+                    image: "https://i.ibb.co.com/CppB1nd8/Screenshot-2026-05-01-201441.png",
+                    live_url: "https://cinestreamss.netlify.app/",
+                    desc: "CineStreams is a modern online streaming platform where users can explore and watch a wide collection of movies, TV shows, and trending entertainment content in one place."
+                },
+                {
+                    title: "SportyXi",
+                    category: "app",
+                    tech: "Python FastAPI + MySQL",
+                    image: "https://i.ibb.co.com/N6kVd60L/fgfg.png",
+                    live_url: "https://sportyxi.com",
+                    desc: "International sports streaming architecture with LL-HLS & AV1 integration for ultra-low latency broadcasting, resilient high-concurrency scaling, and real-time score pipelines."
+                },
+                {
+                    title: "FreeStore",
+                    category: "app",
+                    tech: "Django + PostgreSQL",
+                    image: "https://i.ibb.co.com/V0kwHvQM/free-Store-logo.png",
+                    live_url: "https://freedownloader.top",
+                    desc: "High-speed media extraction ecosystem. Fully optimized for deep technical SEO, asynchronous background task queues, and massive multi-tenant downloading bandwidth."
+                },
+                {
+                    title: "Facebook Videos Downloader",
+                    category: "app",
+                    tech: "Python",
+                    image: "https://i.ibb.co.com/zW23z8SL/Facebook-doanloader-BANADER.png",
+                    live_url: "https://f.freedownloader.top",
+                    desc: "Advanced Facebook media downloader with seamless integration. Supports high-speed 4K video extraction, audio stream demuxing, and instant file delivery."
+                },
+                {
+                    title: "YouTube Videos Downloader",
+                    category: "app",
+                    tech: "Python",
+                    image: "https://i.ibb.co.com/m5QNVT8R/You-Tube-Bander.png",
+                    live_url: "https://y.freedownloader.top",
+                    desc: "Advanced YouTube media downloader with seamless integration. Supports high-speed 4K/8K video extraction, bitrate negotiation, and MP3 audio conversion."
+                },
+                {
+                    title: "Instagram Videos Downloader",
+                    category: "app",
+                    tech: "Python",
+                    image: "https://i.ibb.co.com/3Ysf5Bdy/Instagram-Banare.png",
+                    live_url: "https://i.freedownloader.top",
+                    desc: "Advanced Instagram media downloader with seamless integration. Supports high-speed Reels, Carousel posts, and Stories extraction without quality degradation."
+                },
+                {
+                    title: "TikTok Videos Downloader",
+                    category: "app",
+                    tech: "Python",
+                    image: "https://i.ibb.co.com/N2DrJ4Ln/tiktok-bannar.png",
+                    live_url: "https://t.freedownloader.top",
+                    desc: "Advanced TikTok media downloader with watermark-free extraction, HD resolution retention, and instant multi-CDN streaming pipeline."
+                }
+            ],
+            certificates: [
+                {
+                    title: "Advanced Python Programming",
+                    image: "img/Python programin live - eshokn.png",
+                    issuer: "Verified Credential"
+                },
+                {
+                    title: "AI Agents Intensive Course with Google",
+                    image: "img/5-Day AI Agents Intensive Course with Google.png",
+                    issuer: "Verified Credential"
+                },
+                {
+                    title: "Code Forker Certification with Kaggle",
+                    image: "img/Code Forker.png",
+                    issuer: "Verified Credential"
+                },
+                {
+                    title: "Vampire Certification",
+                    image: "img/Vampire.png",
+                    issuer: "Verified Credential"
+                },
+                {
+                    title: "Kaggle Community Member",
+                    image: "img/Kaggle Community Member.png",
+                    issuer: "Verified Credential"
+                },
+                {
+                    title: "Python Coder Certificate With Kaggle",
+                    image: "img/Python Coder.png",
+                    issuer: "Verified Credential"
+                },
+                {
+                    title: "Advanced Content Creation With AI",
+                    image: "img/Advanced Content Creation With AI.jpg",
+                    issuer: "Verified Credential"
+                },
+                {
+                    title: "Advanced Creative Design Mastery",
+                    image: "img/Advanced Creative Design Mastery.jpg",
+                    issuer: "Verified Credential"
+                }
+            ]
+        };
+
+        // TECH STACK PRESETS WITH ICONS
+        const TECH_PRESETS = [
+            { name: "React.js", icon: "fa-brands fa-react", color: "text-cyan-400" },
+            { name: "Node.js", icon: "fa-brands fa-node-js", color: "text-emerald-400" },
+            { name: "Python", icon: "fa-brands fa-python", color: "text-yellow-400" },
+            { name: "FastAPI", icon: "fa-solid fa-bolt", color: "text-emerald-400" },
+            { name: "Django", icon: "fa-solid fa-leaf", color: "text-green-500" },
+            { name: "Tailwind CSS", icon: "fa-solid fa-wind", color: "text-cyan-400" },
+            { name: "Three.js", icon: "fa-solid fa-cubes", color: "text-purple-400" },
+            { name: "Docker", icon: "fa-brands fa-docker", color: "text-blue-400" },
+            { name: "PostgreSQL", icon: "fa-solid fa-database", color: "text-blue-300" },
+            { name: "MongoDB", icon: "fa-solid fa-cube", color: "text-green-400" },
+            { name: "MySQL", icon: "fa-solid fa-database", color: "text-orange-400" },
+            { name: "Solidity", icon: "fa-brands fa-ethereum", color: "text-indigo-400" },
+            { name: "Smart Contracts", icon: "fa-solid fa-link", color: "text-amber-400" },
+            { name: "Web3.js", icon: "fa-solid fa-coins", color: "text-indigo-400" },
+            { name: "Crypto APIs", icon: "fa-brands fa-bitcoin", color: "text-yellow-500" },
+            { name: "AI / LLM APIs", icon: "fa-solid fa-brain", color: "text-rose-400" },
+            { name: "WebSockets", icon: "fa-solid fa-network-wired", color: "text-cyan-300" }
+        ];
+
+        let selectedTechList = [];
+
+        function getTechIcon(techName) {
+            const found = TECH_PRESETS.find(p => p.name.toLowerCase() === techName.toLowerCase());
+            if (found) return found;
+            return { name: techName, icon: "fa-solid fa-code", color: "text-sunsetRuby" };
+        }
+
+        function renderTechPresets() {
+            const container = document.getElementById('tech-presets-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            TECH_PRESETS.forEach(preset => {
+                const isSelected = selectedTechList.includes(preset.name);
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = `px-2.5 py-1 rounded-lg text-xs font-mono flex items-center gap-1.5 transition-all border ${
+                    isSelected 
+                        ? 'bg-sunsetRuby/20 border-sunsetRuby text-white shadow-[0_0_10px_rgba(244,63,94,0.4)]' 
+                        : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/10 hover:border-white/20'
+                }`;
+                btn.innerHTML = `<i class="${preset.icon} ${preset.color} text-[11px]"></i> <span>${preset.name}</span>`;
+                btn.onclick = () => toggleTechPreset(preset.name);
+                container.appendChild(btn);
+            });
+        }
+
+        function renderSelectedTechTags() {
+            const container = document.getElementById('selected-tech-tags');
+            const hiddenInput = document.getElementById('proj-tech');
+            const countDisplay = document.getElementById('selected-tech-count');
+            
+            if (countDisplay) countDisplay.textContent = selectedTechList.length;
+
+            if (selectedTechList.length === 0) {
+                container.innerHTML = `<span class="text-xs text-gray-500 font-mono italic">No technologies selected yet. Click presets below or add custom.</span>`;
+                hiddenInput.value = "";
+                renderTechPresets();
+                return;
+            }
+
+            container.innerHTML = '';
+            selectedTechList.forEach((tech, idx) => {
+                const iconInfo = getTechIcon(tech);
+                const chip = document.createElement('span');
+                chip.className = "bg-gradient-to-r from-cyberViolet/20 to-sunsetRuby/20 border border-sunsetRuby/40 text-white px-3 py-1 rounded-lg text-xs font-mono flex items-center gap-2 shadow-sm animate-fadeIn";
+                chip.innerHTML = `
+                    <i class="${iconInfo.icon} ${iconInfo.color} text-xs"></i>
+                    <span>${tech}</span>
+                    <button type="button" onclick="removeTechPreset(${idx})" class="text-gray-400 hover:text-rose-400 transition ml-0.5"><i class="fa-solid fa-xmark text-[10px]"></i></button>
+                `;
+                container.appendChild(chip);
+            });
+
+            hiddenInput.value = selectedTechList.join(" + ");
+            renderTechPresets();
+        }
+
+        function toggleTechPreset(name) {
+            if (selectedTechList.includes(name)) {
+                selectedTechList = selectedTechList.filter(item => item !== name);
+            } else {
+                selectedTechList.push(name);
+            }
+            renderSelectedTechTags();
+        }
+
+        function removeTechPreset(index) {
+            selectedTechList.splice(index, 1);
+            renderSelectedTechTags();
+        }
+
+        function addCustomTechStack() {
+            const input = document.getElementById('custom-tech-input');
+            const val = input.value.trim();
+            if (val && !selectedTechList.includes(val)) {
+                selectedTechList.push(val);
+                renderSelectedTechTags();
+                input.value = "";
+            }
+        }
+
+        // Get or initialize data
+        function getData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                try {
+                    return JSON.parse(saved);
+                } catch (e) {
+                    return defaultPortfolioData;
+                }
+            }
+            return defaultPortfolioData;
+        }
+
+        function saveData(data) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            // Trigger storage event for same window
+            window.dispatchEvent(new Event('storage'));
+            renderAll();
+        }
+
+        // Authentication Handler
+        function handleAuth(e) {
+            e.preventDefault();
+            const pin = document.getElementById('auth-passkey').value;
+            if (pin === AUTH_PASSKEY) {
+                sessionStorage.setItem('rafin_admin_auth', 'true');
+                document.getElementById('auth-modal').classList.add('hidden');
+                document.getElementById('admin-app').classList.remove('hidden');
+                renderAll();
+            } else {
+                document.getElementById('auth-error').classList.remove('hidden');
+            }
+        }
+
+        function logoutAdmin() {
+            sessionStorage.removeItem('rafin_admin_auth');
+            location.reload();
+        }
+
+        // Tab Switching
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.admin-tab').forEach(el => {
+                el.classList.remove('bg-gradient-to-r', 'from-cyberViolet', 'to-sunsetRuby', 'text-white', 'shadow-lg');
+                el.classList.add('bg-white/5', 'text-gray-400');
+            });
+
+            document.getElementById(`section-${tabId}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tabId}`);
+            activeBtn.classList.remove('bg-white/5', 'text-gray-400');
+            activeBtn.classList.add('bg-gradient-to-r', 'from-cyberViolet', 'to-sunsetRuby', 'text-white', 'shadow-lg');
+        }
+
+        // Render All UI Data
+        function renderAll() {
+            const data = getData();
+
+            // Counts & KPIs
+            document.getElementById('count-projects').textContent = data.projects.length;
+            document.getElementById('kpi-projects').textContent = data.projects.length;
+
+            let totalSkillsCount = 0;
+            data.skills.forEach(c => totalSkillsCount += c.skills.length);
+            document.getElementById('count-skills').textContent = totalSkillsCount;
+            document.getElementById('kpi-skills').textContent = totalSkillsCount;
+
+            document.getElementById('count-certificates').textContent = data.certificates.length;
+            document.getElementById('kpi-certificates').textContent = data.certificates.length;
+
+            // Render Projects
+            renderProjects(data.projects);
+
+            // Render Skills
+            renderSkills(data.skills);
+
+            // Render Certificates
+            renderCertificates(data.certificates);
+
+            // Populate Profile Form
+            populateProfileForm(data.profile);
+        }
+
+        // Render Projects List
+        function renderProjects(projects) {
+            const container = document.getElementById('admin-projects-grid');
+            container.innerHTML = '';
+
+            projects.forEach((proj, index) => {
+                const card = document.createElement('div');
+                card.className = "glass-panel p-5 rounded-2xl flex flex-col justify-between group";
+                card.innerHTML = `
+                    <div>
+                        <div class="h-36 rounded-xl overflow-hidden mb-4 bg-black relative border border-white/10">
+                            <img src="${proj.image}" alt="${proj.title}" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition duration-500">
+                            <span class="absolute top-2 right-2 bg-black/80 backdrop-blur-md px-2.5 py-1 rounded-md text-[10px] font-mono text-sunsetRuby font-bold border border-white/10">
+                                ${proj.tech}
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between mb-1">
+                            <h4 class="font-display font-bold text-lg text-white">${proj.title}</h4>
+                            <span class="text-[9px] font-mono uppercase bg-white/5 border border-white/10 text-gray-400 px-2 py-0.5 rounded">${proj.category || 'app'}</span>
+                        </div>
+                        <p class="text-xs text-gray-400 line-clamp-2 mb-4 font-light">${proj.desc}</p>
+                    </div>
+                    <div class="pt-3 border-t border-white/5 flex items-center justify-between">
+                        <a href="${proj.live_url}" target="_blank" class="text-xs font-mono text-cyan-400 hover:underline flex items-center gap-1">
+                            <span>Live Demo</span> <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                        </a>
+                        <div class="flex gap-2">
+                            <button onclick="editProject(${index})" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 hover:text-white flex items-center justify-center transition" title="Edit">
+                                <i class="fa-solid fa-pen-to-square text-xs"></i>
+                            </button>
+                            <button onclick="deleteProject(${index})" class="w-8 h-8 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 text-rose-400 flex items-center justify-center transition" title="Delete">
+                                <i class="fa-solid fa-trash text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Project Modal & Actions
+        function openAddProjectModal() {
+            document.getElementById('project-modal-title').textContent = "Add New Project";
+            document.getElementById('proj-edit-index').value = "-1";
+            document.getElementById('proj-title').value = "";
+            document.getElementById('proj-category').value = "app";
+            document.getElementById('proj-image').value = "";
+            document.getElementById('proj-live').value = "";
+            document.getElementById('proj-github').value = "";
+            document.getElementById('proj-desc').value = "";
+            
+            selectedTechList = [];
+            renderSelectedTechTags();
+
+            document.getElementById('project-modal').classList.remove('hidden');
+            document.getElementById('project-modal').classList.add('flex');
+        }
+
+        function editProject(index) {
+            const data = getData();
+            const proj = data.projects[index];
+            document.getElementById('project-modal-title').textContent = "Edit Project";
+            document.getElementById('proj-edit-index').value = index;
+            document.getElementById('proj-title').value = proj.title;
+            document.getElementById('proj-category').value = proj.category || 'app';
+            document.getElementById('proj-image').value = proj.image;
+            document.getElementById('proj-live').value = proj.live_url;
+            document.getElementById('proj-github').value = proj.github_url || "";
+            document.getElementById('proj-desc').value = proj.desc;
+            
+            // Parse existing tech string
+            if (proj.tech) {
+                selectedTechList = proj.tech.split(/\s*\+\s*|\s*,\s*/).filter(t => t.trim().length > 0);
+            } else {
+                selectedTechList = [];
+            }
+            renderSelectedTechTags();
+
+            document.getElementById('project-modal').classList.remove('hidden');
+            document.getElementById('project-modal').classList.add('flex');
+        }
+
+        function closeProjectModal() {
+            document.getElementById('project-modal').classList.add('hidden');
+            document.getElementById('project-modal').classList.remove('flex');
+        }
+
+        function handleSaveProject(e) {
+            e.preventDefault();
+            const data = getData();
+            const index = parseInt(document.getElementById('proj-edit-index').value);
+
+            const techVal = document.getElementById('proj-tech').value.trim();
+            if (!techVal) {
+                alert("Please select at least one tech stack badge!");
+                return;
+            }
+
+            const projectObj = {
+                title: document.getElementById('proj-title').value,
+                category: document.getElementById('proj-category').value,
+                tech: techVal,
+                image: document.getElementById('proj-image').value,
+                live_url: document.getElementById('proj-live').value,
+                github_url: document.getElementById('proj-github').value,
+                desc: document.getElementById('proj-desc').value
+            };
+
+            if (index >= 0) {
+                data.projects[index] = projectObj;
+            } else {
+                data.projects.unshift(projectObj);
+            }
+
+            saveData(data);
+            closeProjectModal();
+        }
+
+        function deleteProject(index) {
+            if (confirm("Are you sure you want to delete this project from the portfolio?")) {
+                const data = getData();
+                data.projects.splice(index, 1);
+                saveData(data);
+            }
+        }
+
+        // Render Skills
+        function renderSkills(skillsCategories) {
+            const container = document.getElementById('admin-skills-grid');
+            container.innerHTML = '';
+
+            skillsCategories.forEach((cat, catIdx) => {
+                const card = document.createElement('div');
+                card.className = "glass-panel p-6 rounded-2xl";
+                card.innerHTML = `
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="font-display font-bold text-lg text-white">${cat.category}</h4>
+                        <span class="text-[10px] font-mono uppercase tracking-wider text-sunsetRuby bg-sunsetRuby/10 px-2 py-0.5 rounded border border-sunsetRuby/20">
+                            ${cat.badge}
+                        </span>
+                    </div>
+                    <p class="text-xs text-gray-400 mb-4 font-light">${cat.desc}</p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4" id="skills-list-${catIdx}">
+                        ${cat.skills.map((skill, sIdx) => {
+                            const iconInfo = getTechIcon(skill);
+                            return `
+                                <span class="bg-white/5 border border-white/10 text-gray-200 px-3 py-1.5 rounded-lg text-xs font-mono flex items-center gap-2">
+                                    <i class="${iconInfo.icon} ${iconInfo.color} text-xs"></i>
+                                    <span>${skill}</span>
+                                    <button onclick="deleteSkill(${catIdx}, ${sIdx})" class="text-gray-400 hover:text-rose-400 text-[10px] ml-0.5"><i class="fa-solid fa-xmark"></i></button>
+                                </span>
+                            `;
+                        }).join('')}
+                    </div>
+
+                    <div class="flex gap-2 pt-2 border-t border-white/5">
+                        <input type="text" id="new-skill-input-${catIdx}" placeholder="New skill name..." class="bg-[#060A14] border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white flex-grow outline-none focus:border-sunsetRuby">
+                        <button onclick="addSkillToCategory(${catIdx})" class="px-3 py-1.5 rounded-lg bg-cyberViolet hover:bg-cyberViolet/90 text-white text-xs font-mono font-bold">Add</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function addSkillToCategory(catIdx) {
+            const input = document.getElementById(`new-skill-input-${catIdx}`);
+            const val = input.value.trim();
+            if (val) {
+                const data = getData();
+                data.skills[catIdx].skills.push(val);
+                saveData(data);
+                input.value = "";
+            }
+        }
+
+        function deleteSkill(catIdx, skillIdx) {
+            const data = getData();
+            data.skills[catIdx].skills.splice(skillIdx, 1);
+            saveData(data);
+        }
+
+        // Render Certificates
+        function renderCertificates(certs) {
+            const container = document.getElementById('admin-certs-grid');
+            container.innerHTML = '';
+
+            certs.forEach((cert, index) => {
+                const card = document.createElement('div');
+                card.className = "glass-panel p-4 rounded-2xl flex flex-col justify-between group";
+                card.innerHTML = `
+                    <div>
+                        <div class="aspect-[4/3] rounded-xl overflow-hidden mb-3 bg-black border border-white/10">
+                            <img src="${cert.image}" alt="${cert.title}" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition duration-500">
+                        </div>
+                        <h4 class="font-display font-bold text-sm text-white line-clamp-1 mb-1">${cert.title}</h4>
+                        <p class="text-[10px] font-mono text-solarGold uppercase">${cert.issuer}</p>
+                    </div>
+                    <div class="pt-3 border-t border-white/5 flex justify-end gap-2 mt-3">
+                        <button onclick="editCert(${index})" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 text-gray-300 flex items-center justify-center text-xs" title="Edit">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button onclick="deleteCert(${index})" class="w-7 h-7 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 flex items-center justify-center text-xs" title="Delete">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openAddCertModal() {
+            document.getElementById('cert-form-title').textContent = "Add New Certificate";
+            document.getElementById('cert-edit-index').value = "-1";
+            document.getElementById('cert-input-title').value = "";
+            document.getElementById('cert-input-image').value = "";
+            document.getElementById('cert-input-issuer').value = "Verified Credential";
+            document.getElementById('cert-modal-form').classList.remove('hidden');
+            document.getElementById('cert-modal-form').classList.add('flex');
+        }
+
+        function editCert(index) {
+            const data = getData();
+            const cert = data.certificates[index];
+            document.getElementById('cert-form-title').textContent = "Edit Certificate";
+            document.getElementById('cert-edit-index').value = index;
+            document.getElementById('cert-input-title').value = cert.title;
+            document.getElementById('cert-input-image').value = cert.image;
+            document.getElementById('cert-input-issuer').value = cert.issuer;
+            document.getElementById('cert-modal-form').classList.remove('hidden');
+            document.getElementById('cert-modal-form').classList.add('flex');
+        }
+
+        function closeCertFormModal() {
+            document.getElementById('cert-modal-form').classList.add('hidden');
+            document.getElementById('cert-modal-form').classList.remove('flex');
+        }
+
+        function handleSaveCert(e) {
+            e.preventDefault();
+            const data = getData();
+            const index = parseInt(document.getElementById('cert-edit-index').value);
+
+            const certObj = {
+                title: document.getElementById('cert-input-title').value,
+                image: document.getElementById('cert-input-image').value,
+                issuer: document.getElementById('cert-input-issuer').value
+            };
+
+            if (index >= 0) {
+                data.certificates[index] = certObj;
+            } else {
+                data.certificates.push(certObj);
+            }
+
+            saveData(data);
+            closeCertFormModal();
+        }
+
+        function deleteCert(index) {
+            if (confirm("Are you sure you want to remove this certificate?")) {
+                const data = getData();
+                data.certificates.splice(index, 1);
+                saveData(data);
+            }
+        }
+
+        // Profile Form
+        function populateProfileForm(profile) {
+            if (!profile) return;
+            document.getElementById('prof-name').value = profile.name || "";
+            document.getElementById('prof-title').value = profile.headline || "";
+            document.getElementById('prof-bio').value = profile.bio || "";
+            document.getElementById('prof-whatsapp').value = profile.whatsapp || "";
+            document.getElementById('prof-email').value = profile.email || "";
+            document.getElementById('prof-github').value = profile.github || "";
+            document.getElementById('prof-linkedin').value = profile.linkedin || "";
+            document.getElementById('prof-instagram').value = profile.instagram || "";
+        }
+
+        function saveProfileChanges(e) {
+            e.preventDefault();
+            const data = getData();
+            data.profile = {
+                ...data.profile,
+                name: document.getElementById('prof-name').value,
+                headline: document.getElementById('prof-title').value,
+                bio: document.getElementById('prof-bio').value,
+                whatsapp: document.getElementById('prof-whatsapp').value,
+                email: document.getElementById('prof-email').value,
+                github: document.getElementById('prof-github').value,
+                linkedin: document.getElementById('prof-linkedin').value,
+                instagram: document.getElementById('prof-instagram').value
+            };
+            saveData(data);
+            alert("Profile & Contact details updated successfully!");
+        }
+
+        // Backup / Export
+        function exportDataJSON() {
+            const data = getData();
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "rafin_portfolio_backup.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function importDataJSON(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                try {
+                    const imported = JSON.parse(event.target.result);
+                    saveData(imported);
+                    alert("Portfolio data restored successfully!");
+                } catch (err) {
+                    alert("Error parsing JSON backup file.");
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function resetToDefaults() {
+            if (confirm("Are you sure you want to reset all portfolio data to factory defaults? Any custom additions will be cleared.")) {
+                saveData(defaultPortfolioData);
+                alert("Data has been reset to defaults.");
+            }
+        }
+
+        // Check authentication state on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (sessionStorage.getItem('rafin_admin_auth') === 'true') {
+                document.getElementById('auth-modal').classList.add('hidden');
+                document.getElementById('admin-app').classList.remove('hidden');
+                renderAll();
+            }
+        });
+    </script>
+</body>
+</html>
