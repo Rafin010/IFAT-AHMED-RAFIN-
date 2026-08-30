@@ -527,14 +527,32 @@
                     <input type="text" id="cert-input-title" required class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-solarGold outline-none" placeholder="e.g. Google Cloud Certified Architect">
                 </div>
 
-                <div>
-                    <label class="block text-xs font-mono uppercase text-gray-400 mb-1">Image Path or URL</label>
-                    <input type="text" id="cert-input-image" required class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-solarGold outline-none" placeholder="img/filename.png or https://...">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-mono uppercase text-gray-400 mb-1">Image Path or URL</label>
+                        <input type="text" id="cert-input-image" required class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-solarGold outline-none" placeholder="img/filename.png">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-mono uppercase text-gray-400 mb-1">Authority Category</label>
+                        <select id="cert-input-category" class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-solarGold outline-none">
+                            <option value="google">Google & AI</option>
+                            <option value="kaggle">Kaggle Data Science</option>
+                            <option value="python">Python & Code</option>
+                            <option value="design">Creative & Design</option>
+                            <option value="other">Other Credential</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div>
-                    <label class="block text-xs font-mono uppercase text-gray-400 mb-1">Verification Issuer / Status</label>
-                    <input type="text" id="cert-input-issuer" required class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-solarGold outline-none" placeholder="e.g. Verified Credential">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-mono uppercase text-gray-400 mb-1">Issuer / Organization</label>
+                        <input type="text" id="cert-input-issuer" required class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-solarGold outline-none" placeholder="e.g. Google Cloud">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-mono uppercase text-gray-400 mb-1">Key Skills / Topics</label>
+                        <input type="text" id="cert-input-skills" class="w-full bg-[#060A14] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:border-solarGold outline-none" placeholder="e.g. Gemini, LLMs">
+                    </div>
                 </div>
 
                 <div class="pt-4 flex justify-end gap-3">
@@ -678,42 +696,66 @@
                 {
                     title: "Advanced Python Programming",
                     image: "img/Python programin live - eshokn.png",
-                    issuer: "Verified Credential"
+                    issuer: "Eshikhon / Live Dev",
+                    category: "python",
+                    skills: "Python 3, OOP, Architecture",
+                    date: "2026"
                 },
                 {
                     title: "AI Agents Intensive Course with Google",
                     image: "img/5-Day AI Agents Intensive Course with Google.png",
-                    issuer: "Verified Credential"
+                    issuer: "Google Cloud",
+                    category: "google",
+                    skills: "Agentic AI, Gemini, LLM Workflows",
+                    date: "2026"
                 },
                 {
                     title: "Code Forker Certification with Kaggle",
                     image: "img/Code Forker.png",
-                    issuer: "Verified Credential"
+                    issuer: "Kaggle",
+                    category: "kaggle",
+                    skills: "Open Source, Code Analysis",
+                    date: "2026"
                 },
                 {
                     title: "Vampire Certification",
                     image: "img/Vampire.png",
-                    issuer: "Verified Credential"
+                    issuer: "Kaggle",
+                    category: "kaggle",
+                    skills: "Data Science, Script Execution",
+                    date: "2026"
                 },
                 {
                     title: "Kaggle Community Member",
                     image: "img/Kaggle Community Member.png",
-                    issuer: "Verified Credential"
+                    issuer: "Kaggle",
+                    category: "kaggle",
+                    skills: "Machine Learning, Community",
+                    date: "2026"
                 },
                 {
                     title: "Python Coder Certificate With Kaggle",
                     image: "img/Python Coder.png",
-                    issuer: "Verified Credential"
+                    issuer: "Kaggle",
+                    category: "python",
+                    skills: "Algorithms, Python Data Structures",
+                    date: "2026"
                 },
                 {
                     title: "Advanced Content Creation With AI",
                     image: "img/Advanced Content Creation With AI.jpg",
-                    issuer: "Verified Credential"
+                    issuer: "Creative AI Mastery",
+                    category: "design",
+                    skills: "GenAI, Content Pipelines",
+                    date: "2026"
                 },
                 {
                     title: "Advanced Creative Design Mastery",
                     image: "img/Advanced Creative Design Mastery.jpg",
-                    issuer: "Verified Credential"
+                    issuer: "Design Studio",
+                    category: "design",
+                    skills: "UI/UX, Visual Composition",
+                    date: "2026"
                 }
             ]
         };
@@ -1146,13 +1188,21 @@
             certs.forEach((cert, index) => {
                 const card = document.createElement('div');
                 card.className = "glass-panel p-4 rounded-2xl flex flex-col justify-between group";
+                const cat = cert.category || 'other';
+                const skillsText = cert.skills ? `<div class="text-[9px] text-gray-400 font-mono mt-1 line-clamp-1">${cert.skills}</div>` : '';
                 card.innerHTML = `
                     <div>
-                        <div class="aspect-[4/3] rounded-xl overflow-hidden mb-3 bg-black border border-white/10">
-                            <img src="${cert.image}" alt="${cert.title}" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition duration-500">
+                        <div class="aspect-[4/3] rounded-xl overflow-hidden mb-3 bg-black border border-white/10 relative">
+                            <img src="${cert.image}" alt="${cert.title}" 
+                                 onerror="this.onerror=null; this.src='img/Code Forker.png';"
+                                 class="w-full h-full object-cover opacity-85 group-hover:scale-105 transition duration-500">
+                            <span class="absolute top-2 right-2 px-2 py-0.5 rounded text-[9px] font-mono uppercase bg-black/80 text-solarGold border border-white/10">
+                                ${cat}
+                            </span>
                         </div>
-                        <h4 class="font-display font-bold text-sm text-white line-clamp-1 mb-1">${cert.title}</h4>
-                        <p class="text-[10px] font-mono text-solarGold uppercase">${cert.issuer}</p>
+                        <h4 class="font-display font-bold text-sm text-white line-clamp-1 mb-0.5">${cert.title}</h4>
+                        <p class="text-[10px] font-mono text-solarGold uppercase">${cert.issuer || 'Verified Credential'}</p>
+                        ${skillsText}
                     </div>
                     <div class="pt-3 border-t border-white/5 flex justify-end gap-2 mt-3">
                         <button onclick="editCert(${index})" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 text-gray-300 flex items-center justify-center text-xs" title="Edit">
@@ -1172,7 +1222,9 @@
             document.getElementById('cert-edit-index').value = "-1";
             document.getElementById('cert-input-title').value = "";
             document.getElementById('cert-input-image').value = "";
-            document.getElementById('cert-input-issuer').value = "Verified Credential";
+            document.getElementById('cert-input-category').value = "google";
+            document.getElementById('cert-input-issuer').value = "Google Cloud";
+            document.getElementById('cert-input-skills').value = "";
             document.getElementById('cert-modal-form').classList.remove('hidden');
             document.getElementById('cert-modal-form').classList.add('flex');
         }
@@ -1182,9 +1234,11 @@
             const cert = data.certificates[index];
             document.getElementById('cert-form-title').textContent = "Edit Certificate";
             document.getElementById('cert-edit-index').value = index;
-            document.getElementById('cert-input-title').value = cert.title;
-            document.getElementById('cert-input-image').value = cert.image;
-            document.getElementById('cert-input-issuer').value = cert.issuer;
+            document.getElementById('cert-input-title').value = cert.title || "";
+            document.getElementById('cert-input-image').value = cert.image || "";
+            document.getElementById('cert-input-category').value = cert.category || "google";
+            document.getElementById('cert-input-issuer').value = cert.issuer || "Verified Credential";
+            document.getElementById('cert-input-skills').value = cert.skills || "";
             document.getElementById('cert-modal-form').classList.remove('hidden');
             document.getElementById('cert-modal-form').classList.add('flex');
         }
@@ -1200,9 +1254,12 @@
             const index = parseInt(document.getElementById('cert-edit-index').value);
 
             const certObj = {
-                title: document.getElementById('cert-input-title').value,
-                image: document.getElementById('cert-input-image').value,
-                issuer: document.getElementById('cert-input-issuer').value
+                title: document.getElementById('cert-input-title').value.trim(),
+                image: document.getElementById('cert-input-image').value.trim(),
+                category: document.getElementById('cert-input-category').value,
+                issuer: document.getElementById('cert-input-issuer').value.trim(),
+                skills: document.getElementById('cert-input-skills').value.trim(),
+                date: "2026"
             };
 
             if (index >= 0) {
