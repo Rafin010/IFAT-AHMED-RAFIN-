@@ -1060,12 +1060,30 @@
             }
         }
 
-        // Get or initialize data
+        // Get or initialize data with automatic schema migration
         function getData() {
             const saved = localStorage.getItem(STORAGE_KEY);
             if (saved) {
                 try {
                     const parsed = JSON.parse(saved);
+
+                    // Ensure Programming Languages is present in skills
+                    if (parsed.skills && Array.isArray(parsed.skills)) {
+                        const hasProgLang = parsed.skills.some(s => (s.category || '').toLowerCase().includes('programming') || (s.category || '').toLowerCase().includes('language'));
+                        if (!hasProgLang) {
+                            parsed.skills.unshift({
+                                category: "Programming Languages",
+                                badge: "Core Syntaxes",
+                                desc: "Low-level to high-level compiled and interpreted languages powering core logic and computational algorithms.",
+                                skills: ["Python", "JavaScript", "TypeScript", "C / C++", "C#", "Go (Golang)", "Rust", "Solidity", "SQL", "Bash / Shell", "Java", "PHP"]
+                            });
+                            localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+                        }
+                    } else {
+                        parsed.skills = defaultPortfolioData.skills;
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+                    }
+
                     // Repair empty project images if missing
                     if (parsed.projects && Array.isArray(parsed.projects)) {
                         parsed.projects.forEach((p, idx) => {
@@ -1074,6 +1092,7 @@
                             }
                         });
                     }
+
                     return parsed;
                 } catch (e) {
                     return defaultPortfolioData;

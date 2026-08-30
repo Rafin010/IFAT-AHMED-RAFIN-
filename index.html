@@ -2606,6 +2606,22 @@
                     return;
                 }
 
+                // Ensure Programming Languages category is always present in skills
+                if (data.skills && Array.isArray(data.skills)) {
+                    const hasProgLang = data.skills.some(s => (s.category || '').toLowerCase().includes('programming') || (s.category || '').toLowerCase().includes('language'));
+                    if (!hasProgLang) {
+                        data.skills.unshift({
+                            category: "Programming Languages",
+                            badge: "Core Syntaxes",
+                            desc: "Low-level to high-level compiled and interpreted languages powering core logic and computational algorithms.",
+                            skills: ["Python", "JavaScript", "TypeScript", "C / C++", "C#", "Go (Golang)", "Rust", "Solidity", "SQL", "Bash / Shell", "Java", "PHP"]
+                        });
+                        try {
+                            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                        } catch(e){}
+                    }
+                }
+
                 // 0. Synchronize Metric Targets
                 if (data.projects && Array.isArray(data.projects)) {
                     const platCounter = document.getElementById('metric-platforms');
