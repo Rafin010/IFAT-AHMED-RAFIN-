@@ -2403,38 +2403,98 @@
                 "Blockchain & Web3": "indigo"
             };
 
-            // Comprehensive Brand Tech Icon & Color Mapper
+            // Comprehensive Brand Tech Icon & Color Mapper for 65+ Languages & Stacks
             function getBrandTechIcon(techName) {
                 const t = techName.toLowerCase().trim();
-                if (t.includes('node')) return { icon: 'fa-brands fa-node-js', color: 'text-emerald-400' };
+                // Programming Languages
                 if (t.includes('python')) return { icon: 'fa-brands fa-python', color: 'text-yellow-400' };
-                if (t.includes('fastapi')) return { icon: 'fa-solid fa-bolt', color: 'text-emerald-400' };
-                if (t.includes('django')) return { icon: 'fa-solid fa-leaf', color: 'text-green-500' };
+                if (t.includes('typescript') || t === 'ts') return { icon: 'fa-solid fa-code', color: 'text-blue-400' };
+                if (t.includes('javascript') || t === 'js') return { icon: 'fa-brands fa-js', color: 'text-yellow-400' };
+                if (t.includes('c++') || t === 'cpp' || t === 'c') return { icon: 'fa-solid fa-code', color: 'text-blue-500' };
+                if (t.includes('c#') || t === 'csharp') return { icon: 'fa-solid fa-code', color: 'text-purple-400' };
+                if (t.includes('java') && !t.includes('javascript')) return { icon: 'fa-brands fa-java', color: 'text-orange-500' };
+                if (t.includes('golang') || t === 'go') return { icon: 'fa-brands fa-golang', color: 'text-cyan-400' };
+                if (t.includes('rust')) return { icon: 'fa-brands fa-rust', color: 'text-orange-400' };
+                if (t.includes('php')) return { icon: 'fa-brands fa-php', color: 'text-indigo-400' };
+                if (t.includes('ruby')) return { icon: 'fa-solid fa-gem', color: 'text-rose-500' };
+                if (t.includes('kotlin')) return { icon: 'fa-solid fa-code', color: 'text-purple-400' };
+                if (t.includes('swift')) return { icon: 'fa-brands fa-swift', color: 'text-orange-400' };
+                if (t.includes('dart') || t.includes('flutter')) return { icon: 'fa-solid fa-feather', color: 'text-cyan-400' };
+                if (t.includes('solidity')) return { icon: 'fa-brands fa-ethereum', color: 'text-indigo-400' };
+                if (t === 'sql') return { icon: 'fa-solid fa-database', color: 'text-amber-400' };
+                if (t.includes('html')) return { icon: 'fa-brands fa-html5', color: 'text-orange-500' };
+                if (t.includes('css') && !t.includes('tailwind')) return { icon: 'fa-brands fa-css3-alt', color: 'text-blue-400' };
+                if (t.includes('bash') || t.includes('shell') || t.includes('terminal')) return { icon: 'fa-solid fa-terminal', color: 'text-emerald-400' };
+                if (t === 'r') return { icon: 'fa-solid fa-chart-line', color: 'text-blue-400' };
+                if (t.includes('lua')) return { icon: 'fa-solid fa-moon', color: 'text-blue-500' };
+                if (t.includes('scala') || t.includes('julia') || t.includes('perl') || t.includes('elixir') || t.includes('haskell')) return { icon: 'fa-solid fa-code', color: 'text-purple-400' };
+
+                // Frontend
                 if (t.includes('react')) return { icon: 'fa-brands fa-react', color: 'text-cyan-400' };
-                if (t.includes('vue')) return { icon: 'fa-brands fa-vuejs', color: 'text-emerald-400' };
+                if (t.includes('next')) return { icon: 'fa-solid fa-bolt', color: 'text-white' };
+                if (t.includes('vue') || t.includes('nuxt')) return { icon: 'fa-brands fa-vuejs', color: 'text-emerald-400' };
                 if (t.includes('angular')) return { icon: 'fa-brands fa-angular', color: 'text-red-500' };
+                if (t.includes('svelte')) return { icon: 'fa-solid fa-fire', color: 'text-orange-500' };
                 if (t.includes('tailwind')) return { icon: 'fa-solid fa-wind', color: 'text-cyan-400' };
+                if (t.includes('bootstrap')) return { icon: 'fa-brands fa-bootstrap', color: 'text-purple-400' };
                 if (t.includes('three')) return { icon: 'fa-solid fa-cubes', color: 'text-purple-400' };
                 if (t.includes('webgl')) return { icon: 'fa-solid fa-cube', color: 'text-rose-400' };
+                if (t.includes('vite')) return { icon: 'fa-solid fa-bolt', color: 'text-yellow-400' };
+                if (t.includes('redux')) return { icon: 'fa-solid fa-cubes', color: 'text-purple-400' };
+
+                // Backend
+                if (t.includes('node')) return { icon: 'fa-brands fa-node-js', color: 'text-emerald-400' };
+                if (t.includes('express')) return { icon: 'fa-solid fa-server', color: 'text-gray-300' };
+                if (t.includes('fastapi')) return { icon: 'fa-solid fa-bolt', color: 'text-emerald-400' };
+                if (t.includes('django')) return { icon: 'fa-solid fa-leaf', color: 'text-green-500' };
+                if (t.includes('flask')) return { icon: 'fa-solid fa-flask', color: 'text-gray-400' };
+                if (t.includes('nest')) return { icon: 'fa-solid fa-shield-halved', color: 'text-rose-500' };
+                if (t.includes('spring')) return { icon: 'fa-brands fa-java', color: 'text-green-500' };
+                if (t.includes('laravel')) return { icon: 'fa-brands fa-laravel', color: 'text-red-500' };
+                if (t.includes('graphql')) return { icon: 'fa-solid fa-diagram-project', color: 'text-pink-400' };
+                if (t.includes('rest')) return { icon: 'fa-solid fa-arrows-split-up-and-left', color: 'text-pink-400' };
+                if (t.includes('websocket')) return { icon: 'fa-solid fa-network-wired', color: 'text-cyan-400' };
+                if (t.includes('grpc')) return { icon: 'fa-solid fa-bolt', color: 'text-teal-400' };
+
+                // Databases
+                if (t.includes('postgres')) return { icon: 'fa-solid fa-database', color: 'text-blue-400' };
+                if (t.includes('mongo')) return { icon: 'fa-solid fa-cube', color: 'text-green-400' };
+                if (t.includes('mysql')) return { icon: 'fa-solid fa-database', color: 'text-orange-400' };
+                if (t.includes('redis')) return { icon: 'fa-solid fa-server', color: 'text-red-500' };
+                if (t.includes('sqlite')) return { icon: 'fa-solid fa-database', color: 'text-cyan-400' };
+                if (t.includes('firebase')) return { icon: 'fa-solid fa-fire', color: 'text-amber-400' };
+                if (t.includes('supabase')) return { icon: 'fa-solid fa-bolt', color: 'text-emerald-400' };
+                if (t.includes('elastic')) return { icon: 'fa-solid fa-magnifying-glass', color: 'text-yellow-400' };
+
+                // DevOps & Cloud
                 if (t.includes('docker')) return { icon: 'fa-brands fa-docker', color: 'text-blue-400' };
+                if (t.includes('kubernetes') || t.includes('k8s')) return { icon: 'fa-solid fa-dharmachakra', color: 'text-blue-500' };
                 if (t.includes('ubuntu') || t.includes('linux')) return { icon: 'fa-brands fa-ubuntu', color: 'text-orange-400' };
                 if (t.includes('nginx')) return { icon: 'fa-solid fa-server', color: 'text-green-400' };
-                if (t.includes('mongo')) return { icon: 'fa-solid fa-cube', color: 'text-green-400' };
-                if (t.includes('postgres')) return { icon: 'fa-solid fa-database', color: 'text-blue-400' };
-                if (t.includes('mysql')) return { icon: 'fa-solid fa-database', color: 'text-orange-400' };
-                if (t.includes('json-ld') || t.includes('json')) return { icon: 'fa-solid fa-code-branch', color: 'text-yellow-400' };
-                if (t.includes('websocket')) return { icon: 'fa-solid fa-network-wired', color: 'text-cyan-400' };
-                if (t.includes('rest')) return { icon: 'fa-solid fa-arrows-split-up-and-left', color: 'text-pink-400' };
-                if (t.includes('llm')) return { icon: 'fa-solid fa-microchip', color: 'text-neonCyan' };
-                if (t.includes('claude') || t.includes('gemini')) return { icon: 'fa-solid fa-sparkles', color: 'text-purple-400' };
-                if (t.includes('solidity')) return { icon: 'fa-brands fa-ethereum', color: 'text-indigo-400' };
-                if (t.includes('contract')) return { icon: 'fa-solid fa-link', color: 'text-amber-400' };
-                if (t.includes('web3')) return { icon: 'fa-solid fa-coins', color: 'text-cyan-400' };
-                if (t.includes('crypto')) return { icon: 'fa-brands fa-bitcoin', color: 'text-yellow-500' };
+                if (t.includes('aws')) return { icon: 'fa-brands fa-aws', color: 'text-orange-400' };
+                if (t.includes('google') || t.includes('gcp')) return { icon: 'fa-brands fa-google', color: 'text-blue-400' };
+                if (t.includes('azure')) return { icon: 'fa-brands fa-microsoft', color: 'text-cyan-500' };
+                if (t.includes('github') || t.includes('git')) return { icon: 'fa-brands fa-github', color: 'text-white' };
+                if (t.includes('vercel')) return { icon: 'fa-solid fa-play', color: 'text-white' };
+                if (t.includes('cloudflare')) return { icon: 'fa-brands fa-cloudflare', color: 'text-orange-400' };
+
+                // AI & ML
+                if (t.includes('pytorch')) return { icon: 'fa-solid fa-fire-flame-curved', color: 'text-red-500' };
+                if (t.includes('tensor')) return { icon: 'fa-solid fa-brain', color: 'text-orange-500' };
+                if (t.includes('scikit') || t.includes('sklearn')) return { icon: 'fa-solid fa-chart-line', color: 'text-blue-400' };
+                if (t.includes('pandas')) return { icon: 'fa-solid fa-table', color: 'text-indigo-400' };
+                if (t.includes('numpy')) return { icon: 'fa-solid fa-calculator', color: 'text-blue-500' };
+                if (t.includes('gemini') || t.includes('claude') || t.includes('openai') || t.includes('gpt')) return { icon: 'fa-solid fa-sparkles', color: 'text-purple-400' };
+                if (t.includes('langchain')) return { icon: 'fa-solid fa-link', color: 'text-yellow-400' };
+                if (t.includes('hugging')) return { icon: 'fa-solid fa-face-smile', color: 'text-yellow-400' };
+                if (t.includes('llm') || t.includes('ai')) return { icon: 'fa-solid fa-microchip', color: 'text-neonCyan' };
+
+                // Web3
+                if (t.includes('contract')) return { icon: 'fa-solid fa-file-contract', color: 'text-amber-400' };
+                if (t.includes('web3') || t.includes('ethers')) return { icon: 'fa-solid fa-coins', color: 'text-cyan-400' };
+                if (t.includes('crypto') || t.includes('bitcoin')) return { icon: 'fa-brands fa-bitcoin', color: 'text-yellow-500' };
                 if (t.includes('defi')) return { icon: 'fa-solid fa-vault', color: 'text-emerald-400' };
-                if (t.includes('automation')) return { icon: 'fa-solid fa-gears', color: 'text-emerald-400' };
-                if (t.includes('js') || t.includes('javascript')) return { icon: 'fa-brands fa-js', color: 'text-yellow-400' };
-                if (t.includes('git') || t.includes('github')) return { icon: 'fa-brands fa-github', color: 'text-white' };
+
                 return { icon: 'fa-solid fa-code', color: 'text-sunsetRuby' };
             }
 

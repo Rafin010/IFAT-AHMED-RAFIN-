@@ -460,22 +460,39 @@
                 <!-- Interactive Multi-Select Tech Stack Picker -->
                 <div class="space-y-2.5 pt-1">
                     <div class="flex justify-between items-center">
-                        <label class="block text-xs font-mono uppercase text-gray-400">Tech Stack Badges (Multi-Select with Logos)</label>
+                        <label class="block text-xs font-mono uppercase text-gray-400">Tech Stack Badges (Multi-Select with Official Logos)</label>
                         <span class="text-[10px] font-mono text-sunsetRuby"><span id="selected-tech-count">0</span> Selected</span>
                     </div>
                     
                     <!-- Selected Tags Viewer Box -->
                     <div id="selected-tech-tags" class="min-h-[46px] p-2.5 bg-[#060A14] border border-white/15 rounded-xl flex flex-wrap gap-2 items-center">
-                        <span class="text-xs text-gray-500 font-mono italic">No technologies selected yet. Click presets below or add custom.</span>
+                        <span class="text-xs text-gray-500 font-mono italic">No technologies selected yet. Click presets below or search.</span>
                     </div>
 
                     <!-- Hidden Input to store combined string -->
                     <input type="hidden" id="proj-tech" required>
 
-                    <!-- Presets Grid with Brand Icons -->
-                    <div class="pt-1">
-                        <span class="text-[10px] font-mono uppercase text-gray-500 block mb-1.5">Click to Add Presets:</span>
-                        <div class="flex flex-wrap gap-1.5" id="tech-presets-container"></div>
+                    <!-- Tech Search & Category Tabs -->
+                    <div class="pt-2 bg-white/[0.02] p-3 rounded-xl border border-white/10 space-y-2.5">
+                        <div class="relative">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-500 text-xs"></i>
+                            <input type="text" id="tech-search-input" oninput="filterTechPresets(this.value)" placeholder="Search any programming language or tool (e.g. Python, Rust, React, Docker, Gemini, Solidity)..." class="w-full bg-[#060A14] border border-white/10 rounded-lg pl-8 pr-3 py-1.5 text-xs text-white outline-none focus:border-sunsetRuby">
+                        </div>
+
+                        <!-- Category Filters -->
+                        <div class="flex flex-wrap gap-1" id="tech-category-filters">
+                            <button type="button" onclick="setTechPresetCategory('all')" class="tech-cat-btn active-tech-cat px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-sunsetRuby text-white">All (65)</button>
+                            <button type="button" onclick="setTechPresetCategory('lang')" class="tech-cat-btn px-2.5 py-0.5 rounded text-[10px] font-mono text-gray-400 bg-white/5 hover:bg-white/10">Languages</button>
+                            <button type="button" onclick="setTechPresetCategory('frontend')" class="tech-cat-btn px-2.5 py-0.5 rounded text-[10px] font-mono text-gray-400 bg-white/5 hover:bg-white/10">Frontend</button>
+                            <button type="button" onclick="setTechPresetCategory('backend')" class="tech-cat-btn px-2.5 py-0.5 rounded text-[10px] font-mono text-gray-400 bg-white/5 hover:bg-white/10">Backend</button>
+                            <button type="button" onclick="setTechPresetCategory('database')" class="tech-cat-btn px-2.5 py-0.5 rounded text-[10px] font-mono text-gray-400 bg-white/5 hover:bg-white/10">Database</button>
+                            <button type="button" onclick="setTechPresetCategory('devops')" class="tech-cat-btn px-2.5 py-0.5 rounded text-[10px] font-mono text-gray-400 bg-white/5 hover:bg-white/10">DevOps/Cloud</button>
+                            <button type="button" onclick="setTechPresetCategory('ai')" class="tech-cat-btn px-2.5 py-0.5 rounded text-[10px] font-mono text-gray-400 bg-white/5 hover:bg-white/10">AI/ML</button>
+                            <button type="button" onclick="setTechPresetCategory('web3')" class="tech-cat-btn px-2.5 py-0.5 rounded text-[10px] font-mono text-gray-400 bg-white/5 hover:bg-white/10">Web3</button>
+                        </div>
+
+                        <!-- Presets Grid with Brand Icons (Scrollable) -->
+                        <div class="max-h-36 overflow-y-auto pr-1 flex flex-wrap gap-1.5" id="tech-presets-container"></div>
                     </div>
 
                     <!-- Custom Tech Stack Input -->
@@ -760,33 +777,141 @@
             ]
         };
 
-        // TECH STACK PRESETS WITH ICONS
+        // COMPREHENSIVE WORLD-CLASS TECH STACK & PROGRAMMING LANGUAGES PRESET LIBRARY
         const TECH_PRESETS = [
-            { name: "React.js", icon: "fa-brands fa-react", color: "text-cyan-400" },
-            { name: "Node.js", icon: "fa-brands fa-node-js", color: "text-emerald-400" },
-            { name: "Python", icon: "fa-brands fa-python", color: "text-yellow-400" },
-            { name: "FastAPI", icon: "fa-solid fa-bolt", color: "text-emerald-400" },
-            { name: "Django", icon: "fa-solid fa-leaf", color: "text-green-500" },
-            { name: "Tailwind CSS", icon: "fa-solid fa-wind", color: "text-cyan-400" },
-            { name: "Three.js", icon: "fa-solid fa-cubes", color: "text-purple-400" },
-            { name: "Docker", icon: "fa-brands fa-docker", color: "text-blue-400" },
-            { name: "PostgreSQL", icon: "fa-solid fa-database", color: "text-blue-300" },
-            { name: "MongoDB", icon: "fa-solid fa-cube", color: "text-green-400" },
-            { name: "MySQL", icon: "fa-solid fa-database", color: "text-orange-400" },
-            { name: "Solidity", icon: "fa-brands fa-ethereum", color: "text-indigo-400" },
-            { name: "Smart Contracts", icon: "fa-solid fa-link", color: "text-amber-400" },
-            { name: "Web3.js", icon: "fa-solid fa-coins", color: "text-indigo-400" },
-            { name: "Crypto APIs", icon: "fa-brands fa-bitcoin", color: "text-yellow-500" },
-            { name: "AI / LLM APIs", icon: "fa-solid fa-brain", color: "text-rose-400" },
-            { name: "WebSockets", icon: "fa-solid fa-network-wired", color: "text-cyan-300" }
+            // --- Programming Languages ---
+            { name: "Python", category: "lang", icon: "fa-brands fa-python", color: "text-yellow-400" },
+            { name: "JavaScript", category: "lang", icon: "fa-brands fa-js", color: "text-yellow-400" },
+            { name: "TypeScript", category: "lang", icon: "fa-solid fa-code", color: "text-blue-400" },
+            { name: "C / C++", category: "lang", icon: "fa-solid fa-code", color: "text-blue-500" },
+            { name: "C#", category: "lang", icon: "fa-solid fa-code", color: "text-purple-400" },
+            { name: "Java", category: "lang", icon: "fa-brands fa-java", color: "text-orange-500" },
+            { name: "Go (Golang)", category: "lang", icon: "fa-brands fa-golang", color: "text-cyan-400" },
+            { name: "Rust", category: "lang", icon: "fa-brands fa-rust", color: "text-orange-400" },
+            { name: "PHP", category: "lang", icon: "fa-brands fa-php", color: "text-indigo-400" },
+            { name: "Ruby", category: "lang", icon: "fa-solid fa-gem", color: "text-rose-500" },
+            { name: "Kotlin", category: "lang", icon: "fa-solid fa-code", color: "text-purple-400" },
+            { name: "Swift", category: "lang", icon: "fa-brands fa-swift", color: "text-orange-400" },
+            { name: "Dart", category: "lang", icon: "fa-solid fa-feather", color: "text-cyan-400" },
+            { name: "Solidity", category: "lang", icon: "fa-brands fa-ethereum", color: "text-indigo-400" },
+            { name: "SQL", category: "lang", icon: "fa-solid fa-database", color: "text-amber-400" },
+            { name: "HTML5", category: "lang", icon: "fa-brands fa-html5", color: "text-orange-500" },
+            { name: "CSS3", category: "lang", icon: "fa-brands fa-css3-alt", color: "text-blue-400" },
+            { name: "Bash / Shell", category: "lang", icon: "fa-solid fa-terminal", color: "text-emerald-400" },
+            { name: "R", category: "lang", icon: "fa-solid fa-chart-line", color: "text-blue-400" },
+            { name: "Lua", category: "lang", icon: "fa-solid fa-moon", color: "text-blue-500" },
+            { name: "Scala", category: "lang", icon: "fa-solid fa-code", color: "text-red-500" },
+            { name: "Julia", category: "lang", icon: "fa-solid fa-code", color: "text-purple-500" },
+            { name: "Perl", category: "lang", icon: "fa-solid fa-code", color: "text-cyan-500" },
+            { name: "Elixir", category: "lang", icon: "fa-solid fa-droplet", color: "text-purple-400" },
+            { name: "Haskell", category: "lang", icon: "fa-solid fa-code", color: "text-purple-300" },
+
+            // --- Frontend & Frameworks ---
+            { name: "React.js", category: "frontend", icon: "fa-brands fa-react", color: "text-cyan-400" },
+            { name: "Next.js", category: "frontend", icon: "fa-solid fa-bolt", color: "text-white" },
+            { name: "Vue.js", category: "frontend", icon: "fa-brands fa-vuejs", color: "text-emerald-400" },
+            { name: "Nuxt.js", category: "frontend", icon: "fa-brands fa-vuejs", color: "text-green-400" },
+            { name: "Angular", category: "frontend", icon: "fa-brands fa-angular", color: "text-red-500" },
+            { name: "Svelte", category: "frontend", icon: "fa-solid fa-fire", color: "text-orange-500" },
+            { name: "Tailwind CSS", category: "frontend", icon: "fa-solid fa-wind", color: "text-cyan-400" },
+            { name: "Bootstrap", category: "frontend", icon: "fa-brands fa-bootstrap", color: "text-purple-400" },
+            { name: "Three.js", category: "frontend", icon: "fa-solid fa-cubes", color: "text-purple-400" },
+            { name: "WebGL", category: "frontend", icon: "fa-solid fa-cube", color: "text-rose-400" },
+            { name: "Vite", category: "frontend", icon: "fa-solid fa-bolt", color: "text-yellow-400" },
+            { name: "Redux", category: "frontend", icon: "fa-solid fa-cubes", color: "text-purple-400" },
+
+            // --- Backend & Architecture ---
+            { name: "Node.js", category: "backend", icon: "fa-brands fa-node-js", color: "text-emerald-400" },
+            { name: "Express.js", category: "backend", icon: "fa-solid fa-server", color: "text-gray-300" },
+            { name: "FastAPI", category: "backend", icon: "fa-solid fa-bolt", color: "text-emerald-400" },
+            { name: "Django", category: "backend", icon: "fa-solid fa-leaf", color: "text-green-500" },
+            { name: "Flask", category: "backend", icon: "fa-solid fa-flask", color: "text-gray-400" },
+            { name: "NestJS", category: "backend", icon: "fa-solid fa-shield-halved", color: "text-rose-500" },
+            { name: "Spring Boot", category: "backend", icon: "fa-brands fa-java", color: "text-green-500" },
+            { name: "Laravel", category: "backend", icon: "fa-brands fa-laravel", color: "text-red-500" },
+            { name: "GraphQL", category: "backend", icon: "fa-solid fa-diagram-project", color: "text-pink-400" },
+            { name: "REST API", category: "backend", icon: "fa-solid fa-arrows-split-up-and-left", color: "text-pink-400" },
+            { name: "WebSockets", category: "backend", icon: "fa-solid fa-network-wired", color: "text-cyan-400" },
+            { name: "gRPC", category: "backend", icon: "fa-solid fa-bolt", color: "text-teal-400" },
+
+            // --- Databases & Storage ---
+            { name: "PostgreSQL", category: "database", icon: "fa-solid fa-database", color: "text-blue-400" },
+            { name: "MongoDB", category: "database", icon: "fa-solid fa-cube", color: "text-green-400" },
+            { name: "MySQL", category: "database", icon: "fa-solid fa-database", color: "text-orange-400" },
+            { name: "Redis", category: "database", icon: "fa-solid fa-server", color: "text-red-500" },
+            { name: "SQLite", category: "database", icon: "fa-solid fa-database", color: "text-cyan-400" },
+            { name: "Firebase", category: "database", icon: "fa-solid fa-fire", color: "text-amber-400" },
+            { name: "Supabase", category: "database", icon: "fa-solid fa-bolt", color: "text-emerald-400" },
+            { name: "Elasticsearch", category: "database", icon: "fa-solid fa-magnifying-glass", color: "text-yellow-400" },
+
+            // --- Cloud, DevOps & Linux ---
+            { name: "Docker", category: "devops", icon: "fa-brands fa-docker", color: "text-blue-400" },
+            { name: "Kubernetes", category: "devops", icon: "fa-solid fa-dharmachakra", color: "text-blue-500" },
+            { name: "Ubuntu VPS", category: "devops", icon: "fa-brands fa-ubuntu", color: "text-orange-400" },
+            { name: "Nginx", category: "devops", icon: "fa-solid fa-server", color: "text-green-400" },
+            { name: "AWS", category: "devops", icon: "fa-brands fa-aws", color: "text-orange-400" },
+            { name: "Google Cloud", category: "devops", icon: "fa-brands fa-google", color: "text-blue-400" },
+            { name: "Microsoft Azure", category: "devops", icon: "fa-brands fa-microsoft", color: "text-cyan-500" },
+            { name: "GitHub Actions", category: "devops", icon: "fa-brands fa-github", color: "text-purple-400" },
+            { name: "Vercel", category: "devops", icon: "fa-solid fa-play", color: "text-white" },
+            { name: "Cloudflare", category: "devops", icon: "fa-brands fa-cloudflare", color: "text-orange-400" },
+
+            // --- AI, ML & Data Science ---
+            { name: "PyTorch", category: "ai", icon: "fa-solid fa-fire-flame-curved", color: "text-red-500" },
+            { name: "TensorFlow", category: "ai", icon: "fa-solid fa-brain", color: "text-orange-500" },
+            { name: "Scikit-Learn", category: "ai", icon: "fa-solid fa-chart-line", color: "text-blue-400" },
+            { name: "Pandas", category: "ai", icon: "fa-solid fa-table", color: "text-indigo-400" },
+            { name: "NumPy", category: "ai", icon: "fa-solid fa-calculator", color: "text-blue-500" },
+            { name: "Google Gemini", category: "ai", icon: "fa-solid fa-sparkles", color: "text-purple-400" },
+            { name: "OpenAI / ChatGPT", category: "ai", icon: "fa-solid fa-sparkles", color: "text-emerald-400" },
+            { name: "Claude AI", category: "ai", icon: "fa-solid fa-sparkles", color: "text-rose-400" },
+            { name: "LangChain", category: "ai", icon: "fa-solid fa-link", color: "text-yellow-400" },
+            { name: "Hugging Face", category: "ai", icon: "fa-solid fa-face-smile", color: "text-yellow-400" },
+            { name: "LLM APIs", category: "ai", icon: "fa-solid fa-microchip", color: "text-neonCyan" },
+
+            // --- Web3 & Blockchain ---
+            { name: "Smart Contracts", category: "web3", icon: "fa-solid fa-file-contract", color: "text-amber-400" },
+            { name: "Web3.js", category: "web3", icon: "fa-solid fa-coins", color: "text-indigo-400" },
+            { name: "Ethers.js", category: "web3", icon: "fa-brands fa-ethereum", color: "text-blue-400" },
+            { name: "Crypto APIs", category: "web3", icon: "fa-brands fa-bitcoin", color: "text-yellow-500" },
+            { name: "DeFi Protocols", category: "web3", icon: "fa-solid fa-vault", color: "text-emerald-400" }
         ];
 
         let selectedTechList = [];
+        let activeTechCategory = "all";
+        let activeTechQuery = "";
 
         function getTechIcon(techName) {
-            const found = TECH_PRESETS.find(p => p.name.toLowerCase() === techName.toLowerCase());
+            const clean = techName.toLowerCase().trim();
+            const found = TECH_PRESETS.find(p => p.name.toLowerCase() === clean);
             if (found) return found;
+
+            // Smart fallback mapper
+            if (clean.includes('python')) return { name: techName, icon: "fa-brands fa-python", color: "text-yellow-400" };
+            if (clean.includes('react')) return { name: techName, icon: "fa-brands fa-react", color: "text-cyan-400" };
+            if (clean.includes('node')) return { name: techName, icon: "fa-brands fa-node-js", color: "text-emerald-400" };
+            if (clean.includes('rust')) return { name: techName, icon: "fa-brands fa-rust", color: "text-orange-400" };
+            if (clean.includes('go') || clean.includes('golang')) return { name: techName, icon: "fa-brands fa-golang", color: "text-cyan-400" };
+            if (clean.includes('java')) return { name: techName, icon: "fa-brands fa-java", color: "text-orange-500" };
+            if (clean.includes('docker')) return { name: techName, icon: "fa-brands fa-docker", color: "text-blue-400" };
+            if (clean.includes('solidity')) return { name: techName, icon: "fa-brands fa-ethereum", color: "text-indigo-400" };
+            if (clean.includes('gemini') || clean.includes('claude') || clean.includes('ai')) return { name: techName, icon: "fa-solid fa-sparkles", color: "text-purple-400" };
+
             return { name: techName, icon: "fa-solid fa-code", color: "text-sunsetRuby" };
+        }
+
+        function setTechPresetCategory(cat) {
+            activeTechCategory = cat;
+            document.querySelectorAll('.tech-cat-btn').forEach(btn => {
+                btn.className = "tech-cat-btn px-2.5 py-0.5 rounded text-[10px] font-mono text-gray-400 bg-white/5 hover:bg-white/10";
+            });
+            event.target.className = "tech-cat-btn active-tech-cat px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-sunsetRuby text-white";
+            renderTechPresets();
+        }
+
+        function filterTechPresets(query) {
+            activeTechQuery = query.toLowerCase().trim();
+            renderTechPresets();
         }
 
         function renderTechPresets() {
@@ -794,13 +919,24 @@
             if (!container) return;
             container.innerHTML = '';
 
-            TECH_PRESETS.forEach(preset => {
+            const filtered = TECH_PRESETS.filter(p => {
+                const matchesCat = activeTechCategory === 'all' || p.category === activeTechCategory;
+                const matchesQuery = !activeTechQuery || p.name.toLowerCase().includes(activeTechQuery);
+                return matchesCat && matchesQuery;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<span class="text-xs text-gray-500 font-mono italic py-2">No matching technologies found. Use custom input below.</span>`;
+                return;
+            }
+
+            filtered.forEach(preset => {
                 const isSelected = selectedTechList.includes(preset.name);
                 const btn = document.createElement('button');
                 btn.type = 'button';
                 btn.className = `px-2.5 py-1 rounded-lg text-xs font-mono flex items-center gap-1.5 transition-all border ${
                     isSelected 
-                        ? 'bg-sunsetRuby/20 border-sunsetRuby text-white shadow-[0_0_10px_rgba(244,63,94,0.4)]' 
+                        ? 'bg-sunsetRuby/25 border-sunsetRuby text-white shadow-[0_0_10px_rgba(244,63,94,0.4)]' 
                         : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/10 hover:border-white/20'
                 }`;
                 btn.innerHTML = `<i class="${preset.icon} ${preset.color} text-[11px]"></i> <span>${preset.name}</span>`;
@@ -1154,9 +1290,109 @@
                         }).join('')}
                     </div>
 
-                    <div class="flex gap-2 pt-2 border-t border-white/5">
-                        <input type="text" id="new-skill-input-${catIdx}" placeholder="New skill name..." class="bg-[#060A14] border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white flex-grow outline-none focus:border-sunsetRuby">
-                        <button onclick="addSkillToCategory(${catIdx})" class="px-3 py-1.5 rounded-lg bg-cyberViolet hover:bg-cyberViolet/90 text-white text-xs font-mono font-bold">Add</button>
+                    <div class="flex flex-wrap sm:flex-nowrap gap-2 pt-2 border-t border-white/5 items-center">
+                        <select onchange="if(this.value){ document.getElementById('new-skill-input-${catIdx}').value = this.value; this.value=''; }" class="bg-[#060A14] border border-white/10 rounded-lg px-2 py-1.5 text-xs text-gray-300 outline-none focus:border-sunsetRuby w-full sm:w-36">
+                            <option value="">+ Pick Preset</option>
+                            <optgroup label="Programming Languages">
+                                <option value="Python">Python</option>
+                                <option value="JavaScript">JavaScript</option>
+                                <option value="TypeScript">TypeScript</option>
+                                <option value="C / C++">C / C++</option>
+                                <option value="C#">C#</option>
+                                <option value="Java">Java</option>
+                                <option value="Go (Golang)">Go (Golang)</option>
+                                <option value="Rust">Rust</option>
+                                <option value="PHP">PHP</option>
+                                <option value="Ruby">Ruby</option>
+                                <option value="Kotlin">Kotlin</option>
+                                <option value="Swift">Swift</option>
+                                <option value="Dart">Dart</option>
+                                <option value="Solidity">Solidity</option>
+                                <option value="SQL">SQL</option>
+                                <option value="HTML5">HTML5</option>
+                                <option value="CSS3">CSS3</option>
+                                <option value="Bash / Shell">Bash / Shell</option>
+                                <option value="R">R</option>
+                                <option value="Lua">Lua</option>
+                                <option value="Scala">Scala</option>
+                                <option value="Julia">Julia</option>
+                                <option value="Perl">Perl</option>
+                                <option value="Elixir">Elixir</option>
+                                <option value="Haskell">Haskell</option>
+                            </optgroup>
+                            <optgroup label="Frontend">
+                                <option value="React.js">React.js</option>
+                                <option value="Next.js">Next.js</option>
+                                <option value="Vue.js">Vue.js</option>
+                                <option value="Nuxt.js">Nuxt.js</option>
+                                <option value="Angular">Angular</option>
+                                <option value="Svelte">Svelte</option>
+                                <option value="Tailwind CSS">Tailwind CSS</option>
+                                <option value="Bootstrap">Bootstrap</option>
+                                <option value="Three.js">Three.js</option>
+                                <option value="WebGL">WebGL</option>
+                                <option value="Vite">Vite</option>
+                                <option value="Redux">Redux</option>
+                            </optgroup>
+                            <optgroup label="Backend">
+                                <option value="Node.js">Node.js</option>
+                                <option value="Express.js">Express.js</option>
+                                <option value="FastAPI">FastAPI</option>
+                                <option value="Django">Django</option>
+                                <option value="Flask">Flask</option>
+                                <option value="NestJS">NestJS</option>
+                                <option value="Spring Boot">Spring Boot</option>
+                                <option value="Laravel">Laravel</option>
+                                <option value="GraphQL">GraphQL</option>
+                                <option value="REST API">REST API</option>
+                                <option value="WebSockets">WebSockets</option>
+                                <option value="gRPC">gRPC</option>
+                            </optgroup>
+                            <optgroup label="Databases">
+                                <option value="PostgreSQL">PostgreSQL</option>
+                                <option value="MongoDB">MongoDB</option>
+                                <option value="MySQL">MySQL</option>
+                                <option value="Redis">Redis</option>
+                                <option value="SQLite">SQLite</option>
+                                <option value="Firebase">Firebase</option>
+                                <option value="Supabase">Supabase</option>
+                                <option value="Elasticsearch">Elasticsearch</option>
+                            </optgroup>
+                            <optgroup label="DevOps & Cloud">
+                                <option value="Docker">Docker</option>
+                                <option value="Kubernetes">Kubernetes</option>
+                                <option value="Ubuntu VPS">Ubuntu VPS</option>
+                                <option value="Nginx">Nginx</option>
+                                <option value="AWS">AWS</option>
+                                <option value="Google Cloud">Google Cloud</option>
+                                <option value="Microsoft Azure">Microsoft Azure</option>
+                                <option value="GitHub Actions">GitHub Actions</option>
+                                <option value="Vercel">Vercel</option>
+                                <option value="Cloudflare">Cloudflare</option>
+                            </optgroup>
+                            <optgroup label="AI & ML">
+                                <option value="PyTorch">PyTorch</option>
+                                <option value="TensorFlow">TensorFlow</option>
+                                <option value="Scikit-Learn">Scikit-Learn</option>
+                                <option value="Pandas">Pandas</option>
+                                <option value="NumPy">NumPy</option>
+                                <option value="Google Gemini">Google Gemini</option>
+                                <option value="OpenAI / ChatGPT">OpenAI / ChatGPT</option>
+                                <option value="Claude AI">Claude AI</option>
+                                <option value="LangChain">LangChain</option>
+                                <option value="Hugging Face">Hugging Face</option>
+                                <option value="LLM APIs">LLM APIs</option>
+                            </optgroup>
+                            <optgroup label="Web3 & Blockchain">
+                                <option value="Smart Contracts">Smart Contracts</option>
+                                <option value="Web3.js">Web3.js</option>
+                                <option value="Ethers.js">Ethers.js</option>
+                                <option value="Crypto APIs">Crypto APIs</option>
+                                <option value="DeFi Protocols">DeFi Protocols</option>
+                            </optgroup>
+                        </select>
+                        <input type="text" id="new-skill-input-${catIdx}" placeholder="Or type skill name..." class="bg-[#060A14] border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white flex-grow outline-none focus:border-sunsetRuby">
+                        <button onclick="addSkillToCategory(${catIdx})" class="px-4 py-1.5 rounded-lg bg-cyberViolet hover:bg-cyberViolet/90 text-white text-xs font-mono font-bold">+ Add</button>
                     </div>
                 `;
                 container.appendChild(card);
