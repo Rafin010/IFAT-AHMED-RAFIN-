@@ -821,6 +821,68 @@
             <!-- Stack Grid -->
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="skills-container">
                 
+                <!-- Dedicated Core Programming Languages Card -->
+                <div class="glass-card-3d p-8 rounded-2xl relative overflow-hidden group reveal-node card-tilt md:col-span-2 lg:col-span-3 border border-yellow-500/30 shadow-[0_0_40px_rgba(234,179,8,0.12)] bg-gradient-to-br from-yellow-500/[0.04] to-transparent">
+                    <div class="absolute -top-16 -right-16 w-48 h-48 bg-yellow-500/10 rounded-full blur-3xl group-hover:bg-yellow-500/20 transition-all duration-500"></div>
+                    <div class="relative z-10">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-14 h-14 rounded-xl bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center text-yellow-400 shadow-[0_0_25px_rgba(234,179,8,0.25)] group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-code text-2xl"></i>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-mono uppercase tracking-widest text-yellow-400/90 bg-yellow-500/10 px-2.5 py-1 rounded-md border border-yellow-500/20 inline-block mb-1">
+                                        Core Syntaxes
+                                    </span>
+                                    <h3 class="text-2xl sm:text-3xl font-display font-bold text-white">Programming Languages</h3>
+                                </div>
+                            </div>
+                            <span class="text-xs font-mono text-gray-400 hidden sm:flex items-center gap-1.5 bg-black/40 px-3 py-1.5 rounded-lg border border-white/5 self-start sm:self-auto">
+                                <i class="fa-solid fa-layer-group text-yellow-400"></i> Pure Syntaxes & Computational Logic
+                            </span>
+                        </div>
+                        <p class="text-gray-300 text-xs sm:text-sm mb-6 font-light max-w-3xl leading-relaxed">
+                            Low-level to high-level compiled and interpreted languages powering core logic, high-throughput microservices, algorithmic pipelines, smart contracts, and system architectures.
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2.5">
+                            <span class="tech-chip text-yellow-200 px-4 py-2 rounded-xl text-xs font-mono font-medium flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/30 shadow-[0_0_15px_rgba(234,179,8,0.15)]">
+                                <i class="fa-brands fa-python text-yellow-400 text-sm"></i> Python
+                            </span>
+                            <span class="tech-chip text-yellow-200 px-4 py-2 rounded-xl text-xs font-mono font-medium flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/30 shadow-[0_0_15px_rgba(234,179,8,0.15)]">
+                                <i class="fa-brands fa-js text-yellow-400 text-sm"></i> JavaScript
+                            </span>
+                            <span class="tech-chip text-blue-200 px-4 py-2 rounded-xl text-xs font-mono font-medium flex items-center gap-2 bg-blue-500/10 border border-blue-500/30">
+                                <i class="fa-solid fa-code text-blue-400 text-sm"></i> TypeScript
+                            </span>
+                            <span class="tech-chip text-blue-200 px-4 py-2 rounded-xl text-xs font-mono font-medium flex items-center gap-2 bg-blue-500/10 border border-blue-500/30">
+                                <i class="fa-solid fa-code text-blue-500 text-sm"></i> C / C++
+                            </span>
+                            <span class="tech-chip text-cyan-200 px-4 py-2 rounded-xl text-xs font-mono font-medium flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/30">
+                                <i class="fa-brands fa-golang text-cyan-400 text-sm"></i> Go (Golang)
+                            </span>
+                            <span class="tech-chip text-orange-200 px-4 py-2 rounded-xl text-xs font-mono font-medium flex items-center gap-2 bg-orange-500/10 border border-orange-500/30">
+                                <i class="fa-brands fa-rust text-orange-400 text-sm"></i> Rust
+                            </span>
+                            <span class="tech-chip text-indigo-200 px-4 py-2 rounded-xl text-xs font-mono font-medium flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/30">
+                                <i class="fa-brands fa-ethereum text-indigo-400 text-sm"></i> Solidity
+                            </span>
+                            <span class="tech-chip text-amber-200 px-4 py-2 rounded-xl text-xs font-mono font-medium flex items-center gap-2 bg-amber-500/10 border border-amber-500/30">
+                                <i class="fa-solid fa-database text-amber-400 text-sm"></i> SQL
+                            </span>
+                            <span class="tech-chip text-emerald-200 px-4 py-2 rounded-xl text-xs font-mono font-medium flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30">
+                                <i class="fa-solid fa-terminal text-emerald-400 text-sm"></i> Bash / Shell
+                            </span>
+                            <span class="tech-chip text-orange-200 px-4 py-2 rounded-xl text-xs font-mono font-medium flex items-center gap-2 bg-orange-500/10 border border-orange-500/30">
+                                <i class="fa-brands fa-java text-orange-400 text-sm"></i> Java
+                            </span>
+                            <span class="tech-chip text-indigo-200 px-4 py-2 rounded-xl text-xs font-mono font-medium flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/30">
+                                <i class="fa-brands fa-php text-indigo-400 text-sm"></i> PHP
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Backend Arch -->
                 <div class="glass-card-3d p-8 rounded-2xl relative overflow-hidden group reveal-node card-tilt">
                     <div class="absolute -top-12 -right-12 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/20 transition-all duration-500"></div>
@@ -839,13 +901,13 @@
                                 <i class="fa-brands fa-node-js text-emerald-400"></i> Node.js
                             </span>
                             <span class="tech-chip text-emerald-300 px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium flex items-center gap-2">
-                                <i class="fa-brands fa-python text-emerald-400"></i> Python
-                            </span>
-                            <span class="tech-chip text-emerald-300 px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium flex items-center gap-2">
                                 <i class="fa-solid fa-leaf text-emerald-400"></i> Django
                             </span>
                             <span class="tech-chip text-emerald-300 px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium flex items-center gap-2">
                                 <i class="fa-solid fa-bolt text-emerald-400"></i> FastAPI
+                            </span>
+                            <span class="tech-chip text-emerald-300 px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium flex items-center gap-2">
+                                <i class="fa-solid fa-server text-gray-400"></i> Express.js
                             </span>
                         </div>
                     </div>
@@ -2384,6 +2446,8 @@
             const STORAGE_KEY = 'rafin_portfolio_data';
 
             const categoryIcons = {
+                "Programming Languages": "fa-solid fa-code text-yellow-400",
+                "Core Languages": "fa-solid fa-code text-yellow-400",
                 "Backend Arch": "fa-solid fa-server text-emerald-400",
                 "Frontend Matrix": "fa-brands fa-react text-cyberViolet",
                 "Data Systems": "fa-solid fa-database text-solarGold",
@@ -2394,6 +2458,8 @@
             };
 
             const categoryColors = {
+                "Programming Languages": "yellow",
+                "Core Languages": "yellow",
                 "Backend Arch": "emerald",
                 "Frontend Matrix": "purple",
                 "Data Systems": "amber",
@@ -2578,7 +2644,7 @@
                     }
                 }
 
-                // 2. Skills Hydration with Brand Specific Logos
+                // 2. Skills Hydration with Brand Specific Logos & Dedicated Programming Languages Layout
                 if (data.skills && Array.isArray(data.skills) && data.skills.length > 0) {
                     const container = document.getElementById('skills-container');
                     if (container) {
@@ -2586,9 +2652,11 @@
                         data.skills.forEach(cat => {
                             const iconClass = categoryIcons[cat.category] || "fa-solid fa-cubes text-cyberViolet";
                             const colorPrefix = categoryColors[cat.category] || "purple";
+                            const isProgrammingLanguages = (cat.category || '').toLowerCase().includes('programming') || (cat.category || '').toLowerCase().includes('language');
+                            const cardSpanClass = isProgrammingLanguages ? "md:col-span-2 lg:col-span-3 border border-yellow-500/30 shadow-[0_0_40px_rgba(234,179,8,0.12)] bg-gradient-to-br from-yellow-500/[0.04] to-transparent" : "";
                             
                             const card = document.createElement('div');
-                            card.className = "glass-card-3d p-8 rounded-2xl relative overflow-hidden group reveal-node active card-tilt";
+                            card.className = `glass-card-3d p-8 rounded-2xl relative overflow-hidden group reveal-node active card-tilt ${cardSpanClass}`;
                             card.innerHTML = `
                                 <div class="absolute -top-12 -right-12 w-32 h-32 bg-${colorPrefix}-500/10 rounded-full blur-2xl group-hover:bg-${colorPrefix}-500/20 transition-all duration-500"></div>
                                 <div class="relative z-10">
