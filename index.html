@@ -2041,37 +2041,31 @@
                     sniperBox.appendChild(flash);
                     setTimeout(() => flash.remove(), 350);
 
-                    // 5. Realistic Deep Crimson Blood Splatter & Bullet Entry Wound
+                    // 5. Realistic Bullet Impact Hole Decal with Fractures
                     const bulletHole = document.createElement('div');
                     bulletHole.className = 'absolute pointer-events-none z-20 transition-opacity duration-1000 transform -translate-x-1/2 -translate-y-1/2';
                     bulletHole.style.left = `${clickX}px`;
                     bulletHole.style.top = `${clickY}px`;
                     bulletHole.innerHTML = `
-                        <div class="relative w-12 h-12 flex items-center justify-center pointer-events-none select-none">
-                            <!-- Deep Crimson Blood Splatter SVG -->
-                            <svg class="absolute inset-0 w-full h-full text-red-600 drop-shadow-[0_0_8px_rgba(220,38,38,0.85)]" viewBox="0 0 100 100" fill="currentColor">
-                                <path d="M50 35 C45 20, 55 10, 52 5 C48 15, 42 25, 45 35 C35 30, 20 22, 12 30 C22 36, 32 38, 38 45 C25 48, 10 52, 8 62 C20 60, 32 55, 40 60 C32 72, 22 88, 35 95 C38 82, 42 68, 48 65 C52 78, 60 92, 70 90 C65 78, 58 66, 56 60 C68 65, 82 72, 90 62 C78 55, 66 52, 60 48 C72 42, 88 36, 92 25 C80 28, 68 35, 58 38 C60 25, 68 12, 58 8 C54 18, 52 28, 50 35 Z" opacity="0.95"/>
-                                <circle cx="82" cy="18" r="4" fill="#DC2626" opacity="0.9"/>
-                                <circle cx="16" cy="80" r="4.5" fill="#B91C1C" opacity="0.9"/>
-                                <circle cx="88" cy="74" r="3.5" fill="#DC2626" opacity="0.85"/>
-                                <circle cx="26" cy="12" r="3.5" fill="#EF4444" opacity="0.85"/>
-                            </svg>
-                            <!-- Bullet Entry Wound Core (Charcoal Hole with Glowing Red Rim) -->
-                            <div class="w-3.5 h-3.5 rounded-full bg-[#180303] border-2 border-rose-500 shadow-[0_0_10px_#f43f5e] relative z-10 flex items-center justify-center">
-                                <div class="w-1.5 h-1.5 rounded-full bg-black"></div>
-                            </div>
-                            <!-- Fine Micro Impact Fractures in Crimson -->
-                            <div class="absolute w-9 h-[1px] bg-red-400/70 rotate-45"></div>
-                            <div class="absolute w-9 h-[1px] bg-red-400/70 -rotate-45"></div>
+                        <div class="relative w-7 h-7 flex items-center justify-center pointer-events-none select-none">
+                            <!-- Bullet Core -->
+                            <div class="w-2.5 h-2.5 rounded-full bg-black border border-white/50 shadow-[0_0_8px_rgba(0,0,0,0.9)] relative z-10"></div>
+                            <!-- Radial Glass / Surface Cracks -->
+                            <div class="absolute w-6 h-[1px] bg-white/40 rotate-45"></div>
+                            <div class="absolute w-6 h-[1px] bg-white/40 -rotate-45"></div>
+                            <div class="absolute w-5 h-[1px] bg-white/30 rotate-90"></div>
+                            <div class="absolute w-5 h-[1px] bg-white/30"></div>
+                            <!-- Impact Ring -->
+                            <div class="absolute inset-0 rounded-full border border-white/20"></div>
                         </div>
                     `;
                     sniperBox.appendChild(bulletHole);
 
-                    // Maintain realistic blood stain on photo for 10 seconds before subtle dissolve
+                    // Fade out bullet hole after 4 seconds
                     setTimeout(() => {
                         bulletHole.style.opacity = '0';
-                        setTimeout(() => bulletHole.remove(), 1200);
-                    }, 10000);
+                        setTimeout(() => bulletHole.remove(), 1000);
+                    }, 4000);
                 });
             }
 
