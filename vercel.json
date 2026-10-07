@@ -1,6 +1,23 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "rewrites": [
+    { "source": "/about", "destination": "/about/index.html" },
+    { "source": "/projects", "destination": "/projects/index.html" },
+    { "source": "/projects/sportyxi", "destination": "/projects/sportyxi/index.html" },
+    { "source": "/projects/x010", "destination": "/projects/x010/index.html" },
+    { "source": "/projects/market-pilot", "destination": "/projects/market-pilot/index.html" },
+    { "source": "/projects/vaxa-ai", "destination": "/projects/vaxa-ai/index.html" },
+    { "source": "/case-studies", "destination": "/case-studies/index.html" },
+    { "source": "/case-studies/sportyxi", "destination": "/case-studies/sportyxi/index.html" },
+    { "source": "/experience", "destination": "/experience/index.html" },
+    { "source": "/skills", "destination": "/skills/index.html" },
+    { "source": "/contact", "destination": "/contact/index.html" },
+    { "source": "/blog", "destination": "/blog/index.html" },
+    { "source": "/blog/how-i-built-a-sports-streaming-platform", "destination": "/blog/how-i-built-a-sports-streaming-platform/index.html" },
+    { "source": "/blog/building-scalable-video-streaming-infrastructure", "destination": "/blog/building-scalable-video-streaming-infrastructure/index.html" },
+    { "source": "/blog/frontend-performance-lessons-from-sportyxi", "destination": "/blog/frontend-performance-lessons-from-sportyxi/index.html" }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -29,6 +46,24 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/css/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
+      "source": "/js/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
         }
       ]
     }

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Case Studies & Systems Architecture | Rafin</title>
+    <meta name="description" content="In-depth technical case studies by Rafin detailing high-concurrency video delivery, low-latency LL-HLS pipelines, and distributed systems architecture.">
+    <link rel="canonical" href="https://ifatahmedrafin.sportyxi.com/case-studies">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ifatahmedrafin.sportyxi.com/case-studies">
+    <meta property="og:title" content="Technical Case Studies & Systems Architecture | Rafin">
+    <meta property="og:description" content="Exhaustive architectural post-mortems and engineering deep dives by Rafin.">
+    <meta property="og:image" content="https://ifatahmedrafin.sportyxi.com/img/SportyXi-Banner.png">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "CollectionPage",
+          "name": "Technical Case Studies by Rafin",
+          "url": "https://ifatahmedrafin.sportyxi.com/case-studies",
+          "description": "Comprehensive engineering breakdowns and architectural post-mortems."
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://ifatahmedrafin.sportyxi.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Case Studies",
+              "item": "https://ifatahmedrafin.sportyxi.com/case-studies"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+</head>
+<body class="bg-[#030712] text-gray-100 flex flex-col min-h-screen">
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 bg-[#030712]/80 backdrop-blur-xl border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center text-black font-display font-black text-xl shadow-lg shadow-amber-500/20 group-hover:scale-105 transition">
+                    R
+                </div>
+                <div>
+                    <span class="font-display font-bold text-lg text-white block group-hover:text-amber-400 transition">Rafin</span>
+                    <span class="text-[11px] font-mono text-gray-400 block tracking-tight">Founder • Developer</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-8 text-sm">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/about" class="nav-link">About</a>
+                <a href="/projects" class="nav-link">Projects</a>
+                <a href="/case-studies" class="nav-link active">Case Studies</a>
+                <a href="/experience" class="nav-link">Experience</a>
+                <a href="/skills" class="nav-link">Skills</a>
+                <a href="/blog" class="nav-link">Blog</a>
+                <a href="/contact" class="btn-primary text-xs !py-2 !px-4">Get in Touch</a>
+            </nav>
+
+            <button id="mobile-menu-btn" aria-label="Toggle Menu" class="md:hidden p-2.5 rounded-lg bg-white/5 border border-white/10 text-gray-300">
+                <i class="fa-solid fa-bars text-lg"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-[#080d1a] border-b border-white/10 px-6 py-6 space-y-4">
+            <a href="/" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Home</a>
+            <a href="/about" class="block text-gray-300 hover:text-amber-400 font-medium py-1">About</a>
+            <a href="/projects" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Projects</a>
+            <a href="/case-studies" class="block text-amber-400 font-medium py-1">Case Studies</a>
+            <a href="/experience" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Experience</a>
+            <a href="/skills" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Skills</a>
+            <a href="/blog" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Blog</a>
+            <a href="/contact" class="btn-primary text-center block w-full mt-4">Get in Touch</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb-container" aria-label="Breadcrumb">
+            <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+            <span class="separator">/</span>
+            <span class="current" aria-current="page">Case Studies</span>
+        </nav>
+
+        <!-- Header -->
+        <div class="mb-12">
+            <div class="flex items-center gap-2 mb-3">
+                <span class="badge-tech badge-amber"><i class="fa-solid fa-book-open"></i> Technical Breakdowns</span>
+                <span class="badge-tech">Deep Dives</span>
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight mb-4">
+                Systems Engineering Case Studies
+            </h1>
+            <p class="text-base sm:text-lg text-gray-400 max-w-2xl font-light">
+                Documenting real-world architectural challenges, traffic spikes, streaming bottlenecks, and the technical solutions implemented across our production platforms.
+            </p>
+        </div>
+
+        <!-- Featured Case Study Card: SportyXi -->
+        <div class="glass-panel p-8 sm:p-10 rounded-3xl mb-12 border-amber-500/30 relative overflow-hidden group">
+            <div class="bg-ambient-amber top-[-100px] right-[-100px]"></div>
+
+            <div class="relative z-10">
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <span class="badge-tech badge-amber">Flagship Case Study</span>
+                    <span class="badge-tech"><i class="fa-regular fa-clock"></i> 14 min read</span>
+                    <span class="badge-tech badge-cyan">Sub-2.5s Latency</span>
+                </div>
+
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-white mb-4 group-hover:text-amber-400 transition leading-tight">
+                    Building SportyXi: High-Concurrency Low-Latency Sports Streaming Architecture
+                </h2>
+
+                <p class="text-gray-300 leading-relaxed max-w-3xl mb-6 font-light">
+                    A comprehensive 13-section architectural breakdown detailing our custom Low-Latency HLS (LL-HLS) pipeline, origin shield mutex request collapsing, client-side ABR stepping, and responsive pitch overlays.
+                </p>
+
+                <!-- 13 Topics Snapshot -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-8 text-xs font-mono text-gray-400">
+                    <div>1. The Latency Problem</div>
+                    <div>2. Product Concept</div>
+                    <div>3. Target Audience</div>
+                    <div>4. Product Architecture</div>
+                    <div>5. Streaming Experience</div>
+                    <div>6. Frontend Code</div>
+                    <div>7. Backend Services</div>
+                    <div>8. Performance Tuning</div>
+                    <div>9. UX Decisions</div>
+                    <div>10. Concurrency Challenges</div>
+                    <div>11. Origin Solutions</div>
+                    <div>12. Key Lessons Learned</div>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-4">
+                    <a href="/case-studies/sportyxi" class="btn-primary">
+                        <span>Read Complete 13-Section Case Study</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <a href="https://sportyxi.com" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+                        <span>Visit SportyXi.com</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upcoming Case Studies -->
+        <h3 class="text-xl font-bold text-white mb-6">Upcoming Whitepapers</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="glass-card-interactive p-6 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="badge-tech badge-cyan">AI Telemetry</span>
+                        <span class="text-xs font-mono text-gray-500">In Peer Review</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-2">Market Pilot: Ingesting 10k Ticks/Sec with Redis Streams</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                        How we designed zero-copy asynchronous WebSocket ingestion pipelines in Python and Go to feed time-series predictive sentiment models.
+                    </p>
+                </div>
+                <div class="text-xs font-mono text-amber-400">
+                    Product: <a href="/projects/market-pilot" class="underline">Market Pilot Overview</a>
+                </div>
+            </div>
+
+            <div class="glass-card-interactive p-6 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="badge-tech badge-emerald">Graph RAG</span>
+                        <span class="text-xs font-mono text-gray-500">Drafting</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-2">Vaxa AI: Eliminating LLM Hallucinations via Hybrid Vector Indexing</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                        A rigorous look at Reciprocal Rank Fusion (RRF), cross-encoder rerankers, and citation verification algorithms in enterprise knowledge search.
+                    </p>
+                </div>
+                <div class="text-xs font-mono text-purple-400">
+                    Product: <a href="/projects/vaxa-ai" class="underline">Vaxa AI Overview</a>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="bg-[#02050c] border-t border-white/10 py-12 mt-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="md:col-span-2">
+                    <span class="text-lg font-bold font-display text-white block mb-2">Rafin</span>
+                    <p class="text-xs text-gray-400 max-w-sm mb-4">
+                        Founder, software engineer, and systems architect building high-concurrency platforms and AI products at X010.
+                    </p>
+                    <div class="text-xs font-mono text-amber-400">
+                        Live Platform: <a href="https://sportyxi.com" target="_blank" rel="noopener noreferrer" class="underline">SportyXi.com</a>
+                    </div>
+                </div>
+                <div>
+                    <span class="text-xs font-mono uppercase text-gray-400 tracking-wider block mb-3">Authority Links</span>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="/case-studies/sportyxi" class="text-amber-400">SportyXi Case Study</a></li>
+                        <li><a href="/projects/sportyxi" class="text-gray-400 hover:text-white">SportyXi Specs</a></li>
+                        <li><a href="/projects/x010" class="text-gray-400 hover:text-white">X010 Studio</a></li>
+                        <li><a href="/projects" class="text-gray-400 hover:text-white">All Projects</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <span class="text-xs font-mono uppercase text-gray-400 tracking-wider block mb-3">Connect</span>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="/contact" class="text-gray-400 hover:text-white">Contact Rafin</a></li>
+                        <li><a href="https://github.com/Rafin010" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">GitHub Profile</a></li>
+                        <li><a href="/blog" class="text-gray-400 hover:text-white">Engineering Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 font-mono">
+                <div>© 2026 Rafin. All rights reserved.</div>
+                <div class="mt-2 sm:mt-0">Systems Architecture Case Studies</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Client Script -->
+    <script src="/js/main.js"></script>
+</body>
+</html>

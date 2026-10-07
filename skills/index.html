@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Skills Matrix & Engineering Stack | Rafin</title>
+    <meta name="description" content="Comprehensive engineering stack and technical competencies of Rafin: Core Programming Languages, Low-Latency Streaming, AI/ML, Cloud Infrastructure, and Distributed Systems.">
+    <link rel="canonical" href="https://ifatahmedrafin.sportyxi.com/skills">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ifatahmedrafin.sportyxi.com/skills">
+    <meta property="og:title" content="Technical Skills Matrix & Engineering Stack | Rafin">
+    <meta property="og:description" content="Explore Rafin's core programming syntaxes, streaming pipelines, cloud infrastructure, and AI engineering stack.">
+    <meta property="og:image" content="https://ifatahmedrafin.sportyxi.com/img/SportyXi-Banner.png">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "ProfilePage",
+          "name": "Technical Skills Matrix of Rafin",
+          "url": "https://ifatahmedrafin.sportyxi.com/skills",
+          "about": {
+            "@type": "Person",
+            "name": "Rafin",
+            "jobTitle": "Systems Architect & Full Stack Engineer"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://ifatahmedrafin.sportyxi.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Skills",
+              "item": "https://ifatahmedrafin.sportyxi.com/skills"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+</head>
+<body class="bg-[#030712] text-gray-100 flex flex-col min-h-screen">
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 bg-[#030712]/80 backdrop-blur-xl border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center text-black font-display font-black text-xl shadow-lg shadow-amber-500/20 group-hover:scale-105 transition">
+                    R
+                </div>
+                <div>
+                    <span class="font-display font-bold text-lg text-white block group-hover:text-amber-400 transition">Rafin</span>
+                    <span class="text-[11px] font-mono text-gray-400 block tracking-tight">Founder • Developer</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-8 text-sm">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/about" class="nav-link">About</a>
+                <a href="/projects" class="nav-link">Projects</a>
+                <a href="/case-studies" class="nav-link">Case Studies</a>
+                <a href="/experience" class="nav-link">Experience</a>
+                <a href="/skills" class="nav-link active">Skills</a>
+                <a href="/blog" class="nav-link">Blog</a>
+                <a href="/contact" class="btn-primary text-xs !py-2 !px-4">Get in Touch</a>
+            </nav>
+
+            <button id="mobile-menu-btn" aria-label="Toggle Menu" class="md:hidden p-2.5 rounded-lg bg-white/5 border border-white/10 text-gray-300">
+                <i class="fa-solid fa-bars text-lg"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-[#080d1a] border-b border-white/10 px-6 py-6 space-y-4">
+            <a href="/" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Home</a>
+            <a href="/about" class="block text-gray-300 hover:text-amber-400 font-medium py-1">About</a>
+            <a href="/projects" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Projects</a>
+            <a href="/case-studies" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Case Studies</a>
+            <a href="/experience" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Experience</a>
+            <a href="/skills" class="block text-amber-400 font-medium py-1">Skills</a>
+            <a href="/blog" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Blog</a>
+            <a href="/contact" class="btn-primary text-center block w-full mt-4">Get in Touch</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb-container" aria-label="Breadcrumb">
+            <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+            <span class="separator">/</span>
+            <span class="current" aria-current="page">Skills Matrix</span>
+        </nav>
+
+        <!-- Header -->
+        <div class="mb-10">
+            <div class="flex items-center gap-2 mb-3">
+                <span class="badge-tech badge-amber"><i class="fa-solid fa-code"></i> Competencies</span>
+                <span class="badge-tech">Production Stack</span>
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight mb-4">
+                Technical Skills & Architecture Stack
+            </h1>
+            <p class="text-base sm:text-lg text-gray-400 max-w-2xl font-light">
+                A structured breakdown of core programming syntaxes, streaming media protocols, cloud orchestration, and AI systems utilized across our production platforms.
+            </p>
+        </div>
+
+        <!-- 1. Dedicated Core Programming Languages Card (Prominent Top Row) -->
+        <div class="glass-panel p-8 sm:p-10 rounded-3xl mb-8 border-amber-500/30 relative overflow-hidden">
+            <div class="bg-ambient-amber top-[-80px] right-[-80px]"></div>
+
+            <div class="relative z-10">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-terminal text-2xl text-amber-400"></i>
+                        <h2 class="text-2xl font-bold text-white">Core Programming Languages</h2>
+                    </div>
+                    <span class="badge-tech badge-amber">Core Syntaxes</span>
+                </div>
+
+                <p class="text-sm text-gray-300 mb-6 font-light max-w-3xl">
+                    Compiled and interpreted languages chosen for computational efficiency, concurrency models, and low-level system memory safety.
+                </p>
+
+                <div class="flex flex-wrap gap-2.5">
+                    <span class="badge-tech py-2 px-3.5 text-xs"><i class="fa-brands fa-python text-yellow-400 text-sm"></i> Python</span>
+                    <span class="badge-tech py-2 px-3.5 text-xs"><i class="fa-brands fa-js text-yellow-300 text-sm"></i> JavaScript (ESNext)</span>
+                    <span class="badge-tech py-2 px-3.5 text-xs"><i class="fa-brands fa-js text-sky-400 text-sm"></i> TypeScript</span>
+                    <span class="badge-tech py-2 px-3.5 text-xs"><i class="fa-brands fa-golang text-cyan-400 text-sm"></i> Go (Golang)</span>
+                    <span class="badge-tech py-2 px-3.5 text-xs"><i class="fa-solid fa-gears text-blue-400 text-sm"></i> C / C++</span>
+                    <span class="badge-tech py-2 px-3.5 text-xs"><i class="fa-brands fa-rust text-amber-500 text-sm"></i> Rust</span>
+                    <span class="badge-tech py-2 px-3.5 text-xs"><i class="fa-solid fa-database text-purple-400 text-sm"></i> SQL (PostgreSQL / MySQL)</span>
+                    <span class="badge-tech py-2 px-3.5 text-xs"><i class="fa-solid fa-terminal text-emerald-400 text-sm"></i> Bash & POSIX Shell</span>
+                    <span class="badge-tech py-2 px-3.5 text-xs"><i class="fa-brands fa-ethereum text-indigo-400 text-sm"></i> Solidity</span>
+                    <span class="badge-tech py-2 px-3.5 text-xs"><i class="fa-brands fa-java text-rose-400 text-sm"></i> Java</span>
+                    <span class="badge-tech py-2 px-3.5 text-xs"><i class="fa-brands fa-php text-indigo-300 text-sm"></i> PHP</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills Categories Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- 2. Streaming & Media -->
+            <div class="glass-card-interactive p-6 flex flex-col justify-between border-amber-500/20">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2 text-amber-400 font-bold">
+                            <i class="fa-solid fa-tower-broadcast"></i>
+                            <h3>Streaming & Real-Time Media</h3>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                        Proven video delivery pipelines engineered for the <a href="https://sportyxi.com" target="_blank" rel="noopener noreferrer" class="text-amber-400 underline">SportyXi sports platform</a>.
+                    </p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="badge-tech text-[10px]">LL-HLS</span>
+                        <span class="badge-tech text-[10px]">CMAF Chunks</span>
+                        <span class="badge-tech text-[10px]">FFmpeg</span>
+                        <span class="badge-tech text-[10px]">WebSockets</span>
+                        <span class="badge-tech text-[10px]">RTMP / SRT</span>
+                        <span class="badge-tech text-[10px]">Hls.js</span>
+                        <span class="badge-tech text-[10px]">Adaptive Bitrate</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Backend & Distributed Systems -->
+            <div class="glass-card-interactive p-6 flex flex-col justify-between border-cyan-500/20">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2 text-cyan-400 font-bold">
+                            <i class="fa-solid fa-server"></i>
+                            <h3>Backend & Systems</h3>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                        High-throughput concurrency, asynchronous message queues, and API gateways.
+                    </p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="badge-tech text-[10px]">Node.js</span>
+                        <span class="badge-tech text-[10px]">Python FastAPI</span>
+                        <span class="badge-tech text-[10px]">Go Microservices</span>
+                        <span class="badge-tech text-[10px]">Redis Pub/Sub</span>
+                        <span class="badge-tech text-[10px]">RESTful APIs</span>
+                        <span class="badge-tech text-[10px]">GraphQL</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Frontend & User Experience -->
+            <div class="glass-card-interactive p-6 flex flex-col justify-between border-emerald-500/20">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2 text-emerald-400 font-bold">
+                            <i class="fa-brands fa-react"></i>
+                            <h3>Frontend & UX Engineering</h3>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                        Lightweight, responsive, zero-bloat user interfaces focused on Core Web Vitals.
+                    </p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="badge-tech text-[10px]">React.js</span>
+                        <span class="badge-tech text-[10px]">Next.js</span>
+                        <span class="badge-tech text-[10px]">Tailwind CSS</span>
+                        <span class="badge-tech text-[10px]">HTML5 Canvas</span>
+                        <span class="badge-tech text-[10px]">CSS Grid & Flexbox</span>
+                        <span class="badge-tech text-[10px]">Web Vitals</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Cloud, DevOps & Edge -->
+            <div class="glass-card-interactive p-6 flex flex-col justify-between border-purple-500/20">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2 text-purple-400 font-bold">
+                            <i class="fa-solid fa-cloud"></i>
+                            <h3>Cloud, DevOps & Edge</h3>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                        Zero-downtime automated deployments and multi-CDN edge shielding.
+                    </p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="badge-tech text-[10px]">Ubuntu VPS</span>
+                        <span class="badge-tech text-[10px]">Docker Containers</span>
+                        <span class="badge-tech text-[10px]">Nginx & OpenResty</span>
+                        <span class="badge-tech text-[10px]">Cloudflare CDN</span>
+                        <span class="badge-tech text-[10px]">Vercel Edge</span>
+                        <span class="badge-tech text-[10px]">GitHub Actions CI/CD</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Database & Persistence -->
+            <div class="glass-card-interactive p-6 flex flex-col justify-between border-blue-500/20">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2 text-blue-400 font-bold">
+                            <i class="fa-solid fa-database"></i>
+                            <h3>Database & Storage</h3>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                        ACID relational databases, time-series telemetry, and in-memory caches.
+                    </p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="badge-tech text-[10px]">PostgreSQL</span>
+                        <span class="badge-tech text-[10px]">Redis Ring Cache</span>
+                        <span class="badge-tech text-[10px]">TimescaleDB</span>
+                        <span class="badge-tech text-[10px]">MongoDB</span>
+                        <span class="badge-tech text-[10px]">MySQL</span>
+                        <span class="badge-tech text-[10px]">Supabase</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. AI & Neural Systems -->
+            <div class="glass-card-interactive p-6 flex flex-col justify-between border-rose-500/20">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2 text-rose-400 font-bold">
+                            <i class="fa-solid fa-brain"></i>
+                            <h3>AI & Cognitive Systems</h3>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                        Production applications built for <a href="/projects/vaxa-ai" class="text-purple-400 underline">Vaxa AI</a> and <a href="/projects/market-pilot" class="text-cyan-400 underline">Market Pilot</a>.
+                    </p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="badge-tech text-[10px]">Vector Search (Qdrant)</span>
+                        <span class="badge-tech text-[10px]">Graph RAG</span>
+                        <span class="badge-tech text-[10px]">Hugging Face</span>
+                        <span class="badge-tech text-[10px]">PyTorch</span>
+                        <span class="badge-tech text-[10px]">LLM APIs & Agents</span>
+                        <span class="badge-tech text-[10px]">LangChain</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Navigation Next Steps -->
+        <div class="mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div>
+                <span class="text-xs font-mono text-gray-400 uppercase tracking-wider block mb-1">See this stack in production</span>
+                <span class="text-lg font-bold text-white">Read how SportyXi delivers live streams with sub-2.5s delay.</span>
+            </div>
+            <a href="/case-studies/sportyxi" class="btn-primary">
+                <span>View SportyXi Case Study</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="bg-[#02050c] border-t border-white/10 py-12 mt-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="md:col-span-2">
+                    <span class="text-lg font-bold font-display text-white block mb-2">Rafin</span>
+                    <p class="text-xs text-gray-400 max-w-sm mb-4">
+                        Founder, software engineer, and systems architect building high-concurrency platforms and AI products at X010.
+                    </p>
+                    <div class="text-xs font-mono text-amber-400">
+                        Official Project: <a href="https://sportyxi.com" target="_blank" rel="noopener noreferrer" class="underline">SportyXi Platform</a>
+                    </div>
+                </div>
+                <div>
+                    <span class="text-xs font-mono uppercase text-gray-400 tracking-wider block mb-3">Authority Links</span>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="/skills" class="text-amber-400">Skills Matrix</a></li>
+                        <li><a href="/projects/sportyxi" class="text-gray-400 hover:text-white">SportyXi Project</a></li>
+                        <li><a href="/case-studies/sportyxi" class="text-gray-400 hover:text-white">SportyXi Case Study</a></li>
+                        <li><a href="/projects/x010" class="text-gray-400 hover:text-white">X010 Studio</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <span class="text-xs font-mono uppercase text-gray-400 tracking-wider block mb-3">Connect</span>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="/contact" class="text-gray-400 hover:text-white">Contact Rafin</a></li>
+                        <li><a href="https://github.com/Rafin010" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">GitHub Profile</a></li>
+                        <li><a href="/blog" class="text-gray-400 hover:text-white">Engineering Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 font-mono">
+                <div>© 2026 Rafin. All rights reserved.</div>
+                <div class="mt-2 sm:mt-0">Technical Skills & Systems Architecture</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Client Script -->
+    <script src="/js/main.js"></script>
+</body>
+</html>

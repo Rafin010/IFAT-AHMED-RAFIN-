@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Rafin — Founder, Systems Architect & Product Builder</title>
+    <meta name="description" content="Biography, engineering philosophy, and background of Rafin, founder of X010 and lead systems architect behind the SportyXi sports streaming platform.">
+    <link rel="canonical" href="https://ifatahmedrafin.sportyxi.com/about">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="profile">
+    <meta property="og:url" content="https://ifatahmedrafin.sportyxi.com/about">
+    <meta property="og:title" content="About Rafin — Founder, Systems Architect & Product Builder">
+    <meta property="og:description" content="Biography, engineering values, and background of Rafin.">
+    <meta property="og:image" content="https://ifatahmedrafin.sportyxi.com/img/SportyXi-Banner.png">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "name": "Rafin",
+          "alternateName": "Ifat Ahmed Rafin",
+          "url": "https://ifatahmedrafin.sportyxi.com",
+          "jobTitle": "Founder & Principal Systems Architect",
+          "worksFor": {
+            "@type": "Organization",
+            "name": "X010",
+            "url": "https://ifatahmedrafin.sportyxi.com/projects/x010"
+          },
+          "knowsAbout": ["Low Latency Streaming", "LL-HLS", "High Concurrency Architecture", "Distributed Systems", "AI/ML SaaS", "Full Stack Engineering"],
+          "sameAs": [
+            "https://github.com/Rafin010",
+            "https://sportyxi.com"
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://ifatahmedrafin.sportyxi.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "About",
+              "item": "https://ifatahmedrafin.sportyxi.com/about"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+</head>
+<body class="bg-[#030712] text-gray-100 flex flex-col min-h-screen">
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 bg-[#030712]/80 backdrop-blur-xl border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center text-black font-display font-black text-xl shadow-lg shadow-amber-500/20 group-hover:scale-105 transition">
+                    R
+                </div>
+                <div>
+                    <span class="font-display font-bold text-lg text-white block group-hover:text-amber-400 transition">Rafin</span>
+                    <span class="text-[11px] font-mono text-gray-400 block tracking-tight">Founder • Developer</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-8 text-sm">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/about" class="nav-link active">About</a>
+                <a href="/projects" class="nav-link">Projects</a>
+                <a href="/case-studies" class="nav-link">Case Studies</a>
+                <a href="/experience" class="nav-link">Experience</a>
+                <a href="/skills" class="nav-link">Skills</a>
+                <a href="/blog" class="nav-link">Blog</a>
+                <a href="/contact" class="btn-primary text-xs !py-2 !px-4">Get in Touch</a>
+            </nav>
+
+            <button id="mobile-menu-btn" aria-label="Toggle Menu" class="md:hidden p-2.5 rounded-lg bg-white/5 border border-white/10 text-gray-300">
+                <i class="fa-solid fa-bars text-lg"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-[#080d1a] border-b border-white/10 px-6 py-6 space-y-4">
+            <a href="/" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Home</a>
+            <a href="/about" class="block text-amber-400 font-medium py-1">About</a>
+            <a href="/projects" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Projects</a>
+            <a href="/case-studies" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Case Studies</a>
+            <a href="/experience" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Experience</a>
+            <a href="/skills" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Skills</a>
+            <a href="/blog" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Blog</a>
+            <a href="/contact" class="btn-primary text-center block w-full mt-4">Get in Touch</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb-container" aria-label="Breadcrumb">
+            <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+            <span class="separator">/</span>
+            <span class="current" aria-current="page">About Rafin</span>
+        </nav>
+
+        <!-- Profile Header -->
+        <div class="glass-panel p-8 sm:p-12 rounded-3xl mb-12 relative overflow-hidden border border-amber-500/20">
+            <div class="bg-ambient-amber top-[-80px] right-[-80px]"></div>
+
+            <div class="relative z-10 flex flex-col md:flex-row gap-8 items-start">
+                <div class="w-24 h-24 rounded-2xl bg-gradient-to-tr from-amber-500 via-amber-400 to-yellow-200 flex items-center justify-center text-black font-display font-black text-4xl shadow-xl shadow-amber-500/25 shrink-0">
+                    R
+                </div>
+
+                <div>
+                    <div class="flex flex-wrap items-center gap-2 mb-3">
+                        <span class="badge-tech badge-amber">Founder & Systems Architect</span>
+                        <span class="badge-tech">X010 Venture Studio</span>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight mb-4">
+                        Rafin
+                    </h1>
+
+                    <p class="text-lg text-gray-300 font-light leading-relaxed mb-6">
+                        Founder, software engineer, and distributed systems architect. I build low-latency streaming infrastructure, high-throughput financial telemetry, and AI systems under the <a href="/projects/x010" class="text-amber-400 underline">X010</a> venture lab.
+                    </p>
+
+                    <div class="flex flex-wrap items-center gap-3">
+                        <a href="/contact" class="btn-primary text-xs !py-2.5 !px-5">
+                            <span>Get in Touch</span>
+                            <i class="fa-solid fa-envelope"></i>
+                        </a>
+                        <a href="https://github.com/Rafin010" target="_blank" rel="noopener noreferrer" class="btn-secondary text-xs !py-2.5 !px-5">
+                            <i class="fa-brands fa-github"></i>
+                            <span>GitHub</span>
+                        </a>
+                        <a href="/experience" class="btn-secondary text-xs !py-2.5 !px-5">
+                            <span>View Career Experience</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Long-Form About Body -->
+        <article class="article-prose space-y-12">
+            
+            <section>
+                <h2>Engineering Background & Journey</h2>
+                <p>
+                    I have always been drawn to the intersection of raw performance and elegant user experience. What began as an obsession with low-level network packets, Linux kernel tuning, and real-time socket communication naturally evolved into architecting mission-critical platforms capable of serving high concurrency with minimal hardware footprints.
+                </p>
+                <p>
+                    Rather than building generic clones or over-engineered boilerplate, I focus on solving difficult, high-leverage technical problems:
+                </p>
+                <ul>
+                    <li>How do you deliver broadcast-quality live sports video to 100,000+ simultaneous viewers with sub-2.5 second latency over standard HTTP? (Answered in my <a href="/case-studies/sportyxi">SportyXi case study</a>).</li>
+                    <li>How do you process 10,000 financial ticks per second without memory leaks or garbage collection pauses in Python and Go? (Solved in <a href="/projects/market-pilot">Market Pilot</a>).</li>
+                    <li>How do you eliminate LLM hallucinations using semantic vector spaces and knowledge graphs? (Engineered in <a href="/projects/vaxa-ai">Vaxa AI</a>).</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>The Creation of SportyXi</h2>
+                <p>
+                    One of my defining engineering undertakings is <a href="https://sportyxi.com" target="_blank" rel="noopener noreferrer">SportyXi</a>, a modern digital sports streaming platform. Frustrated by the sluggish 30-second delays, ad-infested layouts, and constant stream buffering typical of conventional sports websites, I set out to architect an alternative from first principles.
+                </p>
+                <p>
+                    Operating as both founder and lead architect, I developed a custom Low-Latency HLS (LL-HLS) pipeline backed by single-flight mutex origin shielding. Today, <a href="/projects/sportyxi">SportyXi</a> delivers sub-second telemetry and crystal-clear match streams to global audiences daily.
+                </p>
+            </section>
+
+            <section>
+                <h2>Core Engineering Values</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 not-prose my-6">
+                    <div class="glass-panel p-5 rounded-xl border border-white/5">
+                        <div class="flex items-center gap-2 mb-2 text-amber-400 font-bold text-sm">
+                            <i class="fa-solid fa-gauge-simple-high"></i> Zero Bloat
+                        </div>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Every kilobyte of JavaScript sent down the wire must justify its existence. Lightweight code runs faster, breaks less, and respects user battery life.
+                        </p>
+                    </div>
+
+                    <div class="glass-panel p-5 rounded-xl border border-white/5">
+                        <div class="flex items-center gap-2 text-cyan-400 font-bold text-sm mb-2">
+                            <i class="fa-solid fa-shield-halved"></i> Resilient Simplicity
+                        </div>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Complex distributed architectures fail in complex, un-debuggable ways. I prefer battle-tested primitives: Nginx, Redis, PostgreSQL, and Linux namespaces.
+                        </p>
+                    </div>
+
+                    <div class="glass-panel p-5 rounded-xl border border-white/5">
+                        <div class="flex items-center gap-2 text-emerald-400 font-bold text-sm mb-2">
+                            <i class="fa-solid fa-eye"></i> Respect for User Attention
+                        </div>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Interfaces should get out of the way. No intrusive marketing modals, no deceptive dark patterns, and no sensory clutter.
+                        </p>
+                    </div>
+
+                    <div class="glass-panel p-5 rounded-xl border border-white/5">
+                        <div class="flex items-center gap-2 text-purple-400 font-bold text-sm mb-2">
+                            <i class="fa-solid fa-chart-pie"></i> Founder Ownership
+                        </div>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            True product builders understand both the code and the business model. Technical decisions must always align with long-term product viability.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>X010: The Venture Lab</h2>
+                <p>
+                    To house these efforts under a unified architectural philosophy, I founded <a href="/projects/x010">X010</a>. It operates as my parent holding studio, incubating media delivery networks, predictive intelligence software, and modern web tooling.
+                </p>
+                <p>
+                    Whether collaborating with fellow founders, advising technology startups, or scaling internal products, I am committed to building software that lasts.
+                </p>
+            </section>
+
+        </article>
+
+        <!-- Navigation Call to Action -->
+        <div class="mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div>
+                <span class="text-xs font-mono text-gray-400 uppercase tracking-wider block mb-1">Discover Technical Capabilities</span>
+                <span class="text-lg font-bold text-white">Review my full technical stack and languages.</span>
+            </div>
+            <a href="/skills" class="btn-primary">
+                <span>Explore Technical Skills</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="bg-[#02050c] border-t border-white/10 py-12 mt-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="md:col-span-2">
+                    <span class="text-lg font-bold font-display text-white block mb-2">Rafin</span>
+                    <p class="text-xs text-gray-400 max-w-sm mb-4">
+                        Founder, software engineer, and systems architect building high-concurrency platforms and AI products at X010.
+                    </p>
+                    <div class="text-xs font-mono text-amber-400">
+                        Official Project: <a href="https://sportyxi.com" target="_blank" rel="noopener noreferrer" class="underline">SportyXi Platform</a>
+                    </div>
+                </div>
+                <div>
+                    <span class="text-xs font-mono uppercase text-gray-400 tracking-wider block mb-3">Explore</span>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="/projects" class="text-gray-400 hover:text-white">All Projects</a></li>
+                        <li><a href="/projects/sportyxi" class="text-gray-400 hover:text-white">SportyXi Platform</a></li>
+                        <li><a href="/case-studies/sportyxi" class="text-gray-400 hover:text-white">SportyXi Case Study</a></li>
+                        <li><a href="/projects/x010" class="text-gray-400 hover:text-white">X010 Studio</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <span class="text-xs font-mono uppercase text-gray-400 tracking-wider block mb-3">Connect</span>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="/contact" class="text-gray-400 hover:text-white">Contact Rafin</a></li>
+                        <li><a href="https://github.com/Rafin010" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">GitHub Profile</a></li>
+                        <li><a href="/blog" class="text-gray-400 hover:text-white">Engineering Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 font-mono">
+                <div>© 2026 Rafin. All rights reserved.</div>
+                <div class="mt-2 sm:mt-0">Founder & Systems Architect • Authority Hub</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Client Script -->
+    <script src="/js/main.js"></script>
+</body>
+</html>

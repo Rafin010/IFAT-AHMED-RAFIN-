@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How I Built a Modern Sports Streaming Platform with Sub-2.5s Latency | Rafin</title>
+    <meta name="description" content="A comprehensive technical account of how Rafin architected and built SportyXi: micro-chunk LL-HLS transcoding, WebSocket telemetry, and origin shield caching.">
+    <link rel="canonical" href="https://ifatahmedrafin.sportyxi.com/blog/how-i-built-a-sports-streaming-platform">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://ifatahmedrafin.sportyxi.com/blog/how-i-built-a-sports-streaming-platform">
+    <meta property="og:title" content="How I Built a Modern Sports Streaming Platform with Sub-2.5s Latency">
+    <meta property="og:description" content="Technical walkthrough of building SportyXi, achieving sub-2.5s glass-to-glass delay for live sports.">
+    <meta property="og:image" content="https://ifatahmedrafin.sportyxi.com/img/SportyXi-Banner.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="How I Built a Modern Sports Streaming Platform with Sub-2.5s Latency">
+    <meta name="twitter:description" content="Technical walkthrough of building SportyXi, achieving sub-2.5s glass-to-glass delay for live sports.">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Article",
+          "headline": "How I Built a Modern Sports Streaming Platform with Sub-2.5s Latency",
+          "description": "A detailed technical breakdown of architecting SportyXi for low-latency live video distribution.",
+          "author": {
+            "@type": "Person",
+            "name": "Rafin",
+            "url": "https://ifatahmedrafin.sportyxi.com"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "X010",
+            "url": "https://ifatahmedrafin.sportyxi.com/projects/x010"
+          },
+          "datePublished": "2026-08-20",
+          "dateModified": "2026-10-01",
+          "mainEntityOfPage": "https://ifatahmedrafin.sportyxi.com/blog/how-i-built-a-sports-streaming-platform"
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://ifatahmedrafin.sportyxi.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Blog",
+              "item": "https://ifatahmedrafin.sportyxi.com/blog"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "How I Built a Sports Streaming Platform",
+              "item": "https://ifatahmedrafin.sportyxi.com/blog/how-i-built-a-sports-streaming-platform"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+</head>
+<body class="bg-[#030712] text-gray-100 flex flex-col min-h-screen">
+
+    <!-- Reading Progress Bar -->
+    <div id="reading-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-amber-500 to-amber-300 z-50 transition-all duration-75" style="width: 0%;"></div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 bg-[#030712]/85 backdrop-blur-xl border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center text-black font-display font-black text-xl shadow-lg shadow-amber-500/20 group-hover:scale-105 transition">
+                    R
+                </div>
+                <div>
+                    <span class="font-display font-bold text-lg text-white block group-hover:text-amber-400 transition">Rafin</span>
+                    <span class="text-[11px] font-mono text-gray-400 block tracking-tight">Founder • Developer</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-8 text-sm">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/about" class="nav-link">About</a>
+                <a href="/projects" class="nav-link">Projects</a>
+                <a href="/case-studies" class="nav-link">Case Studies</a>
+                <a href="/experience" class="nav-link">Experience</a>
+                <a href="/skills" class="nav-link">Skills</a>
+                <a href="/blog" class="nav-link active">Blog</a>
+                <a href="/contact" class="btn-primary text-xs !py-2 !px-4">Get in Touch</a>
+            </nav>
+
+            <button id="mobile-menu-btn" aria-label="Toggle Menu" class="md:hidden p-2.5 rounded-lg bg-white/5 border border-white/10 text-gray-300">
+                <i class="fa-solid fa-bars text-lg"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-[#080d1a] border-b border-white/10 px-6 py-6 space-y-4">
+            <a href="/" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Home</a>
+            <a href="/about" class="block text-gray-300 hover:text-amber-400 font-medium py-1">About</a>
+            <a href="/projects" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Projects</a>
+            <a href="/case-studies" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Case Studies</a>
+            <a href="/experience" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Experience</a>
+            <a href="/skills" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Skills</a>
+            <a href="/blog" class="block text-amber-400 font-medium py-1">Blog</a>
+            <a href="/contact" class="btn-primary text-center block w-full mt-4">Get in Touch</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb-container" aria-label="Breadcrumb">
+            <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+            <span class="separator">/</span>
+            <a href="/blog">Blog</a>
+            <span class="separator">/</span>
+            <span class="current" aria-current="page">How I Built SportyXi</span>
+        </nav>
+
+        <!-- Article Header -->
+        <header class="mb-10">
+            <div class="flex flex-wrap items-center gap-2 mb-3">
+                <span class="badge-tech badge-amber">Engineering Story</span>
+                <span class="badge-tech"><i class="fa-regular fa-clock"></i> 9 min read</span>
+            </div>
+
+            <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight mb-4">
+                How I Built a Modern Sports Streaming Platform with Sub-2.5s Latency
+            </h1>
+
+            <div class="flex items-center gap-3 text-xs font-mono text-gray-400 py-3 border-y border-white/10">
+                <span>By <strong class="text-white">Rafin</strong></span>
+                <span>•</span>
+                <span>Venture: <a href="/projects/x010" class="text-amber-400 underline">X010</a></span>
+                <span>•</span>
+                <span>Project: <a href="https://sportyxi.com" target="_blank" rel="noopener noreferrer" class="text-amber-400 underline">SportyXi</a></span>
+            </div>
+        </header>
+
+        <!-- Article Prose Body -->
+        <article class="article-prose space-y-8">
+            <p>
+                Live sports is the ultimate test for web infrastructure. If you build an ecommerce store and a product page takes 1.5 seconds to load, users might barely notice. But if you are broadcasting a Champions League penalty kick and your stream lags 25 seconds behind the live whistle, a message from a friend’s group chat will spoil the goal before the ball even leaves the striker’s boot on your screen.
+            </p>
+            <p>
+                This latency dilemma is what prompted me to build <a href="https://sportyxi.com" target="_blank" rel="noopener noreferrer">SportyXi</a>. In this post, I want to share the technical reality of building a broadcast-grade sports streaming platform from scratch: the encoding hurdles, the origin shielding architecture, and why we chose Low-Latency HLS over pure WebRTC.
+            </p>
+
+            <h2>1. Why Traditional HLS Destroys the Live Sports Experience</h2>
+            <p>
+                HTTP Live Streaming (HLS) was designed by Apple over a decade ago. It operates by slicing video files into discrete transport stream segments (typically 6 seconds each) indexed by a text playlist file (`.m3u8`).
+            </p>
+            <p>
+                In standard HLS, a video player will not start playback until it has buffered at least three full chunks to safeguard against jitter. Do the math:
+            </p>
+            <pre><code>3 chunks × 6 seconds = 18 seconds of player buffer
++ 3 to 6 seconds of transcode chunking time
++ 2 seconds of CDN edge distribution delay
+= 23 to 26 seconds of total glass-to-glass delay</code></pre>
+            <p>
+                For on-demand TV series, a 25-second delay is completely irrelevant. For live sports, it is completely unacceptable.
+            </p>
+
+            <h2>2. The Solution: CMAF Micro-Chunking and LL-HLS</h2>
+            <p>
+                To eliminate this delay without going bankrupt on WebRTC infrastructure costs, we implemented Low-Latency HLS (LL-HLS) utilizing CMAF (Common Media Application Format) chunking.
+            </p>
+            <p>
+                Instead of waiting for a 6-second segment to completely write to disk before making it available in the playlist, our transcode nodes produce 1-second chunks divided into partial segments (parts) of roughly 250 milliseconds.
+            </p>
+            <p>
+                Using HTTP/2 chunked transfer encoding, our edge servers push these parts to the browser before the full segment has even finished rendering. The result? End-to-end glass-to-glass latency drops from 25 seconds down to <strong>2.1 seconds</strong>.
+            </p>
+
+            <h2>3. Surviving the "Thundering Herd" with Origin Shielding</h2>
+            <p>
+                One of the greatest engineering scares when scaling <a href="/projects/sportyxi">SportyXi</a> occurred during our first major international football derby. When a goal was scored, over 60,000 users refreshed their players or requested updated playlists within a 3-second span.
+            </p>
+            <p>
+                Every client made simultaneous requests to our origin server for the latest playlist segment. The origin CPU spiked to 100%, packets were dropped, and users experienced buffering wheels.
+            </p>
+            <p>
+                To permanently eliminate this vulnerability, we introduced an <strong>Origin Shield Proxy</strong> powered by OpenResty and Redis. When thousands of requests hit our edge servers for an un-cached chunk, the origin shield employs a single-flight mutex lock. Exactly one request is allowed to fetch the new chunk from the transcode storage, while the remaining 59,999 requests wait in memory for a few milliseconds and are satisfied from the same cached byte stream.
+            </p>
+
+            <blockquote>
+                "At high concurrency, caching is not an optimization—it is your primary defense against cascading infrastructure collapse."
+            </blockquote>
+
+            <h2>4. UI/UX: The "Obsidian Theater" Design</h2>
+            <p>
+                A high-performance streaming backend deserves an equally disciplined frontend. In building the client application for <a href="https://sportyxi.com" target="_blank" rel="noopener noreferrer">SportyXi.com</a>, we threw out heavy third-party player plugins that bloated bundle sizes.
+            </p>
+            <p>
+                Instead, we built a custom player wrapper around <code>Hls.js</code> and the native HTML5 Video element, paired with an "Obsidian Theater" dark mode aesthetic (`#02040a`) that directs all visual focus directly onto the live pitch.
+            </p>
+
+            <h2>5. What’s Next for the Platform</h2>
+            <p>
+                SportyXi continues to evolve as part of the <a href="/projects/x010">X010</a> technology venture lab. We are currently testing AV1 codec ingestion to reduce mobile bandwidth consumption by another 30% and building automated AI highlight clipping pipelines.
+            </p>
+            <p>
+                If you are curious about the deeper architecture numbers, make sure to read the full <a href="/case-studies/sportyxi">SportyXi 13-Section Engineering Case Study</a>.
+            </p>
+        </article>
+
+        <!-- Outro Links -->
+        <div class="mt-12 p-6 glass-panel rounded-2xl border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+                <span class="text-xs font-mono text-gray-400 block mb-0.5">Explore the Live Platform</span>
+                <span class="text-sm font-bold text-white">Experience sub-2.5s sports streaming live at SportyXi.com</span>
+            </div>
+            <a href="https://sportyxi.com" target="_blank" rel="noopener noreferrer" class="btn-primary text-xs !py-2.5 !px-5 shrink-0">
+                <span>Visit SportyXi</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </a>
+        </div>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="bg-[#02050c] border-t border-white/10 py-12 mt-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="md:col-span-2">
+                    <span class="text-lg font-bold font-display text-white block mb-2">Rafin</span>
+                    <p class="text-xs text-gray-400 max-w-sm mb-4">
+                        Founder, software engineer, and systems architect building high-concurrency platforms and AI products at X010.
+                    </p>
+                    <div class="text-xs font-mono text-amber-400">
+                        Official Project: <a href="https://sportyxi.com" target="_blank" rel="noopener noreferrer" class="underline">SportyXi Platform</a>
+                    </div>
+                </div>
+                <div>
+                    <span class="text-xs font-mono uppercase text-gray-400 tracking-wider block mb-3">Related Reading</span>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="/case-studies/sportyxi" class="text-amber-400">SportyXi Case Study</a></li>
+                        <li><a href="/projects/sportyxi" class="text-gray-400 hover:text-white">SportyXi Specs</a></li>
+                        <li><a href="/projects/x010" class="text-gray-400 hover:text-white">X010 Studio</a></li>
+                        <li><a href="/blog" class="text-gray-400 hover:text-white">All Articles</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <span class="text-xs font-mono uppercase text-gray-400 tracking-wider block mb-3">Connect</span>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="/contact" class="text-gray-400 hover:text-white">Contact Rafin</a></li>
+                        <li><a href="https://github.com/Rafin010" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">GitHub Profile</a></li>
+                        <li><a href="/about" class="text-gray-400 hover:text-white">About Rafin</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 font-mono">
+                <div>© 2026 Rafin. All rights reserved.</div>
+                <div class="mt-2 sm:mt-0">Engineering Notes • Technical Authority Hub</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Client Script -->
+    <script src="/js/main.js"></script>
+</body>
+</html>

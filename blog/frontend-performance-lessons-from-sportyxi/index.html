@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend Performance Lessons from SportyXi: Sub-300ms Video Boot and Canvas Overlays | Rafin</title>
+    <meta name="description" content="How Rafin optimized Core Web Vitals in SportyXi: sub-300ms video boot, hardware-accelerated HTML5 Canvas overlays, and zero-bloat reactive UI architecture.">
+    <link rel="canonical" href="https://ifatahmedrafin.sportyxi.com/blog/frontend-performance-lessons-from-sportyxi">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://ifatahmedrafin.sportyxi.com/blog/frontend-performance-lessons-from-sportyxi">
+    <meta property="og:title" content="Frontend Performance Lessons from SportyXi: Sub-300ms Video Boot and Canvas Overlays">
+    <meta property="og:description" content="Technical guide on frontend video optimization, sub-300ms video boot, and HTML5 Canvas telemetry layers.">
+    <meta property="og:image" content="https://ifatahmedrafin.sportyxi.com/img/SportyXi-Banner.png">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "TechArticle",
+          "headline": "Frontend Performance Lessons from SportyXi: Sub-300ms Video Boot and Canvas Overlays",
+          "description": "An architectural guide exploring how to achieve sub-300ms initial video boot and 60fps telemetry overlays on mobile devices.",
+          "author": {
+            "@type": "Person",
+            "name": "Rafin",
+            "url": "https://ifatahmedrafin.sportyxi.com"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "X010",
+            "url": "https://ifatahmedrafin.sportyxi.com/projects/x010"
+          },
+          "datePublished": "2026-08-28",
+          "dateModified": "2026-10-01",
+          "mainEntityOfPage": "https://ifatahmedrafin.sportyxi.com/blog/frontend-performance-lessons-from-sportyxi"
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://ifatahmedrafin.sportyxi.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Blog",
+              "item": "https://ifatahmedrafin.sportyxi.com/blog"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Frontend Performance Lessons",
+              "item": "https://ifatahmedrafin.sportyxi.com/blog/frontend-performance-lessons-from-sportyxi"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+</head>
+<body class="bg-[#030712] text-gray-100 flex flex-col min-h-screen">
+
+    <!-- Reading Progress Bar -->
+    <div id="reading-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-amber-500 to-amber-300 z-50 transition-all duration-75" style="width: 0%;"></div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 bg-[#030712]/85 backdrop-blur-xl border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center text-black font-display font-black text-xl shadow-lg shadow-amber-500/20 group-hover:scale-105 transition">
+                    R
+                </div>
+                <div>
+                    <span class="font-display font-bold text-lg text-white block group-hover:text-amber-400 transition">Rafin</span>
+                    <span class="text-[11px] font-mono text-gray-400 block tracking-tight">Founder • Developer</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-8 text-sm">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/about" class="nav-link">About</a>
+                <a href="/projects" class="nav-link">Projects</a>
+                <a href="/case-studies" class="nav-link">Case Studies</a>
+                <a href="/experience" class="nav-link">Experience</a>
+                <a href="/skills" class="nav-link">Skills</a>
+                <a href="/blog" class="nav-link active">Blog</a>
+                <a href="/contact" class="btn-primary text-xs !py-2 !px-4">Get in Touch</a>
+            </nav>
+
+            <button id="mobile-menu-btn" aria-label="Toggle Menu" class="md:hidden p-2.5 rounded-lg bg-white/5 border border-white/10 text-gray-300">
+                <i class="fa-solid fa-bars text-lg"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-[#080d1a] border-b border-white/10 px-6 py-6 space-y-4">
+            <a href="/" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Home</a>
+            <a href="/about" class="block text-gray-300 hover:text-amber-400 font-medium py-1">About</a>
+            <a href="/projects" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Projects</a>
+            <a href="/case-studies" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Case Studies</a>
+            <a href="/experience" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Experience</a>
+            <a href="/skills" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Skills</a>
+            <a href="/blog" class="block text-amber-400 font-medium py-1">Blog</a>
+            <a href="/contact" class="btn-primary text-center block w-full mt-4">Get in Touch</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb-container" aria-label="Breadcrumb">
+            <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+            <span class="separator">/</span>
+            <a href="/blog">Blog</a>
+            <span class="separator">/</span>
+            <span class="current" aria-current="page">Frontend Performance</span>
+        </nav>
+
+        <!-- Article Header -->
+        <header class="mb-10">
+            <div class="flex flex-wrap items-center gap-2 mb-3">
+                <span class="badge-tech badge-emerald">Frontend Optimization</span>
+                <span class="badge-tech"><i class="fa-regular fa-clock"></i> 8 min read</span>
+            </div>
+
+            <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight mb-4">
+                Frontend Performance Lessons from SportyXi: Sub-300ms Video Boot and Canvas Overlays
+            </h1>
+
+            <div class="flex items-center gap-3 text-xs font-mono text-gray-400 py-3 border-y border-white/10">
+                <span>By <strong class="text-white">Rafin</strong></span>
+                <span>•</span>
+                <span>Systems Architect at <a href="/projects/x010" class="text-amber-400 underline">X010</a></span>
+                <span>•</span>
+                <span>Project: <a href="https://sportyxi.com" target="_blank" rel="noopener noreferrer" class="text-amber-400 underline">SportyXi</a></span>
+            </div>
+        </header>
+
+        <!-- Article Prose Body -->
+        <article class="article-prose space-y-8">
+            <p>
+                In the era of 5MB single-page JavaScript bundles, bloated CSS frameworks, and intrusive third-party analytics trackers, website performance has hit an all-time low. For a video streaming platform, frontend bloat is catastrophic: every millisecond your main browser thread spends parsing JavaScript is a millisecond your video decoder is starved of CPU cycles.
+            </p>
+            <p>
+                When building the frontend for the <a href="https://sportyxi.com" target="_blank" rel="noopener noreferrer">SportyXi sports platform</a>, our goal was radical: achieve an instant sub-300ms video playback boot while keeping Core Web Vitals strictly in the 99th percentile across mobile and desktop browsers.
+            </p>
+
+            <h2>1. Ditching Third-Party Video Frameworks</h2>
+            <p>
+                Most modern video websites pull in generic player packages that bundle hundreds of kilobytes of unused skins, advertising wrappers, and social share widgets.
+            </p>
+            <p>
+                We took the contrarian route: we bypassed heavy player skins and built directly on top of the native HTML5 <code>&lt;video&gt;</code> element paired with a minimal, optimized build of <code>Hls.js</code>.
+            </p>
+            <ul>
+                <li><strong>Bundle Reduction:</strong> Shaved over 380 KB of uncompressed JavaScript from the initial page payload.</li>
+                <li><strong>Hardware Acceleration:</strong> Native browser video elements pass decoded frames directly to GPU hardware layers, reducing mobile battery drain by over 40%.</li>
+            </ul>
+
+            <h2>2. Eliminating Layout Thrashing with Canvas Telemetry</h2>
+            <p>
+                In live sports, match scoreboards, possession clocks, and pitch events update multiple times per second. If you attempt to render fast-moving coordinates (such as ball radar or player heatmaps) using traditional DOM elements or React state updates, the browser constantly recalculates layouts and triggers severe repaints.
+            </p>
+            <p>
+                To solve this in <a href="/projects/sportyxi">SportyXi</a>, we separated the video player into two distinct rendering layers:
+            </p>
+            <div class="callout-box not-prose">
+                <div class="text-xs font-mono text-emerald-400 uppercase tracking-widest mb-2">Two-Layer UI Architecture</div>
+                <p class="text-xs text-gray-300 font-mono">
+                    [Layer 0: Native Video Hardware Decoder] ──► Renders raw 60fps video frames.<br>
+                    [Layer 1: Transparent HTML5 Canvas Overlay] ──► Plots live radar, scores, and alerts via requestAnimationFrame without triggering a single DOM reflow.
+                </p>
+            </div>
+
+            <h2>3. Sub-300ms Time to First Frame (TTFF)</h2>
+            <p>
+                To make video playback feel instantaneous, our backend transcoder pre-injects a miniature 250ms I-frame (keyframe) at the top of the initial HLS manifest. When the browser requests the stream, it decodes and renders that keyframe within 180ms, giving the user immediate visual confirmation while subsequent audio/video CMAF fragments stream in continuously.
+            </p>
+
+            <h2>4. Summary of Key Performance Rules</h2>
+            <ul>
+                <li>Never re-render the entire DOM for real-time telemetry; use Canvas or decoupled micro-components.</li>
+                <li>Keep initial bundle sizes below 100 KB total gzip.</li>
+                <li>Let native browser hardware handle decoding rather than layering heavy JavaScript wrappers over the player.</li>
+            </ul>
+            <p>
+                To see these architectural principles in action, check out the live <a href="https://sportyxi.com" target="_blank" rel="noopener noreferrer">SportyXi platform</a> or read our in-depth <a href="/case-studies/sportyxi">SportyXi Engineering Case Study</a>.
+            </p>
+        </article>
+
+        <!-- Outro Links -->
+        <div class="mt-12 p-6 glass-panel rounded-2xl border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+                <span class="text-xs font-mono text-gray-400 block mb-0.5">Explore the Production Platform</span>
+                <span class="text-sm font-bold text-white">Experience high-speed video rendering live at SportyXi.com</span>
+            </div>
+            <a href="https://sportyxi.com" target="_blank" rel="noopener noreferrer" class="btn-primary text-xs !py-2.5 !px-5 shrink-0">
+                <span>Visit SportyXi</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </a>
+        </div>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="bg-[#02050c] border-t border-white/10 py-12 mt-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="md:col-span-2">
+                    <span class="text-lg font-bold font-display text-white block mb-2">Rafin</span>
+                    <p class="text-xs text-gray-400 max-w-sm mb-4">
+                        Founder, software engineer, and systems architect building high-concurrency platforms and AI products at X010.
+                    </p>
+                    <div class="text-xs font-mono text-amber-400">
+                        Official Project: <a href="https://sportyxi.com" target="_blank" rel="noopener noreferrer" class="underline">SportyXi Platform</a>
+                    </div>
+                </div>
+                <div>
+                    <span class="text-xs font-mono uppercase text-gray-400 tracking-wider block mb-3">Related Reading</span>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="/case-studies/sportyxi" class="text-amber-400">SportyXi Case Study</a></li>
+                        <li><a href="/projects/sportyxi" class="text-gray-400 hover:text-white">SportyXi Specs</a></li>
+                        <li><a href="/projects/x010" class="text-gray-400 hover:text-white">X010 Studio</a></li>
+                        <li><a href="/blog" class="text-gray-400 hover:text-white">All Articles</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <span class="text-xs font-mono uppercase text-gray-400 tracking-wider block mb-3">Connect</span>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="/contact" class="text-gray-400 hover:text-white">Contact Rafin</a></li>
+                        <li><a href="https://github.com/Rafin010" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">GitHub Profile</a></li>
+                        <li><a href="/about" class="text-gray-400 hover:text-white">About Rafin</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 font-mono">
+                <div>© 2026 Rafin. All rights reserved.</div>
+                <div class="mt-2 sm:mt-0">Frontend Performance Notes • Authority Hub</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Client Script -->
+    <script src="/js/main.js"></script>
+</body>
+</html>

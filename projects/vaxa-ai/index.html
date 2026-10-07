@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaxa AI — Cognitive Search & Knowledge Intelligence Engine | Rafin</title>
+    <meta name="description" content="Technical architecture of Vaxa AI, an intelligent neural search and knowledge agent engine combining dense vector embeddings and graph RAG by Rafin at X010.">
+    <link rel="canonical" href="https://ifatahmedrafin.sportyxi.com/projects/vaxa-ai">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ifatahmedrafin.sportyxi.com/projects/vaxa-ai">
+    <meta property="og:title" content="Vaxa AI — Cognitive Search & Knowledge Intelligence Engine">
+    <meta property="og:description" content="Neural search, vector indexing, and autonomous knowledge retrieval engine engineered by Rafin.">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "Vaxa AI",
+          "applicationCategory": "UtilitiesApplication",
+          "author": {
+            "@type": "Person",
+            "name": "Rafin",
+            "url": "https://ifatahmedrafin.sportyxi.com"
+          },
+          "description": "A cognitive AI search engine leveraging hybrid dense vector embeddings, reciprocal rank fusion, and graph retrieval-augmented generation (RAG)."
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://ifatahmedrafin.sportyxi.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Projects",
+              "item": "https://ifatahmedrafin.sportyxi.com/projects"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Vaxa AI",
+              "item": "https://ifatahmedrafin.sportyxi.com/projects/vaxa-ai"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+</head>
+<body class="bg-[#030712] text-gray-100 flex flex-col min-h-screen">
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 bg-[#030712]/80 backdrop-blur-xl border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center text-black font-display font-black text-xl shadow-lg shadow-amber-500/20 group-hover:scale-105 transition">
+                    R
+                </div>
+                <div>
+                    <span class="font-display font-bold text-lg text-white block group-hover:text-amber-400 transition">Rafin</span>
+                    <span class="text-[11px] font-mono text-gray-400 block tracking-tight">Founder • Developer</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-8 text-sm">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/about" class="nav-link">About</a>
+                <a href="/projects" class="nav-link active">Projects</a>
+                <a href="/case-studies" class="nav-link">Case Studies</a>
+                <a href="/experience" class="nav-link">Experience</a>
+                <a href="/skills" class="nav-link">Skills</a>
+                <a href="/blog" class="nav-link">Blog</a>
+                <a href="/contact" class="btn-primary text-xs !py-2 !px-4">Get in Touch</a>
+            </nav>
+
+            <button id="mobile-menu-btn" aria-label="Toggle Menu" class="md:hidden p-2.5 rounded-lg bg-white/5 border border-white/10 text-gray-300">
+                <i class="fa-solid fa-bars text-lg"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-[#080d1a] border-b border-white/10 px-6 py-6 space-y-4">
+            <a href="/" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Home</a>
+            <a href="/about" class="block text-gray-300 hover:text-amber-400 font-medium py-1">About</a>
+            <a href="/projects" class="block text-amber-400 font-medium py-1">Projects</a>
+            <a href="/case-studies" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Case Studies</a>
+            <a href="/experience" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Experience</a>
+            <a href="/skills" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Skills</a>
+            <a href="/blog" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Blog</a>
+            <a href="/contact" class="btn-primary text-center block w-full mt-4">Get in Touch</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb-container" aria-label="Breadcrumb">
+            <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+            <span class="separator">/</span>
+            <a href="/projects">Projects</a>
+            <span class="separator">/</span>
+            <span class="current" aria-current="page">Vaxa AI</span>
+        </nav>
+
+        <!-- Project Hero Header -->
+        <div class="glass-panel p-8 sm:p-12 rounded-3xl mb-12 relative overflow-hidden border border-purple-500/20">
+            <div class="bg-ambient-amber top-[-100px] right-[-100px]"></div>
+            
+            <div class="relative z-10">
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <span class="badge-tech badge-emerald"><i class="fa-solid fa-brain"></i> Neural Search</span>
+                    <span class="badge-tech badge-cyan"><i class="fa-solid fa-network-wired"></i> Graph RAG</span>
+                    <span class="badge-tech"><i class="fa-solid fa-cubes"></i> Incubated at X010</span>
+                </div>
+
+                <h1 class="text-3xl sm:text-5xl font-extrabold text-white mb-6 tracking-tight leading-tight">
+                    Vaxa AI — Cognitive Search & Knowledge Intelligence Engine
+                </h1>
+
+                <p class="text-lg sm:text-xl text-gray-300 leading-relaxed max-w-3xl mb-8 font-light">
+                    A next-generation enterprise search and reasoning platform that replaces keyword matching with semantic vector representations, contextual graph traversal, and verified citation pipelines.
+                </p>
+
+                <div class="flex flex-wrap items-center gap-4">
+                    <a href="/contact" class="btn-primary text-sm px-6 py-3">
+                        <span>Discuss Enterprise AI Pilot</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                    <a href="/projects/x010" class="btn-secondary text-sm px-6 py-3">
+                        <i class="fa-solid fa-building text-purple-400"></i>
+                        <span>Explore X010 Lab</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project Metadata Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            <div class="glass-panel p-6 rounded-2xl">
+                <div class="text-xs font-mono text-gray-400 uppercase tracking-wider mb-2">My Role</div>
+                <div class="text-lg font-bold text-white mb-1">Founder & AI Architect</div>
+                <p class="text-xs text-gray-400">Constructed dense embedding pipelines, vector indexing architectures, and LLM reranking agents.</p>
+            </div>
+            <div class="glass-panel p-6 rounded-2xl">
+                <div class="text-xs font-mono text-gray-400 uppercase tracking-wider mb-2">Parent Lab</div>
+                <div class="text-lg font-bold text-purple-400 mb-1"><a href="/projects/x010" class="hover:underline">X010 Venture Studio</a></div>
+                <p class="text-xs text-gray-400">Developed in tandem with <a href="/projects/sportyxi" class="text-amber-400 underline">SportyXi</a> streaming and <a href="/projects/market-pilot" class="text-cyan-400 underline">Market Pilot</a> analytics.</p>
+            </div>
+            <div class="glass-panel p-6 rounded-2xl">
+                <div class="text-xs font-mono text-gray-400 uppercase tracking-wider mb-2">Retrieval Precision</div>
+                <div class="text-lg font-bold text-emerald-400 mb-1">Sub-90ms Search</div>
+                <p class="text-xs text-gray-400">Hybrid BM25 + HNSW vector indexing over multi-million document corpora.</p>
+            </div>
+        </div>
+
+        <!-- Detailed Specifications -->
+        <article class="article-prose space-y-12">
+            <section>
+                <h2>1. Problem: The Hallucination Dilemma</h2>
+                <p>
+                    Standard large language models hallucinate false facts when queried about proprietary domain knowledge. Conversely, traditional full-text search fails to comprehend semantic synonyms, conceptual relationships, or user intent.
+                </p>
+                <p>
+                    Vaxa AI bridges this divide with an end-to-end <strong>Retrieval-Augmented Generation (RAG)</strong> architecture that enforces strict factual attribution by anchoring LLM outputs directly to verifiable source chunks.
+                </p>
+            </section>
+
+            <section>
+                <h2>2. Architecture & Tech Stack</h2>
+                <div class="callout-box not-prose">
+                    <div class="text-xs font-mono text-purple-400 uppercase tracking-widest mb-2">Vaxa AI Neural Pipeline</div>
+                    <pre><code>[Document Ingestion (PDF, Markdown, HTML, APIs)]
+                       │
+                       ▼
+  [Semantic Chunking & Metadata Enrichment]
+                       │
+                       ▼
+ [Dual Encoder Vectorization (Dense + Sparse Embeddings)]
+                       │
+                       ▼
+  [Vector Store (Qdrant / Milvus) + Knowledge Graph]
+                       │
+                       ▼
+ [Hybrid Query: Dense Similarity + BM25 Keyword Search]
+                       │
+                       ▼
+     [Cross-Encoder Reranking & LLM Synthesis]
+                       │
+                       ▼
+   [Verified Output with Direct Inline Footnotes]</code></pre>
+                </div>
+
+                <div class="not-prose flex flex-wrap gap-2 my-4">
+                    <span class="badge-tech"><i class="fa-brands fa-python text-yellow-400"></i> Python & FastAPI</span>
+                    <span class="badge-tech"><i class="fa-solid fa-cube text-emerald-400"></i> Qdrant Vector DB</span>
+                    <span class="badge-tech"><i class="fa-solid fa-brain text-purple-400"></i> Hugging Face Transformers</span>
+                    <span class="badge-tech"><i class="fa-solid fa-bolt text-amber-400"></i> Redis Cache</span>
+                    <span class="badge-tech"><i class="fa-brands fa-react text-sky-400"></i> React & Tailwind UI</span>
+                </div>
+            </section>
+
+            <section>
+                <h2>3. Key Capabilities</h2>
+                <ul>
+                    <li><strong>Reciprocal Rank Fusion (RRF):</strong> Combines lexical precision (exact serial codes, part numbers) with semantic nuance (natural language intent).</li>
+                    <li><strong>Fact Verification Guardrails:</strong> Every claim generated by the model must cite a specific chunk ID or the system explicitly flags uncertainty.</li>
+                    <li><strong>Zero Data Leakage:</strong> Strict enterprise tenant isolation ensuring multi-user organizations maintain absolute privacy over proprietary knowledge repositories.</li>
+                </ul>
+            </section>
+        </article>
+
+        <!-- Contextual Navigation -->
+        <div class="mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div>
+                <span class="text-xs font-mono text-gray-400 uppercase tracking-wider block mb-1">Explore High-Concurrency Media</span>
+                <span class="text-lg font-bold text-white">Discover SportyXi, our live streaming platform.</span>
+            </div>
+            <a href="/projects/sportyxi" class="btn-primary">
+                <span>View SportyXi Overview</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="bg-[#02050c] border-t border-white/10 py-12 mt-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="md:col-span-2">
+                    <span class="text-lg font-bold font-display text-white block mb-2">Rafin</span>
+                    <p class="text-xs text-gray-400 max-w-sm mb-4">
+                        Founder, software engineer, and systems architect building high-concurrency platforms and AI products at X010.
+                    </p>
+                    <div class="text-xs font-mono text-amber-400">
+                        Flagship Project: <a href="https://sportyxi.com" target="_blank" rel="noopener noreferrer" class="underline">SportyXi Platform</a>
+                    </div>
+                </div>
+                <div>
+                    <span class="text-xs font-mono uppercase text-gray-400 tracking-wider block mb-3">Authority Links</span>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="/projects/vaxa-ai" class="text-purple-400">Vaxa AI</a></li>
+                        <li><a href="/projects/sportyxi" class="text-gray-400 hover:text-white">SportyXi Project</a></li>
+                        <li><a href="/case-studies/sportyxi" class="text-gray-400 hover:text-white">SportyXi Case Study</a></li>
+                        <li><a href="/projects/x010" class="text-gray-400 hover:text-white">X010 Studio</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <span class="text-xs font-mono uppercase text-gray-400 tracking-wider block mb-3">Connect</span>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="/contact" class="text-gray-400 hover:text-white">Contact Rafin</a></li>
+                        <li><a href="https://github.com/Rafin010" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">GitHub Profile</a></li>
+                        <li><a href="/blog" class="text-gray-400 hover:text-white">Engineering Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 font-mono">
+                <div>© 2026 Rafin. All rights reserved.</div>
+                <div class="mt-2 sm:mt-0">Vaxa AI • X010 Research Portfolio</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Client Script -->
+    <script src="/js/main.js"></script>
+</body>
+</html>

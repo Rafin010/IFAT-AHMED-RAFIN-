@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects & Engineered Products | Rafin</title>
+    <meta name="description" content="Explore live platforms, streaming architectures, and AI/SaaS products engineered by Rafin, including SportyXi, X010, Market Pilot, and Vaxa AI.">
+    <link rel="canonical" href="https://ifatahmedrafin.sportyxi.com/projects">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ifatahmedrafin.sportyxi.com/projects">
+    <meta property="og:title" content="Projects & Engineered Products | Rafin">
+    <meta property="og:description" content="Explore high-concurrency streaming, AI/SaaS, and distributed systems engineered by Rafin.">
+    <meta property="og:image" content="https://ifatahmedrafin.sportyxi.com/img/SportyXi-Banner.png">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "CollectionPage",
+          "name": "Projects Portfolio by Rafin",
+          "url": "https://ifatahmedrafin.sportyxi.com/projects",
+          "description": "A curated directory of production platforms, streaming infrastructure, and AI systems built by Rafin."
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://ifatahmedrafin.sportyxi.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Projects",
+              "item": "https://ifatahmedrafin.sportyxi.com/projects"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+</head>
+<body class="bg-[#030712] text-gray-100 flex flex-col min-h-screen">
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 bg-[#030712]/80 backdrop-blur-xl border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center text-black font-display font-black text-xl shadow-lg shadow-amber-500/20 group-hover:scale-105 transition">
+                    R
+                </div>
+                <div>
+                    <span class="font-display font-bold text-lg text-white block group-hover:text-amber-400 transition">Rafin</span>
+                    <span class="text-[11px] font-mono text-gray-400 block tracking-tight">Founder • Developer</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-8 text-sm">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/about" class="nav-link">About</a>
+                <a href="/projects" class="nav-link active">Projects</a>
+                <a href="/case-studies" class="nav-link">Case Studies</a>
+                <a href="/experience" class="nav-link">Experience</a>
+                <a href="/skills" class="nav-link">Skills</a>
+                <a href="/blog" class="nav-link">Blog</a>
+                <a href="/contact" class="btn-primary text-xs !py-2 !px-4">Get in Touch</a>
+            </nav>
+
+            <button id="mobile-menu-btn" aria-label="Toggle Menu" class="md:hidden p-2.5 rounded-lg bg-white/5 border border-white/10 text-gray-300">
+                <i class="fa-solid fa-bars text-lg"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-[#080d1a] border-b border-white/10 px-6 py-6 space-y-4">
+            <a href="/" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Home</a>
+            <a href="/about" class="block text-gray-300 hover:text-amber-400 font-medium py-1">About</a>
+            <a href="/projects" class="block text-amber-400 font-medium py-1">Projects</a>
+            <a href="/case-studies" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Case Studies</a>
+            <a href="/experience" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Experience</a>
+            <a href="/skills" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Skills</a>
+            <a href="/blog" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Blog</a>
+            <a href="/contact" class="btn-primary text-center block w-full mt-4">Get in Touch</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb-container" aria-label="Breadcrumb">
+            <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+            <span class="separator">/</span>
+            <span class="current" aria-current="page">Projects</span>
+        </nav>
+
+        <!-- Page Header -->
+        <div class="mb-10">
+            <div class="flex items-center gap-2 mb-3">
+                <span class="badge-tech badge-amber">Engineering Portfolio</span>
+                <span class="badge-tech">Production Platforms</span>
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight mb-4">
+                Projects & Venture Portfolio
+            </h1>
+            <p class="text-base sm:text-lg text-gray-400 max-w-2xl font-light">
+                A selection of high-concurrency streaming systems, intelligent SaaS applications, and developer platforms engineered by Rafin.
+            </p>
+        </div>
+
+        <!-- Filter Category Tabs -->
+        <div class="flex flex-wrap items-center gap-2 mb-10 pb-4 border-b border-white/10" id="project-filters">
+            <button class="project-filter-btn px-4 py-2 rounded-xl text-xs font-mono font-bold bg-amber-500 text-black border border-amber-400 transition" data-filter="all">All Projects</button>
+            <button class="project-filter-btn px-4 py-2 rounded-xl text-xs font-mono bg-white/5 text-gray-300 hover:text-white border border-white/10 transition" data-filter="sports">Sports Technology</button>
+            <button class="project-filter-btn px-4 py-2 rounded-xl text-xs font-mono bg-white/5 text-gray-300 hover:text-white border border-white/10 transition" data-filter="ai">AI / SaaS</button>
+            <button class="project-filter-btn px-4 py-2 rounded-xl text-xs font-mono bg-white/5 text-gray-300 hover:text-white border border-white/10 transition" data-filter="studio">Venture Studio</button>
+            <button class="project-filter-btn px-4 py-2 rounded-xl text-xs font-mono bg-white/5 text-gray-300 hover:text-white border border-white/10 transition" data-filter="media">Media & Web Tools</button>
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projects-grid">
+
+            <!-- 1. SportyXi (Featured Card matching Prompt Section 7) -->
+            <div class="project-card-item glass-card-interactive p-6 flex flex-col justify-between border-amber-500/40 relative overflow-hidden group" data-category="sports">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="badge-tech badge-amber"><i class="fa-solid fa-tower-broadcast"></i> Sports Streaming</span>
+                        <span class="text-xs font-mono text-emerald-400 flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Production
+                        </span>
+                    </div>
+
+                    <h2 class="text-2xl font-bold text-white mb-2 group-hover:text-amber-400 transition">
+                        SportyXi
+                    </h2>
+
+                    <div class="text-xs font-mono text-gray-400 mb-3 uppercase tracking-wider">
+                        Sports Technology / Streaming
+                    </div>
+
+                    <p class="text-sm text-gray-300 leading-relaxed mb-6 font-light">
+                        A modern sports streaming platform designed around performance, accessibility, and a fast viewing experience.
+                    </p>
+
+                    <div class="flex flex-wrap gap-1.5 mb-6">
+                        <span class="badge-tech text-[10px]">LL-HLS</span>
+                        <span class="badge-tech text-[10px]">Node.js</span>
+                        <span class="badge-tech text-[10px]">WebSockets</span>
+                        <span class="badge-tech text-[10px]">Redis Ring</span>
+                        <span class="badge-tech text-[10px]">CMAF</span>
+                    </div>
+                </div>
+
+                <div class="space-y-2.5 pt-4 border-t border-white/10">
+                    <div class="grid grid-cols-2 gap-2">
+                        <a href="/case-studies/sportyxi" class="btn-secondary !py-2.5 text-xs text-center justify-center">
+                            <span>View Case Study</span>
+                        </a>
+                        <a href="https://sportyxi.com" target="_blank" rel="noopener noreferrer" class="btn-primary !py-2.5 text-xs text-center justify-center">
+                            <span>Visit SportyXi</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+                    <a href="/projects/sportyxi" class="text-center block text-xs font-mono text-gray-400 hover:text-amber-400 py-1 transition">
+                        View Detailed Architecture Overview →
+                    </a>
+                </div>
+            </div>
+
+            <!-- 2. X010 Parent Studio Card -->
+            <div class="project-card-item glass-card-interactive p-6 flex flex-col justify-between border-indigo-500/30 group" data-category="studio">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="badge-tech badge-cyan"><i class="fa-solid fa-building"></i> Venture Studio</span>
+                        <span class="text-xs font-mono text-indigo-400">Parent Org</span>
+                    </div>
+
+                    <h2 class="text-2xl font-bold text-white mb-2 group-hover:text-cyan-400 transition">
+                        X010
+                    </h2>
+
+                    <div class="text-xs font-mono text-gray-400 mb-3 uppercase tracking-wider">
+                        Technology Lab & Holding
+                    </div>
+
+                    <p class="text-sm text-gray-300 leading-relaxed mb-6 font-light">
+                        Parent technology company founded by Rafin, incubating high-concurrency streaming, AI/SaaS products, and resilient web infrastructure.
+                    </p>
+
+                    <div class="flex flex-wrap gap-1.5 mb-6">
+                        <span class="badge-tech text-[10px]">Product Incubator</span>
+                        <span class="badge-tech text-[10px]">Distributed Systems</span>
+                        <span class="badge-tech text-[10px]">Venture Thesis</span>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-white/10">
+                    <a href="/projects/x010" class="btn-secondary w-full text-xs !py-2.5 justify-between">
+                        <span>Explore Studio & Portfolio</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 3. Market Pilot Card -->
+            <div class="project-card-item glass-card-interactive p-6 flex flex-col justify-between border-cyan-500/30 group" data-category="ai">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="badge-tech badge-cyan"><i class="fa-solid fa-chart-line"></i> AI SaaS</span>
+                        <span class="text-xs font-mono text-cyan-400">Active Beta</span>
+                    </div>
+
+                    <h2 class="text-2xl font-bold text-white mb-2 group-hover:text-cyan-400 transition">
+                        Market Pilot
+                    </h2>
+
+                    <div class="text-xs font-mono text-gray-400 mb-3 uppercase tracking-wider">
+                        Financial AI & Order Telemetry
+                    </div>
+
+                    <p class="text-sm text-gray-300 leading-relaxed mb-6 font-light">
+                        Intelligent market sentiment engine and predictive volatility modeling platform processing 10,000+ ticks/sec over asynchronous WebSockets.
+                    </p>
+
+                    <div class="flex flex-wrap gap-1.5 mb-6">
+                        <span class="badge-tech text-[10px]">Python FastAPI</span>
+                        <span class="badge-tech text-[10px]">PyTorch</span>
+                        <span class="badge-tech text-[10px]">TimescaleDB</span>
+                        <span class="badge-tech text-[10px]">Redis Streams</span>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-white/10">
+                    <a href="/projects/market-pilot" class="btn-secondary w-full text-xs !py-2.5 justify-between">
+                        <span>Read Architecture Specs</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 4. Vaxa AI Card -->
+            <div class="project-card-item glass-card-interactive p-6 flex flex-col justify-between border-purple-500/30 group" data-category="ai">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="badge-tech badge-emerald"><i class="fa-solid fa-brain"></i> Neural Search</span>
+                        <span class="text-xs font-mono text-purple-400">R&D System</span>
+                    </div>
+
+                    <h2 class="text-2xl font-bold text-white mb-2 group-hover:text-purple-400 transition">
+                        Vaxa AI
+                    </h2>
+
+                    <div class="text-xs font-mono text-gray-400 mb-3 uppercase tracking-wider">
+                        Cognitive Search & Graph RAG
+                    </div>
+
+                    <p class="text-sm text-gray-300 leading-relaxed mb-6 font-light">
+                        Enterprise neural search engine combining dense vector embeddings, reciprocal rank fusion, and verified citation pipelines for zero hallucinations.
+                    </p>
+
+                    <div class="flex flex-wrap gap-1.5 mb-6">
+                        <span class="badge-tech text-[10px]">Qdrant Vector DB</span>
+                        <span class="badge-tech text-[10px]">Hybrid BM25</span>
+                        <span class="badge-tech text-[10px]">Transformers</span>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-white/10">
+                    <a href="/projects/vaxa-ai" class="btn-secondary w-full text-xs !py-2.5 justify-between">
+                        <span>View Vaxa AI Specs</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 5. CineStream Card -->
+            <div class="project-card-item glass-card-interactive p-6 flex flex-col justify-between group" data-category="media">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="badge-tech"><i class="fa-solid fa-film text-rose-400"></i> Media WebApp</span>
+                        <span class="text-xs font-mono text-emerald-400">Production</span>
+                    </div>
+
+                    <h2 class="text-2xl font-bold text-white mb-2 group-hover:text-rose-400 transition">
+                        CineStream
+                    </h2>
+
+                    <div class="text-xs font-mono text-gray-400 mb-3 uppercase tracking-wider">
+                        Entertainment Platform
+                    </div>
+
+                    <p class="text-sm text-gray-300 leading-relaxed mb-6 font-light">
+                        Modern streaming interface for browsing and exploring media catalogs with ultra-fast search indexes and responsive UI layouts.
+                    </p>
+
+                    <div class="flex flex-wrap gap-1.5 mb-6">
+                        <span class="badge-tech text-[10px]">React.js</span>
+                        <span class="badge-tech text-[10px]">Node.js</span>
+                        <span class="badge-tech text-[10px]">REST APIs</span>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-white/10">
+                    <a href="https://cinestreamss.netlify.app/" target="_blank" rel="noopener noreferrer" class="btn-secondary w-full text-xs !py-2.5 justify-between">
+                        <span>Live Platform</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 6. FreeStore Media Tool Card -->
+            <div class="project-card-item glass-card-interactive p-6 flex flex-col justify-between group" data-category="media">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="badge-tech"><i class="fa-solid fa-download text-amber-400"></i> Utility Engine</span>
+                        <span class="text-xs font-mono text-emerald-400">Live</span>
+                    </div>
+
+                    <h2 class="text-2xl font-bold text-white mb-2 group-hover:text-amber-400 transition">
+                        FreeStore
+                    </h2>
+
+                    <div class="text-xs font-mono text-gray-400 mb-3 uppercase tracking-wider">
+                        High-Speed Media Extraction
+                    </div>
+
+                    <p class="text-sm text-gray-300 leading-relaxed mb-6 font-light">
+                        Optimized asynchronous media extraction pipeline with technical SEO architectures and multi-tenant download acceleration.
+                    </p>
+
+                    <div class="flex flex-wrap gap-1.5 mb-6">
+                        <span class="badge-tech text-[10px]">Django</span>
+                        <span class="badge-tech text-[10px]">PostgreSQL</span>
+                        <span class="badge-tech text-[10px]">Celery</span>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-white/10">
+                    <a href="https://freedownloader.top" target="_blank" rel="noopener noreferrer" class="btn-secondary w-full text-xs !py-2.5 justify-between">
+                        <span>Visit FreeStore</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="bg-[#02050c] border-t border-white/10 py-12 mt-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="md:col-span-2">
+                    <span class="text-lg font-bold font-display text-white block mb-2">Rafin</span>
+                    <p class="text-xs text-gray-400 max-w-sm mb-4">
+                        Founder, software engineer, and systems architect building high-concurrency platforms and AI products at X010.
+                    </p>
+                    <div class="text-xs font-mono text-amber-400">
+                        Official Project: <a href="https://sportyxi.com" target="_blank" rel="noopener noreferrer" class="underline">SportyXi Sports Platform</a>
+                    </div>
+                </div>
+                <div>
+                    <span class="text-xs font-mono uppercase text-gray-400 tracking-wider block mb-3">Key Projects</span>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="/projects/sportyxi" class="text-amber-400">SportyXi Platform</a></li>
+                        <li><a href="/case-studies/sportyxi" class="text-gray-400 hover:text-white">SportyXi Case Study</a></li>
+                        <li><a href="/projects/x010" class="text-gray-400 hover:text-white">X010 Studio</a></li>
+                        <li><a href="/projects/market-pilot" class="text-gray-400 hover:text-white">Market Pilot</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <span class="text-xs font-mono uppercase text-gray-400 tracking-wider block mb-3">Connect</span>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="/contact" class="text-gray-400 hover:text-white">Contact Rafin</a></li>
+                        <li><a href="https://github.com/Rafin010" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">GitHub Profile</a></li>
+                        <li><a href="/blog" class="text-gray-400 hover:text-white">Engineering Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 font-mono">
+                <div>© 2026 Rafin. All rights reserved.</div>
+                <div class="mt-2 sm:mt-0">Engineered for Performance & Technical Authority</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Client Script -->
+    <script src="/js/main.js"></script>
+</body>
+</html>

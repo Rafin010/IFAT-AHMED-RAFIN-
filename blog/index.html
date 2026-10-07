@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineering Blog & Systems Notes | Rafin</title>
+    <meta name="description" content="Technical engineering articles by Rafin on low-latency streaming pipelines, video infrastructure scaling, Core Web Vitals optimization, and real-time distributed systems.">
+    <link rel="canonical" href="https://ifatahmedrafin.sportyxi.com/blog">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ifatahmedrafin.sportyxi.com/blog">
+    <meta property="og:title" content="Engineering Blog & Systems Notes | Rafin">
+    <meta property="og:description" content="Technical engineering articles on streaming media, distributed systems, and real-time web performance.">
+    <meta property="og:image" content="https://ifatahmedrafin.sportyxi.com/img/SportyXi-Banner.png">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Blog",
+          "name": "Rafin's Engineering Blog",
+          "url": "https://ifatahmedrafin.sportyxi.com/blog",
+          "description": "Technical insights on video streaming, high-concurrency architectures, and web performance."
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://ifatahmedrafin.sportyxi.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Blog",
+              "item": "https://ifatahmedrafin.sportyxi.com/blog"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+</head>
+<body class="bg-[#030712] text-gray-100 flex flex-col min-h-screen">
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 bg-[#030712]/80 backdrop-blur-xl border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center text-black font-display font-black text-xl shadow-lg shadow-amber-500/20 group-hover:scale-105 transition">
+                    R
+                </div>
+                <div>
+                    <span class="font-display font-bold text-lg text-white block group-hover:text-amber-400 transition">Rafin</span>
+                    <span class="text-[11px] font-mono text-gray-400 block tracking-tight">Founder • Developer</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-8 text-sm">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/about" class="nav-link">About</a>
+                <a href="/projects" class="nav-link">Projects</a>
+                <a href="/case-studies" class="nav-link">Case Studies</a>
+                <a href="/experience" class="nav-link">Experience</a>
+                <a href="/skills" class="nav-link">Skills</a>
+                <a href="/blog" class="nav-link active">Blog</a>
+                <a href="/contact" class="btn-primary text-xs !py-2 !px-4">Get in Touch</a>
+            </nav>
+
+            <button id="mobile-menu-btn" aria-label="Toggle Menu" class="md:hidden p-2.5 rounded-lg bg-white/5 border border-white/10 text-gray-300">
+                <i class="fa-solid fa-bars text-lg"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-[#080d1a] border-b border-white/10 px-6 py-6 space-y-4">
+            <a href="/" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Home</a>
+            <a href="/about" class="block text-gray-300 hover:text-amber-400 font-medium py-1">About</a>
+            <a href="/projects" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Projects</a>
+            <a href="/case-studies" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Case Studies</a>
+            <a href="/experience" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Experience</a>
+            <a href="/skills" class="block text-gray-300 hover:text-amber-400 font-medium py-1">Skills</a>
+            <a href="/blog" class="block text-amber-400 font-medium py-1">Blog</a>
+            <a href="/contact" class="btn-primary text-center block w-full mt-4">Get in Touch</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb-container" aria-label="Breadcrumb">
+            <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+            <span class="separator">/</span>
+            <span class="current" aria-current="page">Blog</span>
+        </nav>
+
+        <!-- Header -->
+        <div class="mb-12">
+            <div class="flex items-center gap-2 mb-3">
+                <span class="badge-tech badge-amber"><i class="fa-solid fa-newspaper"></i> Technical Writing</span>
+                <span class="badge-tech">Real-World Engineering</span>
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight mb-4">
+                Engineering Notes & Architecture Articles
+            </h1>
+            <p class="text-base sm:text-lg text-gray-400 max-w-2xl font-light">
+                Original, in-depth technical writings exploring the engineering realities of video streaming protocols, high-concurrency systems, and web performance.
+            </p>
+        </div>
+
+        <!-- Articles Grid -->
+        <div class="space-y-6">
+
+            <!-- Article 1: How I Built a Sports Streaming Platform -->
+            <article class="glass-card-interactive p-8 rounded-3xl border-amber-500/20 group">
+                <div class="flex flex-wrap items-center gap-2 mb-3 text-xs font-mono text-gray-400">
+                    <span class="badge-tech badge-amber">Streaming Architecture</span>
+                    <span>•</span>
+                    <span><i class="fa-regular fa-clock"></i> 9 min read</span>
+                    <span>•</span>
+                    <span>October 2026</span>
+                </div>
+
+                <h2 class="text-2xl sm:text-3xl font-bold text-white mb-3 group-hover:text-amber-400 transition">
+                    <a href="/blog/how-i-built-a-sports-streaming-platform">How I Built a Modern Sports Streaming Platform with Sub-2.5s Latency</a>
+                </h2>
+
+                <p class="text-sm text-gray-300 font-light leading-relaxed mb-6">
+                    A behind-the-scenes journey from initial napkin sketches to scaling <a href="https://sportyxi.com" target="_blank" rel="noopener noreferrer" class="text-amber-400 underline">SportyXi</a>: transcode pipelines, handling un-cached chunk storms, and delivering broadcast-quality video over standard HTTP infrastructure.
+                </p>
+
+                <div class="flex items-center justify-between pt-4 border-t border-white/10">
+                    <div class="text-xs font-mono text-gray-400">
+                        Platform: <span class="text-white">SportyXi</span>
+                    </div>
+                    <a href="/blog/how-i-built-a-sports-streaming-platform" class="text-xs font-bold font-mono text-amber-400 hover:underline flex items-center gap-1.5">
+                        <span>Read Full Article</span>
+                        <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Article 2: Building Scalable Video Streaming Infrastructure -->
+            <article class="glass-card-interactive p-8 rounded-3xl border-cyan-500/20 group">
+                <div class="flex flex-wrap items-center gap-2 mb-3 text-xs font-mono text-gray-400">
+                    <span class="badge-tech badge-cyan">Distributed Systems</span>
+                    <span>•</span>
+                    <span><i class="fa-regular fa-clock"></i> 11 min read</span>
+                    <span>•</span>
+                    <span>September 2026</span>
+                </div>
+
+                <h2 class="text-2xl sm:text-3xl font-bold text-white mb-3 group-hover:text-cyan-400 transition">
+                    <a href="/blog/building-scalable-video-streaming-infrastructure">Building Scalable Video Streaming Infrastructure: Lessons From Origin Shielding to Edge CDNs</a>
+                </h2>
+
+                <p class="text-sm text-gray-300 font-light leading-relaxed mb-6">
+                    Why traditional load balancing fails during live sports penalty shootouts, how single-flight request collapsing eliminates origin meltdown, and how to structure cache headers for micro-second chunk availability.
+                </p>
+
+                <div class="flex items-center justify-between pt-4 border-t border-white/10">
+                    <div class="text-xs font-mono text-gray-400">
+                        Focus: <span class="text-white">Origin Shielding & CMAF</span>
+                    </div>
+                    <a href="/blog/building-scalable-video-streaming-infrastructure" class="text-xs font-bold font-mono text-cyan-400 hover:underline flex items-center gap-1.5">
+                        <span>Read Full Article</span>
+                        <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Article 3: Frontend Performance Lessons from SportyXi -->
+            <article class="glass-card-interactive p-8 rounded-3xl border-emerald-500/20 group">
+                <div class="flex flex-wrap items-center gap-2 mb-3 text-xs font-mono text-gray-400">
+                    <span class="badge-tech badge-emerald">Frontend & Core Web Vitals</span>
+                    <span>•</span>
+                    <span><i class="fa-regular fa-clock"></i> 8 min read</span>
+                    <span>•</span>
+                    <span>August 2026</span>
+                </div>
+
+                <h2 class="text-2xl sm:text-3xl font-bold text-white mb-3 group-hover:text-emerald-400 transition">
+                    <a href="/blog/frontend-performance-lessons-from-sportyxi">Frontend Performance Lessons from SportyXi: Sub-300ms Video Boot and Canvas Overlays</a>
+                </h2>
+
+                <p class="text-sm text-gray-300 font-light leading-relaxed mb-6">
+                    How removing heavy third-party video players and leveraging native HTML5 video with transparent canvas telemetry layers achieved a 99+ Core Web Vitals score on mobile devices.
+                </p>
+
+                <div class="flex items-center justify-between pt-4 border-t border-white/10">
+                    <div class="text-xs font-mono text-gray-400">
+                        Focus: <span class="text-white">Zero-Bloat UI Engineering</span>
+                    </div>
+                    <a href="/blog/frontend-performance-lessons-from-sportyxi" class="text-xs font-bold font-mono text-emerald-400 hover:underline flex items-center gap-1.5">
+                        <span>Read Full Article</span>
+                        <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+            </article>
+
+        </div>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="bg-[#02050c] border-t border-white/10 py-12 mt-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="md:col-span-2">
+                    <span class="text-lg font-bold font-display text-white block mb-2">Rafin</span>
+                    <p class="text-xs text-gray-400 max-w-sm mb-4">
+                        Founder, software engineer, and systems architect building high-concurrency platforms and AI products at X010.
+                    </p>
+                    <div class="text-xs font-mono text-amber-400">
+                        Official Project: <a href="https://sportyxi.com" target="_blank" rel="noopener noreferrer" class="underline">SportyXi Platform</a>
+                    </div>
+                </div>
+                <div>
+                    <span class="text-xs font-mono uppercase text-gray-400 tracking-wider block mb-3">Key Links</span>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="/blog" class="text-amber-400">Engineering Blog</a></li>
+                        <li><a href="/projects/sportyxi" class="text-gray-400 hover:text-white">SportyXi Project</a></li>
+                        <li><a href="/case-studies/sportyxi" class="text-gray-400 hover:text-white">SportyXi Case Study</a></li>
+                        <li><a href="/projects/x010" class="text-gray-400 hover:text-white">X010 Studio</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <span class="text-xs font-mono uppercase text-gray-400 tracking-wider block mb-3">Connect</span>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="/contact" class="text-gray-400 hover:text-white">Contact Rafin</a></li>
+                        <li><a href="https://github.com/Rafin010" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">GitHub Profile</a></li>
+                        <li><a href="/about" class="text-gray-400 hover:text-white">About Rafin</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 font-mono">
+                <div>© 2026 Rafin. All rights reserved.</div>
+                <div class="mt-2 sm:mt-0">Engineering Blog & Systems Notes</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Client Script -->
+    <script src="/js/main.js"></script>
+</body>
+</html>
